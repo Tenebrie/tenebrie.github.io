@@ -132,18 +132,23 @@ var CurrencyUnits = 10;
 var LastExamPassed = true;
 var DebugMode = false;
 
+var Stats_TimeTaken = 0;
+var Stats_TotalClicks = 0;
+var Stats_TotalCheats = 0;
+
 //=====================================================================
 // Initialization
 //=====================================================================
 function Initialization()
 {
 	// Push levels
+	// Note: The levels will appear in that order. Point counts are independant from the level names and setup below.
+	// You can change the names here if you wish, but be careful with formatting.
 	var LevelNames =
 	[
 		"Programming fundamentals exam",
 		"Mathematics exam",
 		"Electronics and digits exam",
-		"Impossible exam",
 		"Biology exam",
 		"Business fundamentals exam",
 		"World History exam",
@@ -173,8 +178,9 @@ function Initialization()
 		"Computer Science exam",
 		"Windows Administration Fundamentals exam",
 		"Linux+ exam",
+		"Impossible exam",
 	];
-
+	// Points setup
 	var StartValue = 10;
 	var PointValue = 2;
 	var PointMultiplier = 1;
@@ -194,6 +200,8 @@ function Initialization()
 	}
 
 	// Push upgrades
+	// Note: If you wish to change the priority in the upgrade list, change the order here (move the whole string up or down).
+	// GlobalUpgrades.push(new Upgrade(id, DisplayedName, Description, Cost, ParentId, Classification))
 	GlobalUpgrades.push(new Upgrade("click01", "Enthusiasm", "Each click now gives you 2 points.", 3, null, ""));
 	GlobalUpgrades.push(new Upgrade("click02", "Courage", "Each click now gives you 3 points.", 3, "click01", ""));
 	GlobalUpgrades.push(new Upgrade("click03", "Persistence", "Each click now gives you 4 points.", 3, "click02", ""));
@@ -237,15 +245,19 @@ function Initialization()
 		CurrencyUnits += 100;
 		GlobalUpgrades[Upgrade.GetIndexOf("speed_jacobs")].Purchased = true;
 	}
-	// Start exam timer
-	Exam_Timer();
-	// Show exam UI
-	ShowExam();
+	// Show starting UI
+	ShowTitle();
 }
 
 //=====================================================================
 // Event handlers
 //=====================================================================
+function StartGame_OnClick()
+{
+	Exam_Timer();
+	ShowExam();
+}
+
 function WorkHard_OnClick()
 {
 	if (ExamPoints < GlobalLevels[CurrentExamOrdinal].Points[4])
@@ -407,6 +419,7 @@ function GetCurrentExamPointsGoal()
 function ShowHome()
 {
 	// Display home
+	document.getElementById("Title").style.display = "none";
 	document.getElementById("Exam").style.display = "none";
 	document.getElementById("Home").style.display = "block";
 	document.getElementById("HomeGameOver").style.display = "none";
@@ -431,10 +444,18 @@ function ShowHome()
 
 function ShowExam()
 {
+	document.getElementById("Title").style.display = "none";
 	document.getElementById("Home").style.display = "none";
 	document.getElementById("Exam").style.display = "block";
 	UpdateExamPoints();
 	UpdateExamOrdinal();
+}
+
+function ShowTitle()
+{
+	document.getElementById("Title").style.display = "block";
+	document.getElementById("Home").style.display = "none";
+	document.getElementById("Exam").style.display = "none";
 }
 
 function WorkHard_Timer()
