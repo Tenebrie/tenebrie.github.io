@@ -1,13 +1,15 @@
 #ExamPointsLabel, #ExamPointsSeparator
 {
-	float: left;
+	font-size: 25px;
 }
 
 #ExamPointsCurrent, #ExamPointsMax
 {
-	width: 35px;
-	float: left;
-	text-align: center;
+	font-size: 25px;
+}
+#ExamPoints
+{
+	text-align:center;
 }
 
 #ExamWorkProgress
@@ -20,18 +22,27 @@
 
 #ExamEndButton
 {
-	width: 100%;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 82px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #555555;
 }
 
 .HomeUpgradesFloater
 {
 	position: relative;
 	float: left;
-	width: 300px;
-	height: 130px;
+	width: 270px;
+	min-height: 80px;
 	border-style: solid;
 	border-width: 1px;
-	border-radius: 5px;
+	/*border-radius: 5px;*/
 	margin: 1px;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -39,6 +50,7 @@
 	display: flex;
   	flex-direction: column;
   	justify-content: space-between;
+	box-shadow: 5px 5px 5px #888888;
 }
 
 .HomeUpgradesText
@@ -55,13 +67,32 @@
 
 .HomeUpgradesButton
 {
-	bottom: 5px;
-	width: 100%;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    float: left;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #555555;
 }
 
 hr
 {
 	clear: both;
+}
+
+.exam_failed {
+	color: red;
+	font-size: 25px;
+}
+.exam_success {
+	color: green;
+	font-size: 25px;
 }
 
 /*Added for UI:*/
