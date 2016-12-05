@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<script src="core.js"></script>
+		<script src="../core.js"></script>
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body onload="Initialization()">
@@ -42,8 +42,9 @@
 				<button onclick="NextExam_OnClick()">Next Exam</button>
 			</div>
 			<div id="HomeGameOver">
-				<div id="HomeGameOverForReals">You have failed too many exams and have been expelled from the university! Refresh the page to re-enroll.</div>
-				<div id="HomeGameOverForCheats">You have been caught cheating and have been expelled from the university! Refresh the page to re-enroll.</div>
+				<div id="HomeGameOver_Win">You Win!</div>
+				<div id="HomeGameOver_Fail">You have failed too many exams and have been expelled from the university! Refresh the page to re-enroll.</div>
+				<div id="HomeGameOver_Cheat">You have been caught cheating and have been expelled from the university! Refresh the page to re-enroll.</div>
 				<div id="HomeGameOverStatistics">
 					Time taken: <span id="Stats_TimeTaken"></span><br>
 					Total clicks: <span id="Stats_TotalClicks"></span><br>

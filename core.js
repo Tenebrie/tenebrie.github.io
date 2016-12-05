@@ -433,21 +433,32 @@ function ShowHome()
 	document.getElementById("HomeGameOver").style.display = "none";
 	// Game over conditions
 	var ShowStatistics = false;
-	if (TotalExamsFailed == 3)
+	if (CurrentExamOrdinal >= GlobalLevels.length - 1)
 	{
 		ShowStatistics = true;
 		document.getElementById("HomeContinue").style.display = "none";
 		document.getElementById("HomeGameOver").style.display = "block";
-		document.getElementById("HomeGameOverForReals").style.display = "block";
-		document.getElementById("HomeGameOverForCheats").style.display = "none";
+		document.getElementById("HomeGameOver_Win").style.display = "block";
+		document.getElementById("HomeGameOver_Fail").style.display = "none";
+		document.getElementById("HomeGameOver_Cheat").style.display = "none";
+	}
+	else if (TotalExamsFailed == 3)
+	{
+		ShowStatistics = true;
+		document.getElementById("HomeContinue").style.display = "none";
+		document.getElementById("HomeGameOver").style.display = "block";
+		document.getElementById("HomeGameOver_Win").style.display = "none";
+		document.getElementById("HomeGameOver_Fail").style.display = "block";
+		document.getElementById("HomeGameOver_Cheat").style.display = "none";
 	}
 	else if (TotalCheatsFound == 1)
 	{
 		ShowStatistics = true;
 		document.getElementById("HomeContinue").style.display = "none";
 		document.getElementById("HomeGameOver").style.display = "block";
-		document.getElementById("HomeGameOverForReals").style.display = "none";
-		document.getElementById("HomeGameOverForCheats").style.display = "block";
+		document.getElementById("HomeGameOver_Win").style.display = "none";
+		document.getElementById("HomeGameOver_Fail").style.display = "none";
+		document.getElementById("HomeGameOver_Cheat").style.display = "block";
 	}
 	// Summarize statistics
 	if (ShowStatistics == true)
