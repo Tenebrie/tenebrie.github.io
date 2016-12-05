@@ -15,7 +15,6 @@ class Level
 		{
 			this.Points[i] = PointsHalfValue + PointsIncrement * i + 1;
 		}
-		alert(this.Points);
 	}
 }
 
