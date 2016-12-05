@@ -94,6 +94,7 @@ class Upgrade
 		var Cost = GlobalUpgrades[Index].Cost;
 		if (CurrencyUnits >= Cost)
 		{
+			Stats_TotalUpgrades += 1;
 			// Cheat check
 			if (Upgrade.IsClassified(Id, "cheat"))
 			{
@@ -103,6 +104,7 @@ class Upgrade
 					ShowHome();
 					return;
 				}
+				Stats_TotalCheats += 1;
 			}
 			// Check check passed, use the money
 			CurrencyUnits -= Cost;
@@ -132,15 +134,19 @@ var CurrencyUnits = 10;
 var LastExamPassed = true;
 var DebugMode = false;
 
-var Stats_TimeTaken = 0;
+var Stats_Timestamp = 0;
 var Stats_TotalClicks = 0;
+var Stats_TotalUpgrades = 0;
 var Stats_TotalCheats = 0;
+var Stats_TotalMoney = 0;
 
 //=====================================================================
 // Initialization
 //=====================================================================
 function Initialization()
 {
+	Stats_Timestamp = new Date();
+	Stats_TotalMoney += CurrencyUnits;
 	// Push levels
 	// Note: The levels will appear in that order. Point counts are independant from the level names and setup below.
 	// You can change the names here if you wish, but be careful with formatting.
@@ -260,6 +266,7 @@ function StartGame_OnClick()
 
 function WorkHard_OnClick()
 {
+	Stats_TotalClicks += 1;
 	if (ExamPoints < GlobalLevels[CurrentExamOrdinal].Points[4])
 	{
 		// Start timer
@@ -299,6 +306,7 @@ function EndExam_OnClick()
 		TotalExamsPassed += 1;
 	}
 	CurrencyUnits += Grade;
+	Stats_TotalMoney += Grade;
 	// Clear consumables
 	for (var i = 0; i < GlobalUpgrades.length; i++) {
 		if (Upgrade.IsClassified(GlobalUpgrades[i].Id, "consumable")) {
@@ -424,8 +432,10 @@ function ShowHome()
 	document.getElementById("Home").style.display = "block";
 	document.getElementById("HomeGameOver").style.display = "none";
 	// Game over conditions
+	var ShowStatistics = false;
 	if (TotalExamsFailed == 3)
 	{
+		ShowStatistics = true;
 		document.getElementById("HomeContinue").style.display = "none";
 		document.getElementById("HomeGameOver").style.display = "block";
 		document.getElementById("HomeGameOverForReals").style.display = "block";
@@ -433,10 +443,23 @@ function ShowHome()
 	}
 	else if (TotalCheatsFound == 1)
 	{
+		ShowStatistics = true;
 		document.getElementById("HomeContinue").style.display = "none";
 		document.getElementById("HomeGameOver").style.display = "block";
 		document.getElementById("HomeGameOverForReals").style.display = "none";
 		document.getElementById("HomeGameOverForCheats").style.display = "block";
+	}
+	// Summarize statistics
+	if (ShowStatistics == true)
+	{
+		var Timestamp = new Date();
+		var Stats_TimeTaken = (Timestamp - Stats_Timestamp) / 1000;
+		document.getElementById("Stats_TimeTaken").innerHTML = Stats_TimeTaken + " seconds";
+		document.getElementById("Stats_TotalClicks").innerHTML = Stats_TotalClicks;
+		document.getElementById("Stats_TotalExams").innerHTML = TotalExamsPassed + TotalExamsFailed;
+		document.getElementById("Stats_TotalUpgrades").innerHTML = Stats_TotalUpgrades;
+		document.getElementById("Stats_TotalCheats").innerHTML = Stats_TotalCheats;
+		document.getElementById("Stats_TotalMoney").innerHTML = Stats_TotalMoney;
 	}
 	// Update the UI
 	UpdateHome();
