@@ -584,9 +584,9 @@ function UpdateHome()
 	var Grade = GetCurrentExamGrade();
 	// Determine the outcome message
 	var ExamStatus;
-	if (Grade == 0 && DebugMode == false) { ExamStatus = "You have failed the exam!"; }
-	else if (Grade == 0 && DebugMode == true) { ExamStatus = "You have failed the exam! But it's debug mode so it's all k."; }
-	else { ExamStatus = "Congratulations! You have passed the exam with grade " + Grade; }
+	if (Grade == 0 && DebugMode == false) { ExamStatus = "<span class='exam_failed'>You have failed the exam!</span>"; }
+	else if (Grade == 0 && DebugMode == true) { ExamStatus = "<span class='exam_failed'>You have failed the exam! But it's debug mode so it's all k.</span>"; }
+	else { ExamStatus = "<span class='exam_success'>Congratulations! <br>You have passed the exam with grade " + Grade; + "</span>"}
 	// Update elements
 	document.getElementById("HomeExamStatus").innerHTML = ExamStatus;
 	document.getElementById("HomeCurrencyUnits").innerHTML = "- Your (up)grade money: " + CurrencyUnits;
