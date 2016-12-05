@@ -575,7 +575,8 @@ function UpdateExamPoints()
 function UpdateExamOrdinal()
 {
 	document.getElementById("ExamName").innerHTML = GlobalLevels[CurrentExamOrdinal].Name;
-	document.getElementById("ExamNumber").innerHTML = "[№" + (CurrentExamOrdinal + 1) + "]";
+	//document.getElementById("ExamNumber").innerHTML = "[№" + (CurrentExamOrdinal + 1) + "]";
+	document.getElementById("ExamNumber").innerHTML = "";
 }
 
 function UpdateHome()
