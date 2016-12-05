@@ -4,25 +4,18 @@
 //=====================================================================
 class Level
 {
-	constructor(Name, PointStartValue, PointMultiplier, PointFunction)
+	constructor(Name, PointStartValue, PointValue, PointMultiplier)
 	{
+		var PointsEndValue = PointStartValue + PointValue * 4 * PointMultiplier;
+		var PointsHalfValue = Math.floor(PointsEndValue / 2);
+		var PointsIncrement = Math.round(Math.floor(PointsEndValue / 2) / 4);
 		this.Name = Name;
 		this.Points = [0, 0, 0, 0, 0];
 		for (var i = 0; i < 5; i += 1)
 		{
-			if (PointFunction == "Linear")
-			{
-				this.Points[i] = PointStartValue + PointMultiplier * i;
-			}
-			else if (PointFunction == "Parabolic")
-			{
-				this.Points[i] = PointStartValue + Math.pow(PointMultiplier, i + 1) - PointMultiplier;
-			}
-			else if (PointFunction == "Exponential")
-			{
-				this.Points[i] = PointStartValue + Math.round(Math.pow(Math.E, PointMultiplier * i)) - 1;
-			}
+			this.Points[i] = PointsHalfValue + PointsIncrement * i + 1;
 		}
+		alert(this.Points);
 	}
 }
 
@@ -96,18 +89,69 @@ var GlobalUpgrades = [];
 var ExamPoints = 0;
 var CurrencyUnits = 0;
 var LastExamPassed = true;
-var DebugMode = false;
+var DebugMode = true;
 
 //=====================================================================
 // Initialization
 //=====================================================================
 function Initialization()
 {
-	// Generate some temporary levels
-	for (var i = 2; i < 50; i++)
+	// Push levels
+	var LevelNames =
+	[
+		"Programming fundamentals exam",
+		"Mathematics exam",
+		"Electronics and digits exam",
+		"Impossible exam",
+		"Biology exam",
+		"Business fundamentals exam",
+		"World History exam",
+		"Physics exam",
+		"Computer networks exam",
+		"ICT professional skills exam",
+		"Insta-finishnish exam",
+		"Law exam",
+		"Hardware and Software exam",
+		"Engineering exam",
+		"Music Theory exam",
+		"Psychology exam",
+		"Microeconomics exam",
+		"Geography exam",
+		"Chemistry exam",
+		"European History exam",
+		"Art exam",
+		"Environmental Science exam",
+		"Studio Art Drawing exam",
+		"Information Systems exam",
+		"Principles of Marketing exam",
+		"Principles of Management exam",
+		"Human Growth exam",
+		"English literature exam",
+		"Finnish literature exam",
+		"Architecture exam",
+		"Computer Science exam",
+		"Windows Administration Fundamentals exam",
+		"Linux+ exam",
+	];
+
+	var StartValue = 10;
+	var PointValue = 2;
+	var PointMultiplier = 1;
+	var i = 0;
+	while(LevelNames.length > 0)
 	{
-		GlobalLevels.push(new Level("Temporary Exam", i * 4, i * 2, "Linear"));
+		var Name = LevelNames.shift();
+		GlobalLevels.push(new Level(Name, StartValue, PointValue, PointMultiplier));
+		StartValue += 5;
+		PointValue += 1;
+		if (i % 10 == 0)
+		{
+			StartValue -= 5;
+			PointMultiplier += 1;
+		}
+		i += 1;
 	}
+
 	// Push upgrades
 	GlobalUpgrades.push(new Upgrade("click01", "Enthusiasm", "Each click now gives you 2 points.", 3, null));
 	GlobalUpgrades.push(new Upgrade("click02", "Courage", "Each click now gives you 3 points.", 3, "click01"));
@@ -139,6 +183,11 @@ function Initialization()
 	GlobalUpgrades.push(new Upgrade("crit_chance09", "Reliable Inspiration, Level 9", "Inspiration now has 50% chance to occur.", 3, "crit_chance08"));
 	//GlobalUpgrades.push(new Upgrade("crit_double01", "Inspiration Overflow", "Inspiration now can happen one extra time.", 5, "crit_damage08"));
 	//GlobalUpgrades.push(new Upgrade("crit_double02", "Inspiration Overflow", "Inspiration now can happen one extra time.", 5, "crit_chance09"));
+	// Debug stuff
+	if (DebugMode == true) {
+		CurrencyUnits += 100;
+		GlobalUpgrades[Upgrade.GetIndexOf("speed_jacobs")].Purchased = true;
+	}
 	// Start exam timer
 	Exam_Timer();
 	// Show exam UI
