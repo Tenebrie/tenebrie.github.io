@@ -222,7 +222,7 @@ button.custom1 {
 	background-color: #555555;
 	
 }
-/*Added for letter of acceptance logo and signature:*/
+/*Added for letter of acceptance logo and signature. 'course for ending too:*/
 #Title{
 	width: 70%;
 	height: 90%;
@@ -243,4 +243,9 @@ button.custom1 {
   content:url(http://www.clipartkid.com/images/743/fake-signature-examples-cterrys-signature-jpg-fr2QrV-clipart.jpg); 
   width: 147px;
   height: 83px;
+}
+.image3 {
+	content:url(Pictures/Certificate.jpg);
+	width: 600px;
+	height: 540px;
 }
