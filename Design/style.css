@@ -1,4 +1,4 @@
-@media (min-width: 1200px) {
+@media {
     .container{
         max-width: 800px;
     }
@@ -12,4 +12,15 @@
 .biggestFont
 {
 	font-size: 18px;
+}
+
+.HomeUpgradesText
+{
+	font-style: italic;
+}
+
+.HomeUpgradesCheatWarning
+{
+	font-style: italic;
+	color: red; 
 }
