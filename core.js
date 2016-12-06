@@ -616,8 +616,6 @@ function UpdateExamPoints()
 function UpdateExamOrdinal()
 {
 	document.getElementById("ExamName").innerHTML = GlobalLevels[CurrentExamOrdinal].Name;
-	//document.getElementById("ExamNumber").innerHTML = "[№" + (CurrentExamOrdinal + 1) + "]";
-	document.getElementById("ExamNumber").innerHTML = "";
 }
 
 function UpdateHome()
@@ -646,7 +644,7 @@ function UpdateUpgradeList()
 		if (Upgrade.IsVisible(GlobalUpgrades[i].Id))
 		{
 			// Div tag
-			Div = "<div id=\"Upg_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesFloater\" class=\"Well\">";
+			Div = "<div id=\"Upg_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesFloater well\">";
 			// Upgrade name
 			Div += "<div><div>" + GlobalUpgrades[i].Name + "</div>";
 			// Upgrade cost
@@ -659,7 +657,7 @@ function UpdateUpgradeList()
 			}
 			Div += "</div>";
 			// Button
-			Div += "<button id=\"UpgBtn_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesButton\" class=\"btn\" onclick=\"BuyUpgrade_OnClick(this.id)\">Buy</button>";
+			Div += "<button id=\"UpgBtn_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesButton btn\" onclick=\"BuyUpgrade_OnClick(this.id)\">Buy</button>";
 			// Div closing tag
 			Div += "</div>"
 			document.getElementById("HomeUpgrades").innerHTML += Div;
