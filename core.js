@@ -155,6 +155,8 @@ var CheatFailChance = 0.01;
 
 var Stats_Timestamp = 0;
 var Stats_TotalClicks = 0;
+var Stats_TotalPoints = 0;
+var Stats_TotalPointsFromBots = 0;
 var Stats_TotalExams = 0;
 var Stats_TotalUpgrades = 0;
 var Stats_TotalCheats = 0;
@@ -349,6 +351,7 @@ function WorkHard_TimerEnd()
 {
 	// Add the points				
 	ExamPoints += GetExamPointsPerClick();
+	Stats_TotalPoints += GetExamPointsPerClick();
 	// Update points
 	var Goal = GetCurrentExamPointsGoal();
 	if (ExamPoints > Goal) { ExamPoints = Goal; }
@@ -384,7 +387,7 @@ function EndExam_OnClick()
 
 function NextExam_OnClick()
 {
-	if (CurrentExamOrdinal < GlobalLevels.length - 1)
+	if (CurrentExamOrdinal < GlobalLevels.length - 1 || LastExamPassed == false)
 	{
 		Exam_Timer();
 		ExamPoints = 0;
@@ -565,7 +568,7 @@ function ShowHome()
 	document.getElementById("HomeGameOver").style.display = "none";
 	// Game over conditions
 	var ShowStatistics = false;
-	if (CurrentExamOrdinal >= GlobalLevels.length - 1)
+	if (CurrentExamOrdinal >= GlobalLevels.length - 1 && LastExamPassed)
 	{
 		ShowStatistics = true;
 		document.getElementById("HomeContinue").style.display = "none";
@@ -575,7 +578,7 @@ function ShowHome()
 		document.getElementById("HomeGameOver_Cheat").style.display = "none";
 		document.getElementById("NextExamBtn").style.display = "none";
 	}
-	else if (TotalExamsFailed == 3)
+	else if (TotalExamsFailed >= 3)
 	{
 		ShowStatistics = true;
 		document.getElementById("HomeContinue").style.display = "none";
@@ -585,7 +588,7 @@ function ShowHome()
 		document.getElementById("HomeGameOver_Cheat").style.display = "none";
 		document.getElementById("NextExamBtn").style.display = "none";
 	}
-	else if (TotalCheatsFound == 1)
+	else if (TotalCheatsFound >= 1)
 	{
 		ShowStatistics = true;
 		document.getElementById("HomeContinue").style.display = "none";
@@ -614,6 +617,8 @@ function ShowHome()
 		Stats_TimeTaken += Seconds;
 		document.getElementById("Stats_TimeTaken").innerHTML = Stats_TimeTaken;
 		document.getElementById("Stats_TotalClicks").innerHTML = Stats_TotalClicks;
+		document.getElementById("Stats_TotalPoints").innerHTML = Stats_TotalPoints;
+		document.getElementById("Stats_TotalPointsFromBots").innerHTML = Stats_TotalPointsFromBots;
 		document.getElementById("Stats_TotalExams").innerHTML = Stats_TotalExams;
 		document.getElementById("Stats_TotalUpgrades").innerHTML = Stats_TotalUpgrades;
 		document.getElementById("Stats_TotalCheats").innerHTML = Stats_TotalCheats;
@@ -737,6 +742,7 @@ function Exam_Timer()
 		if (ExamPoints < GetCurrentExamPointsGoal())
 		{
 			ExamPoints += GetNanobotPointsPerTick();
+			Stats_TotalPointsFromBots += ExamPoints;
 			if (ExamPoints > GetCurrentExamPointsGoal()) { ExamPoints = GetCurrentExamPointsGoal(); }
 			UpdateExamPoints();
 		}
@@ -788,7 +794,7 @@ function UpdateHome()
 	// Determine the outcome message
 	var ExamStatus;
 	if (Upgrade.IsPurchased("time_travel")) { ExamStatus = "<span class='exam_success'>Welcome to the Clicker University!</span>"; }
-	else if (CurrentExamOrdinal >= GlobalLevels.length - 1) { ExamStatus = "<span class='exam_success'>Congratulations!<br>You have successfully gratuated from the Clicker University!</span>"; }
+	else if (CurrentExamOrdinal >= GlobalLevels.length - 1 && LastExamPassed) { ExamStatus = "<span class='exam_success'>Congratulations!<br>You have successfully gratuated from the Clicker University!</span>"; }
 	else if (Grade == 0 && DebugMode == false) { ExamStatus = "<span class='exam_failed'>You have failed the exam!</span>"; }
 	else if (Grade == 0 && DebugMode == true) { ExamStatus = "<span class='exam_failed'>You have failed the exam! But it's debug mode so it's all k.</span>"; }
 	else { ExamStatus = "<span class='exam_success'>Congratulations! <br>You have passed the exam with grade " + Grade; + "</span>"}
