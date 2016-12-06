@@ -126,6 +126,12 @@ hr
 	clear: both;
 }
 
+#img_logo
+{
+	display: block;
+	margin: auto;
+}
+
 .exam_failed {
 	color: red;
 	font-size: 25px;
@@ -237,10 +243,10 @@ button.custom1 {
 	margin-right: auto;
 }
 .image1 {
-  content:url(http://wwwimages.adobe.com/content/dam/Adobe/en/casestudies/solutions/idle-games/idle-games/idlegames_logo_147x83.jpg); 
+  content:url(Pictures/logo.jpg); 
 }
 .image2 {
-  content:url(http://www.clipartkid.com/images/743/fake-signature-examples-cterrys-signature-jpg-fr2QrV-clipart.jpg); 
+  content:url(Pictures/signature.jpg);
   width: 147px;
   height: 83px;
 }
