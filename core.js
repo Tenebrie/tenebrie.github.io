@@ -99,11 +99,14 @@ class Upgrade
 			// Cheat check
 			if (Upgrade.IsClassified(Id, "cheat"))
 			{
-				if (Math.random() <= 0.10) {
+				if (Math.random() <= CheatFailChance) {
 					// You've been caught
 					TotalCheatsFound = 1;
 					ShowHome();
 					return;
+				}
+				else {
+					CheatFailChance += 0.05;
 				}
 				Stats_TotalCheats += 1;
 			}
@@ -113,7 +116,7 @@ class Upgrade
 			// Special upgrades
 			if (Id == "cheat_extraLife") { TotalExamsFailed -= 1; }
 			if (Id == "cheat_twin") { NextExam_OnClick(); ExamPoints = GlobalLevels[CurrentExamOrdinal].Points[Math.round(Math.random() * 5)]; EndExam_OnClick(); }
-			if (Id == "time_travel") { CurrentExamOrdinal = 0; TotalExamsPassed = 0; TotalExamsFailed = 0; }
+			if (Id == "time_travel") { CurrentExamOrdinal = 0; TotalExamsPassed = 0; TotalExamsFailed = 0; CheatFailChance = 0.00; }
 			// Resettable
 			if (Upgrade.IsClassified(Id, "repeatable")) { GlobalUpgrades[Index].Purchased = false; }
 			// Update
@@ -135,6 +138,7 @@ var ExamPoints = 0;
 var CurrencyUnits = 100;
 var LastExamPassed = true;
 var DebugMode = false;
+var CheatFailChance = 0.00;
 
 var Stats_Timestamp = 0;
 var Stats_TotalClicks = 0;
@@ -186,8 +190,8 @@ function Initialization()
 		"Basics of Clicker Thesis || September, Year 4",
 		"Advanced Cheating Exam || October, Year 4",
 		"Cheat Management Exam || November, Year 4",
-		"Time Travel Exam || December, Year 4",
-		"Thesis Fundamentals Exam || January, Year 4",
+		"Time Travel For Dummies Exam || December, Year 4",
+		"Click The Thesis Exam || January, Year 4",
 		"Classmates' Names Exam || February, Year 4",
 		"Preliminary Comprehensive Clicking Exam || March, Year 4",
 		"Final Comprehensive Clicking Exam || April, Year 4",
@@ -209,6 +213,8 @@ function Initialization()
 			StartValue -= 5;
 			PointMultiplier += 1;
 		}
+		// Year incrementer
+		if (i == 10 || i == 19 || i == 28) { PointMultiplier += 1; }
 		i += 1;
 	}
 
@@ -249,7 +255,7 @@ function Initialization()
 	GlobalUpgrades.push(new Upgrade("crit_chance09", "Reliable Inspiration, Level 9", "Inspiration now has 50% chance to occur.", 3, "crit_chance08", ""));
 	GlobalUpgrades.push(new Upgrade("cheat_base", "Cheating", "Unlock the cheats. Be careful with those though.", 3, null, ""));
 	GlobalUpgrades.push(new Upgrade("cheat_extraLife", "Extra Life", "Let's pretend that one failed exam didn't happen, ok?", 1, "cheat_base", "cheat&repeatable"));
-	GlobalUpgrades.push(new Upgrade("cheat_twin", "Find a Twin", "You ask your twin to come to an exam instead of you.", 2, "cheat_base", "cheat&repeatable"));
+	GlobalUpgrades.push(new Upgrade("cheat_twin", "Find a Twin", "You ask your twin to come to the next exam instead of you.", 2, "cheat_base", "cheat&repeatable"));
 	GlobalUpgrades.push(new Upgrade("cheat_fakePaper", "Fake Paper", "You start the next exam with some amount of points.", 1, "cheat_base", "cheat&consumable"));
 	GlobalUpgrades.push(new Upgrade("cheat_bribe", "Bribe a Teacher", "Your time for the next exam is doubled.", 1, "cheat_base", "cheat&consumable"));
 	//GlobalUpgrades.push(new Upgrade("crit_double01", "Inspiration Overflow", "Inspiration now can happen one extra time.", 5, "crit_damage08"));
@@ -450,6 +456,7 @@ function ShowHome()
 		document.getElementById("HomeGameOver_Win").style.display = "block";
 		document.getElementById("HomeGameOver_Fail").style.display = "none";
 		document.getElementById("HomeGameOver_Cheat").style.display = "none";
+		document.getElementById("NextExamBtn").style.display = "none";
 	}
 	else if (TotalExamsFailed == 3)
 	{
@@ -459,6 +466,7 @@ function ShowHome()
 		document.getElementById("HomeGameOver_Win").style.display = "none";
 		document.getElementById("HomeGameOver_Fail").style.display = "block";
 		document.getElementById("HomeGameOver_Cheat").style.display = "none";
+		document.getElementById("NextExamBtn").style.display = "none";
 	}
 	else if (TotalCheatsFound == 1)
 	{
@@ -468,6 +476,7 @@ function ShowHome()
 		document.getElementById("HomeGameOver_Win").style.display = "none";
 		document.getElementById("HomeGameOver_Fail").style.display = "none";
 		document.getElementById("HomeGameOver_Cheat").style.display = "block";
+		document.getElementById("NextExamBtn").style.display = "none";
 	}
 	// Summarize statistics
 	if (ShowStatistics == true)
@@ -664,7 +673,7 @@ function UpdateUpgradeList()
 			Div += "<div class=\"HomeUpgradesText\">" + GlobalUpgrades[i].Description + "</div>";
 			// Cheat warning
 			if (Upgrade.IsClassified(GlobalUpgrades[i].Id, "cheat")) {
-				Div += "<div class=\"HomeUpgradesCheatWarning\">You have 10% chance to be caught cheating!</div>";
+				Div += "<div class=\"HomeUpgradesCheatWarning\">You have a chance to be caught cheating!</div>";
 			}
 			Div += "</div>";
 			// Button
