@@ -691,7 +691,7 @@ function UpdateUpgradeList()
 			}
 			Div += "</div>";
 			// Button
-			Div += "<button id=\"UpgBtn_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesButton btn btn-primary\" onclick=\"BuyUpgrade_OnClick(this.id)\">Buy<span class=\"glyphicon glyphicon-shopping-cart\"></span></button>";
+			Div += "<button id=\"UpgBtn_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesButton btn btn-primary\" onclick=\"BuyUpgrade_OnClick(this.id)\"><span class=\"glyphicon glyphicon-shopping-cart\"></span> Buy</button>";
 			// Div closing tag
 			Div += "</div>"
 			document.getElementById("HomeUpgrades").innerHTML += Div;
