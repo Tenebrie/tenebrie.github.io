@@ -116,7 +116,7 @@ class Upgrade
 			// Special upgrades
 			if (Id == "cheat_extraLife") { TotalExamsFailed -= 1; }
 			if (Id == "cheat_twin") { NextExam_OnClick(); ExamPoints = GlobalLevels[CurrentExamOrdinal].Points[Math.round(Math.random() * 5)]; EndExam_OnClick(); }
-			if (Id == "time_travel") { CurrentExamOrdinal = 0; TotalExamsPassed = 0; TotalExamsFailed = 0; CheatFailChance = 0.00; }
+			if (Id == "time_travel") { Stats_TimeTravels += 1; CurrentExamOrdinal = 0; TotalExamsPassed = 0; TotalExamsFailed = 0; CheatFailChance = 0.00; }
 			// Resettable
 			if (Upgrade.IsClassified(Id, "repeatable")) { GlobalUpgrades[Index].Purchased = false; }
 			// Update
@@ -146,6 +146,7 @@ var Stats_TotalExams = 0;
 var Stats_TotalUpgrades = 0;
 var Stats_TotalCheats = 0;
 var Stats_TotalMoney = 0;
+var Stats_TimeTravels = 0;
 
 //=====================================================================
 // Initialization
@@ -501,6 +502,7 @@ function ShowHome()
 		document.getElementById("Stats_TotalUpgrades").innerHTML = Stats_TotalUpgrades;
 		document.getElementById("Stats_TotalCheats").innerHTML = Stats_TotalCheats;
 		document.getElementById("Stats_TotalMoney").innerHTML = Stats_TotalMoney;
+		document.getElementById("Stats_TimeTravels").innerHTML = Stats_TimeTravels;
 	}
 	// Update the UI
 	UpdateHome();
