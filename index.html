@@ -38,20 +38,19 @@
 			<div id="block_2"><center><font style="font-size: 30px;">Cheats or sth</font></center><hr class="custom"></div>
 			<div id="block_3"><center><font style="font-size: 30px;">Exam</font></center><hr class="custom">
 				<div id="ExamPoints">
-					<span id="ExamPointsLabel" style="font-size: 25px">Points:</span>
+					<br><br><span id="ExamPointsLabel" style="font-size: 25px">Points:</span>
 					<span id="ExamPointsCurrent">???</span>
 					<span id="ExamPointsSeparator">/</span>
 					<span id="ExamPointsMax">???</span>
-					<br/>
+					<br/><br>
 				</div>
 				<div id="ExamGrade">
 					<span id="ExamGradeLabel" style="font-size: 25px;">Grade:</span>
 					<span id="ExamGradeValue" style="font-size: 25px;">?</span>
-				</div>
-				<table>
-					<tr><th><button id="ExamWorkHard" onclick="WorkHard_OnClick()">Work Hard<br><progress id="ExamWorkProgress" max="1000" value="1000"></progress></button></th></tr>
-					<tr><th><button id="ExamEndButton" onclick="EndExam_OnClick()">Finish Exam<hr><span id="ExamTimeProgress"></span></button></th></tr>
-				</table>
+				</div><br><br>
+				<button id="ExamWorkHard" onclick="WorkHard_OnClick()"><div id="ExamProgressText"><b>Work Hard</b></div><br><progress id="ExamWorkProgress" max="1000" value="1000"></progress></button>
+				<br><br><br><button id="ExamEndButton" onclick="EndExam_OnClick()">Finish Exam<hr><span id="ExamTimeProgress"></span></button>
+				
 			</div>
 		</div>
 		
@@ -72,8 +71,8 @@
 					<div id="HomeExamsPassed"></div>
 					<div id="HomeExamsFailed"></div><br>
 					<div style="display: inline-block;">
-					<button align="left" class="custom">Reset</button>
-					<button class="custom" onclick="NextExam_OnClick()">Next Exam</button>
+					<button align="left" class="custom" style="margin-right: 40px; padding-left: 50px; padding-right: 50px;">Reset</button>
+				or	<button class="custom" style="margin-left: 40px;" onclick="NextExam_OnClick()">Next Exam</button>
 					</div>
 				</div>
 			</div>
