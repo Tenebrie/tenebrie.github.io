@@ -502,8 +502,8 @@ function WorkHard_Timer()
 {
 	var TimerId = window.setInterval(WorkHard_OnProgressUpdate, 20);
 	var Timestamp = new Date();
-	var Value = 100;
-	var MaxValue = 100;
+	var Value = 1000;
+	var MaxValue = 1000;
 
 	function WorkHard_OnProgressUpdate()
 	{
@@ -525,12 +525,24 @@ function WorkHard_Timer()
 		}
 		var Progress = document.getElementById("ExamWorkProgress");
 		if (Progress != null) {
+			// Normal
 			Progress.max = MaxValue;
 			Progress.value = Value;
 		}
 		else {
+			// Bootstrap
 			var Progress = document.getElementById("ExamWorkProgressNew");
-			Progress.setAttribute("aria-valuenow", Value);
+			Progress.style.animation = '2s linear 0s normal none infinite progress-bar-stripes';
+			if (Value == 0) {
+				Progress.style.transition = '0s';
+				Progress.style.width = '0%';
+			}
+			else {
+				var TimeNeeded = 1 / GetWorkHardTimeModifier();
+				Progress.style.transition = TimeNeeded + 's';
+				Progress.style.width = '100%';
+			}
+			//Progress.style.width = (Value / 10) + '%';
 		}
 	}
 }
