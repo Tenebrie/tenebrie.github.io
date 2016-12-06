@@ -682,7 +682,7 @@ function UpdateUpgradeList()
 			// Upgrade name
 			Div += "<div><div>" + GlobalUpgrades[i].Name + "</div>";
 			// Upgrade cost
-			Div += "<p>Cost: " + GlobalUpgrades[i].Cost + "</p>";
+			Div += "<p>Cost: " + GlobalUpgrades[i].Cost + " <span class=\"glyphicon glyphicon-briefcase\"></span></p>";
 			// Upgrade description
 			Div += "<p class=\"HomeUpgradesText\">" + GlobalUpgrades[i].Description + "</p>";
 			// Cheat warning
