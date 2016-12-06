@@ -13,8 +13,9 @@ class Level
 		this.Points = [0, 0, 0, 0, 0];
 		for (var i = 0; i < 5; i += 1)
 		{
-			this.Points[i] = PointsHalfValue + PointsIncrement * i + 1;
+			this.Points[i] = PointsHalfValue + PointsIncrement * i;
 		}
+		this.Points[4] += 1;
 	}
 }
 
@@ -152,39 +153,43 @@ function Initialization()
 	// You can change the names here if you wish, but be careful with formatting.
 	var LevelNames =
 	[
-		"Programming fundamentals exam",
-		"Mathematics exam",
-		"Electronics and digits exam",
-		"Biology exam",
-		"Business fundamentals exam",
-		"World History exam",
-		"Physics exam",
-		"Computer networks exam",
-		"ICT professional skills exam",
-		"Insta-finishnish exam",
-		"Law exam",
-		"Hardware and Software exam",
-		"Engineering exam",
-		"Music Theory exam",
-		"Psychology exam",
-		"Microeconomics exam",
-		"Geography exam",
-		"Chemistry exam",
-		"European History exam",
-		"Art exam",
-		"Environmental Science exam",
-		"Studio Art Drawing exam",
-		"Information Systems exam",
-		"Principles of Marketing exam",
-		"Principles of Management exam",
-		"Human Growth exam",
-		"English literature exam",
-		"Finnish literature exam",
-		"Architecture exam",
-		"Computer Science exam",
-		"Windows Administration Fundamentals exam",
-		"Linux+ exam",
-		"Impossible exam",
+		"Admission Exam || August, Year 1",
+		"Orientation Week Exam || September, Year 1",
+		"Teachers' Names Exam || October, Year 1",
+		"Basics of Clicking Exam || November, Year 1",
+		"Christmas Celebration Exam || December, Year 1",
+		"Timetable Fundamentals Exam || January, Year 1",
+		"Advanced Clicking Exam || February, Year 1",
+		"Clicking on Linux Exam || March, Year 1",
+		"Clicking the Kernel Exam || April, Year 1",
+		"First Year Comprehensive Exam || May, Year 1",
+		"Summer Holiday Exam || September, Year 2",
+		"Teachers' Family Names Exam || October, Year 2",
+		"Psychology of the Click Exam || November, Year 2",
+		"Advanced Christmas Exam || December, Year 2",
+		"Professional Clicking Exam || January, Year 2",
+		"Time Management Exam || February, Year 2",
+		"History of Clicking Exam || March, Year 2",
+		"Clicker Heroes Practice Exam || April, Year 2",
+		"Second Year Comprehensive Exam || May, Year 2",
+		"Mouse Structure Exam || September, Year 3",
+		"Gamepad Clicking Exam || October, Year 3",
+		"Theory of Inspiration Exam || November, Year 3",
+		"Basics of Cheating Exam || December, Year 3",
+		"Determination Exam || January, Year 3",
+		"Clicker Game Design Exam || February, Year 3",
+		"Clicker Game Programming Exam || March, Year 3",
+		"Clicker Game Gaming Exam || April, Year 3",
+		"What Am I Doing With My Life Exam || May, Year 3",
+		"Basics of Clicker Thesis || September, Year 4",
+		"Advanced Cheating Exam || October, Year 4",
+		"Cheat Management Exam || November, Year 4",
+		"Time Travel Exam || December, Year 4",
+		" || January, Year 4",
+		" || February, Year 4",
+		"Preliminary Comprehensive Clicking Exam || March, Year 4",
+		"Final Comprehensive Clicking Exam || April, Year 4",
+		"Thesis Seminar || May, Year 4",
 	];
 	// Points setup
 	var StartValue = 10;
@@ -220,6 +225,7 @@ function Initialization()
 	GlobalUpgrades.push(new Upgrade("time01", "Alarm Clock", "You get slightly more time for an exam.", 1, null, ""));
 	GlobalUpgrades.push(new Upgrade("time02", "Redundant Alarm Clocks", "You get even more time for an exam.", 3, "time01", ""));
 	GlobalUpgrades.push(new Upgrade("time03", "Overclocked Alarm Clock", "You get all the time in the world for an exam.", 5, "time02", ""));
+	GlobalUpgrades.push(new Upgrade("time_travel", "Time Travel Machine", "You get all the time in the world for an exam.", 10, "time03", ""));
 	GlobalUpgrades.push(new Upgrade("speed_jacobs", "Time Management, Jacobs course", "Fires as fast as you can pull down the trigger.", 7, "speed04", ""));
 	GlobalUpgrades.push(new Upgrade("crit", "Sudden Inspiration", "You have a 5% chance to get inspired and double your points for a click.", 3, "click01", ""));
 	GlobalUpgrades.push(new Upgrade("crit_damage01", "Massive Inspiration, Level 1", "Inspiration now gives you 2.5x points.", 3, "crit", ""));
@@ -496,25 +502,35 @@ function WorkHard_Timer()
 {
 	var TimerId = window.setInterval(WorkHard_OnProgressUpdate, 20);
 	var Timestamp = new Date();
+	var Value = 100;
+	var MaxValue = 100;
 
 	function WorkHard_OnProgressUpdate()
 	{
-		var Progress = document.getElementById("ExamWorkProgress");
-		if (Progress.value >= Progress.max)
+		if (Value >= MaxValue)
 		{
-			Progress.value = 0;
+			Value = 0;
 		}
 		else
 		{
 			var NewTimestamp = new Date();
-			Progress.value += (NewTimestamp - Timestamp) * GetWorkHardTimeModifier();
+			Value += (NewTimestamp - Timestamp) * GetWorkHardTimeModifier();
 			Timestamp = NewTimestamp;
-			if (Progress.value >= Progress.max)
+			if (Value >= MaxValue)
 			{
 				window.clearInterval(TimerId);
 				document.getElementById("ExamWorkHard").disabled = false;
 				WorkHard_TimerEnd();
 			}
+		}
+		var Progress = document.getElementById("ExamWorkProgress");
+		if (Progress != null) {
+			Progress.max = MaxValue;
+			Progress.value = Value;
+		}
+		else {
+			var Progress = document.getElementById("ExamWorkProgressNew");
+			Progress.aria-valuenow = Value;
 		}
 	}
 }
