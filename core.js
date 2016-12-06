@@ -113,6 +113,7 @@ class Upgrade
 			// Special upgrades
 			if (Id == "cheat_extraLife") { TotalExamsFailed -= 1; }
 			if (Id == "cheat_twin") { NextExam_OnClick(); ExamPoints = GlobalLevels[CurrentExamOrdinal].Points[Math.round(Math.random() * 5)]; EndExam_OnClick(); }
+			if (Id == "time_travel") { CurrentExamOrdinal = 0; TotalExamsPassed = 0; TotalExamsFailed = 0; }
 			// Resettable
 			if (Upgrade.IsClassified(Id, "repeatable")) { GlobalUpgrades[Index].Purchased = false; }
 			// Update
@@ -131,12 +132,13 @@ var TotalCheatsFound = 0;
 var GlobalLevels = [];
 var GlobalUpgrades = [];
 var ExamPoints = 0;
-var CurrencyUnits = 0;
+var CurrencyUnits = 100;
 var LastExamPassed = true;
 var DebugMode = false;
 
 var Stats_Timestamp = 0;
 var Stats_TotalClicks = 0;
+var Stats_TotalExams = 0;
 var Stats_TotalUpgrades = 0;
 var Stats_TotalCheats = 0;
 var Stats_TotalMoney = 0;
@@ -225,7 +227,7 @@ function Initialization()
 	GlobalUpgrades.push(new Upgrade("time01", "Alarm Clock", "You get slightly more time for an exam.", 1, null, ""));
 	GlobalUpgrades.push(new Upgrade("time02", "Redundant Alarm Clocks", "You get even more time for an exam.", 3, "time01", ""));
 	GlobalUpgrades.push(new Upgrade("time03", "Overclocked Alarm Clock", "You get all the time in the world for an exam.", 5, "time02", ""));
-	GlobalUpgrades.push(new Upgrade("time_travel", "Time Travel Machine", "You get all the time in the world for an exam.", 10, "time03", ""));
+	GlobalUpgrades.push(new Upgrade("time_travel", "Time Travel Machine", "You return to the first exam with all your knowledge!", 5, "time03", "consumable"));
 	GlobalUpgrades.push(new Upgrade("speed_jacobs", "Time Management, Jacobs course", "Fires as fast as you can pull down the trigger.", 7, "speed04", ""));
 	GlobalUpgrades.push(new Upgrade("crit", "Sudden Inspiration", "You have a 5% chance to get inspired and double your points for a click.", 3, "click01", ""));
 	GlobalUpgrades.push(new Upgrade("crit_damage01", "Massive Inspiration, Level 1", "Inspiration now gives you 2.5x points.", 3, "crit", ""));
@@ -303,6 +305,7 @@ function EndExam_OnClick()
 {
 	// Update the stats
 	var Grade = GetCurrentExamGrade();
+	Stats_TotalExams += 1;
 	if (Grade == 0 && DebugMode == false) {
 		LastExamPassed = false;
 		TotalExamsFailed += 1;
@@ -473,7 +476,7 @@ function ShowHome()
 		var Stats_TimeTaken = (Timestamp - Stats_Timestamp) / 1000;
 		document.getElementById("Stats_TimeTaken").innerHTML = Stats_TimeTaken + " seconds";
 		document.getElementById("Stats_TotalClicks").innerHTML = Stats_TotalClicks;
-		document.getElementById("Stats_TotalExams").innerHTML = TotalExamsPassed + TotalExamsFailed;
+		document.getElementById("Stats_TotalExams").innerHTML = Stats_TotalExams;
 		document.getElementById("Stats_TotalUpgrades").innerHTML = Stats_TotalUpgrades;
 		document.getElementById("Stats_TotalCheats").innerHTML = Stats_TotalCheats;
 		document.getElementById("Stats_TotalMoney").innerHTML = Stats_TotalMoney;
@@ -643,7 +646,7 @@ function UpdateUpgradeList()
 		if (Upgrade.IsVisible(GlobalUpgrades[i].Id))
 		{
 			// Div tag
-			Div = "<div id=\"Upg_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesFloater\">";
+			Div = "<div id=\"Upg_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesFloater\" class=\"Well\">";
 			// Upgrade name
 			Div += "<div><div>" + GlobalUpgrades[i].Name + "</div>";
 			// Upgrade cost
@@ -656,7 +659,7 @@ function UpdateUpgradeList()
 			}
 			Div += "</div>";
 			// Button
-			Div += "<button id=\"UpgBtn_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesButton\" onclick=\"BuyUpgrade_OnClick(this.id)\">Buy</button>";
+			Div += "<button id=\"UpgBtn_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesButton\" class=\"btn\" onclick=\"BuyUpgrade_OnClick(this.id)\">Buy</button>";
 			// Div closing tag
 			Div += "</div>"
 			document.getElementById("HomeUpgrades").innerHTML += Div;
