@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body onload="Initialization()">
-		<div id="Title" class="container">
+		<div id="Title" class="container biggestFont">
 			<div class="col-md-12">
 				<img id="logo" class="img-responsive center-block" src="../Pictures/idlelogo.png">
 			</div>
@@ -88,16 +88,20 @@
 			</table>
 		</div>
 		<div id="Home" class="container">
-			<div class="page-header">
-				<p id="HomeExamStatus" class="biggerFont"></p>
-				<p id="HomeExamsPassed" class="biggerFont"></p>
-				<p id="HomeExamsFailed" class="biggerFont"></p>
+			<div class="container page-header">
+				<div class="col-md-6">
+					<p id="HomeExamStatus" class="biggerFont"></p>
+					<p id="HomeExamsPassed" class="biggerFont"></p>
+					<p id="HomeExamsFailed" class="biggerFont"></p>
+				</div>
+				<div class="col-md-6 text-right">
+					<button class="btn btn-lg btn-success" onclick="NextExam_OnClick()">Next Exam</button>
+				</div>
 			</div>
 			<div id="HomeContinue" class="container">
 				<div id="HomeUpgradesLabel">Upgrades:</div>
 				<div id="HomeCurrencyUnits"></div>
 				<div id="HomeUpgrades"></div>
-				<button class="btn btn-lg btn-success" onclick="NextExam_OnClick()">Next Exam</button>
 			</div>
 			<div id="HomeGameOver" class="container">
 				<div id="HomeGameOver_Win">You Win!</div>
