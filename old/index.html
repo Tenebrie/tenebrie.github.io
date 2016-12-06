@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="core.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body onload="Initialization()">
+	<div class="block_1">
+
+		<div id="Title">
+			<div id="TitleLetter"><img id="img_logo" src="Pictures/logo.jpg">
+				<p>Dear Mr Gamer,</p>
+				<p>We are pleased to inform you that you have a place at Clicker University. 
+				After reviewing your application and all the supporting documents, we have 
+				determinated that you are exactly that kind of gamer that we are looking for to 
+				carry on at Clicker University. It is a great honor for us to have your participation on the matter.</p>
+				<p>Once again, congratulations. Get your computer ready and start to clicking!</p>
+				<p>Sincerely,</p>
+				<img src="Pictures/signature.jpg" width=147px>
+				<p>Clicker University Admissions</p>
+			</div>
+			<button id="TitleStartButton" onclick="StartGame_OnClick()">Start Game</button>
+		</div>
+		<div id="Exam">
+			<div id="block_100_1">
+				<center><br><span id="ExamName">Unnamed exam</span>
+				<span id="ExamNumber">???</span><br><br></center>
+				
+			</div>
+			<div id="block_2"><center><font style="font-size: 30px;">Cheats or sth</font></center><hr class="custom"></div>
+			<div id="block_3"><center><font style="font-size: 30px;">Exam</font></center><hr class="custom">
+				<div id="ExamPoints">
+					<br><br><span id="ExamPointsLabel" style="font-size: 25px">Points:</span>
+					<span id="ExamPointsCurrent">???</span>
+					<span id="ExamPointsSeparator">/</span>
+					<span id="ExamPointsMax">???</span>
+					<br/><br>
+				</div>
+				<div id="ExamGrade">
+					<span id="ExamGradeLabel" style="font-size: 25px;">Grade:</span>
+					<span id="ExamGradeValue" style="font-size: 25px;">?</span>
+				</div><br><br>
+				<button id="ExamWorkHard" onclick="WorkHard_OnClick()"><div id="ExamProgressText"><b>Work Hard</b></div><br><progress id="ExamWorkProgress" max="1000" value="1000"></progress></button>
+				<br><br><br><button id="ExamEndButton" onclick="EndExam_OnClick()">Finish Exam<hr><span id="ExamTimeProgress"></span></button>
+				
+			</div>
+		</div>
+		
+		<div id="Home">
+	
+			
+			<div id="HomeContinue">
+					<div id="block_100_1">
+				<br><div id="HomeCurrencyUnits"></div><br>
+			</div>
+				<div id="block_2">
+					<div id="HomeUpgradesLabel"><center><font style="font-size: 30px;">Upgrades</font></center></div><hr class="custom">
+					<div id="HomeUpgrades"></div>
+				</div>
+				<div id="block_3">
+					<center><font style="font-size: 30px;">Exam</font></center><hr class="custom">
+					<br><br><Br>
+					<div id="HomeExamStatus"></div><br>
+					<div id="HomeExamsPassed"></div>
+					<div id="HomeExamsFailed"></div><br>
+					<div style="display: inline-block;">
+					<button align="left" class="custom" style="margin-right: 40px; padding-left: 50px; padding-right: 50px;">Reset</button>
+				or	<button class="custom" style="margin-left: 40px;" onclick="NextExam_OnClick()">Next Exam</button>
+					</div>
+				</div>
+			</div>
+			<div id="HomeGameOver">
+			<br><br>
+			<div id="block_100_1">
+				<div id="HomeGameOver_Win"><img class="image3"><br><br>Refresh the page to re-sent your application!</div>
+				<div id="HomeGameOver_Fail" style="font-size: 25px;">You have <span style="color: red;">failed</span> too many exams and have been expelled from the university! <br>Refresh the page to re-enroll.</div>
+				<div id="HomeGameOver_Cheat">You have been caught <span style="color: red;">cheating</span> and have been expelled from the university! Refresh the page to re-enroll.</div>
+				<br><br><div id="HomeGameOverStatistics">
+					Time taken: <span id="Stats_TimeTaken"></span><br>
+					Total clicks: <span id="Stats_TotalClicks"></span><br>
+					Exams played: <span id="Stats_TotalExams"></span><br>
+					Upgrades purchased: <span id="Stats_TotalUpgrades"></span><br>
+					Cheats used: <span id="Stats_TotalCheats"></span><br>
+					Money accumulated: <span id="Stats_TotalMoney"></span>
+				</div>
+			</div>
+			</div>
+		</div>
+		
+		</div>
+	</body>
+</html>
