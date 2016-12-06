@@ -39,6 +39,7 @@
 			</div>
 		</div>
 		<div id="Exam" class="container">
+			<span id="ExamTimeProgress"></span>
 			<span id="ExamName">Unnamed exam</span>
 			<span id="ExamNumber">???</span>
 			<div id="ExamPoints">
@@ -52,9 +53,21 @@
 				<span id="ExamGradeLabel">Grade:</span>
 				<span id="ExamGradeValue">?</span>
 			</div>
-			<table>
-				<tr><th><button id="ExamWorkHard" onclick="WorkHard_OnClick()">Work Hard<br><progress id="ExamWorkProgress" max="1000" value="1000"></progress></button></th></tr>
-				<tr><th><button id="ExamEndButton" onclick="EndExam_OnClick()">Finish Exam<hr><span id="ExamTimeProgress"></span></button></th></tr>
+			<div class="col-md-12">
+				<button id="ExamWorkHard" class="btn btn-primary" onclick="WorkHard_OnClick()">
+					Work Hard
+					<span class="glyphicon glyphicon-plus"></span>
+				</button>
+			</div>
+			<div class="col-md-12">
+				<progress id="ExamWorkProgress" max="1000" value="1000"></progress>
+			</div>
+			<div class="col-md-12">
+				<button id="ExamEndButton" class="btn btn-danger" onclick="EndExam_OnClick()">
+					Finish Exam
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+				</button>
+			</div>
 			</table>
 		</div>
 		<div id="Home" class="container">
