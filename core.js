@@ -187,8 +187,8 @@ function Initialization()
 		"Advanced Cheating Exam || October, Year 4",
 		"Cheat Management Exam || November, Year 4",
 		"Time Travel Exam || December, Year 4",
-		" || January, Year 4",
-		" || February, Year 4",
+		"Thesis Fundamentals Exam || January, Year 4",
+		"Classmates' Names Exam || February, Year 4",
 		"Preliminary Comprehensive Clicking Exam || March, Year 4",
 		"Final Comprehensive Clicking Exam || April, Year 4",
 		"Thesis Seminar || May, Year 4",
@@ -333,7 +333,7 @@ function NextExam_OnClick()
 	{
 		Exam_Timer();
 		ExamPoints = 0;
-		if (LastExamPassed == true) {
+		if (LastExamPassed == true && Upgrade.IsPurchased("time_travel") == false) {
 			CurrentExamOrdinal += 1;
 		}
 		// Use consumables
@@ -615,7 +615,17 @@ function UpdateExamPoints()
 
 function UpdateExamOrdinal()
 {
-	document.getElementById("ExamName").innerHTML = GlobalLevels[CurrentExamOrdinal].Name;
+	if (document.getElementById("ExamDate") == null) {
+		// Normal
+		document.getElementById("ExamName").innerHTML = GlobalLevels[CurrentExamOrdinal].Name;
+	}
+	else {
+		// Bootstrap
+		var ExamName = GlobalLevels[CurrentExamOrdinal].Name.substring(0, GlobalLevels[CurrentExamOrdinal].Name.indexOf("||") - 1);
+		var ExamDate = GlobalLevels[CurrentExamOrdinal].Name.substring(GlobalLevels[CurrentExamOrdinal].Name.indexOf("||") + 3);
+		document.getElementById("ExamName").innerHTML = ExamName;
+		document.getElementById("ExamDate").innerHTML = ExamDate;
+	}
 }
 
 function UpdateHome()
@@ -623,7 +633,8 @@ function UpdateHome()
 	var Grade = GetCurrentExamGrade();
 	// Determine the outcome message
 	var ExamStatus;
-	if (Grade == 0 && DebugMode == false) { ExamStatus = "<span class='exam_failed'>You have failed the exam!</span>"; }
+	if (Upgrade.IsPurchased("time_travel")) { ExamStatus = "<span class='exam_success'>Welcome to the Clicker University!</span>"; }
+	else if (Grade == 0 && DebugMode == false) { ExamStatus = "<span class='exam_failed'>You have failed the exam!</span>"; }
 	else if (Grade == 0 && DebugMode == true) { ExamStatus = "<span class='exam_failed'>You have failed the exam! But it's debug mode so it's all k.</span>"; }
 	else { ExamStatus = "<span class='exam_success'>Congratulations! <br>You have passed the exam with grade " + Grade; + "</span>"}
 	// Update elements
