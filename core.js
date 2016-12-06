@@ -162,6 +162,8 @@ var Stats_TotalUpgrades = 0;
 var Stats_TotalCheats = 0;
 var Stats_TotalMoney = 0;
 var Stats_TimeTravels = 0;
+var Stats_GPAValue = 0;
+var Stats_GPACount = 0;
 
 //=====================================================================
 // Initialization
@@ -362,6 +364,8 @@ function EndExam_OnClick()
 {
 	// Update the stats
 	var Grade = GetCurrentExamGrade();
+	Stats_GPACount += 1;
+	Stats_GPAValue += Grade;
 	Stats_TotalExams += 1;
 	if (Grade == 0 && DebugMode == false) {
 		LastExamPassed = false;
@@ -624,6 +628,11 @@ function ShowHome()
 		document.getElementById("Stats_TotalCheats").innerHTML = Stats_TotalCheats;
 		document.getElementById("Stats_TotalMoney").innerHTML = Stats_TotalMoney;
 		document.getElementById("Stats_TimeTravels").innerHTML = Stats_TimeTravels;
+		var GPA = "N/A";
+		if (Stats_GPACount > 0) {
+			GPA = Math.round((Stats_GPAValue / Stats_GPACount) * 10) / 10;
+		}
+		document.getElementById("Stats_GPA").innerHTML = GPA;
 	}
 	// Update the UI
 	UpdateHome();
