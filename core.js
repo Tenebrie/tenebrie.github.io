@@ -662,7 +662,7 @@ function UpdateHome()
 	else { ExamStatus = "<span class='exam_success'>Congratulations! <br>You have passed the exam with grade " + Grade; + "</span>"}
 	// Update elements
 	document.getElementById("HomeExamStatus").innerHTML = ExamStatus;
-	document.getElementById("HomeCurrencyUnits").innerHTML = "- Your (up)grade money: " + CurrencyUnits;
+	document.getElementById("HomeCurrencyUnits").innerHTML = "Upgrade money: " + CurrencyUnits;
 	document.getElementById("HomeExamsPassed").innerHTML = "- Exams passed: " + TotalExamsPassed;
 	document.getElementById("HomeExamsFailed").innerHTML = "- Exams failed: " + TotalExamsFailed + " / 3";
 	// Update upgrade list
