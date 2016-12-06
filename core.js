@@ -223,37 +223,37 @@ function Initialization()
 	// Note: If you wish to change the priority in the upgrade list, change the order here (move the whole string up or down).
 	// GlobalUpgrades.push(new Upgrade(id, DisplayedName, Description, Cost, ParentId, Classification))
 	GlobalUpgrades.push(new Upgrade("click01", "Enthusiasm", "Each click now gives you 2 points.", 3, null, ""));
-	GlobalUpgrades.push(new Upgrade("click02", "Courage", "Each click now gives you 3 points.", 3, "click01", ""));
-	GlobalUpgrades.push(new Upgrade("click03", "Persistence", "Each click now gives you 4 points.", 4, "click02", ""));
-	GlobalUpgrades.push(new Upgrade("click04", "Dedication", "Each click now gives you 5 points.", 4, "click03", ""));
+	GlobalUpgrades.push(new Upgrade("click02", "Courage", "Each click now gives you 3 points.", 4, "click01", ""));
+	GlobalUpgrades.push(new Upgrade("click03", "Persistence", "Each click now gives you 4 points.", 5, "click02", ""));
+	GlobalUpgrades.push(new Upgrade("click04", "Dedication", "Each click now gives you 5 points.", 6, "click03", ""));
 	GlobalUpgrades.push(new Upgrade("click05", "Determination", "Each click now gives you 10 points.", 7, "click04", ""));
 	GlobalUpgrades.push(new Upgrade("speed01", "Time Management, Introductory course", "Your clicks are now 50% faster.", 3, null, ""));
-	GlobalUpgrades.push(new Upgrade("speed02", "Time Management, Advanced course", "Your clicks are now 2 times faster.", 3, "speed01", ""));
-	GlobalUpgrades.push(new Upgrade("speed03", "Time Management, Professional course", "Your clicks are now 3 times faster.", 3, "speed02", ""));
-	GlobalUpgrades.push(new Upgrade("speed04", "Time Management, Scientific course", "Your clicks are now 4 times faster.", 3, "speed03", ""));
+	GlobalUpgrades.push(new Upgrade("speed02", "Time Management, Advanced course", "Your clicks are now 2 times faster.", 4, "speed01", ""));
+	GlobalUpgrades.push(new Upgrade("speed03", "Time Management, Professional course", "Your clicks are now 3 times faster.", 5, "speed02", ""));
+	GlobalUpgrades.push(new Upgrade("speed04", "Time Management, Scientific course", "Your clicks are now 4 times faster.", 6, "speed03", ""));
 	GlobalUpgrades.push(new Upgrade("time01", "Alarm Clock", "You get slightly more time for an exam.", 1, null, ""));
-	GlobalUpgrades.push(new Upgrade("time02", "Redundant Alarm Clocks", "You get even more time for an exam.", 3, "time01", ""));
-	GlobalUpgrades.push(new Upgrade("time03", "Overclocked Alarm Clock", "You get all the time in the world for an exam.", 5, "time02", ""));
-	GlobalUpgrades.push(new Upgrade("time_travel", "Time Travel Machine", "You return to the first exam with all your knowledge!", 5, "time03", "consumable"));
+	GlobalUpgrades.push(new Upgrade("time02", "Redundant Alarm Clocks", "You get even more time for an exam.", 2, "time01", ""));
+	GlobalUpgrades.push(new Upgrade("time03", "Overclocked Alarm Clock", "You get all the time in the world for an exam.", 3, "time02", ""));
+	GlobalUpgrades.push(new Upgrade("time_travel", "Time Travel Machine", "You return to the first exam with all your knowledge!", 5, "time03", "consumable&reset"));
 	GlobalUpgrades.push(new Upgrade("speed_jacobs", "Time Management, Jacobs course", "Fires as fast as you can pull down the trigger.", 7, "speed04", ""));
 	GlobalUpgrades.push(new Upgrade("crit", "Sudden Inspiration", "You have a 5% chance to get inspired and double your points for a click.", 3, "click01", ""));
 	GlobalUpgrades.push(new Upgrade("crit_damage01", "Massive Inspiration, Level 1", "Inspiration now gives you 2.5x points.", 3, "crit", ""));
 	GlobalUpgrades.push(new Upgrade("crit_damage02", "Massive Inspiration, Level 2", "Inspiration now gives you 3.0x points.", 3, "crit_damage01", ""));
 	GlobalUpgrades.push(new Upgrade("crit_damage03", "Massive Inspiration, Level 3", "Inspiration now gives you 3.5x points.", 3, "crit_damage02", ""));
-	GlobalUpgrades.push(new Upgrade("crit_damage04", "Massive Inspiration, Level 4", "Inspiration now gives you 4.0x points.", 3, "crit_damage03", ""));
-	GlobalUpgrades.push(new Upgrade("crit_damage05", "Massive Inspiration, Level 5", "Inspiration now gives you 4.5x points.", 3, "crit_damage04", ""));
-	GlobalUpgrades.push(new Upgrade("crit_damage06", "Massive Inspiration, Level 6", "Inspiration now gives you 5.0x points.", 3, "crit_damage05", ""));
-	GlobalUpgrades.push(new Upgrade("crit_damage07", "Massive Inspiration, Level 7", "Inspiration now gives you 5.5x points.", 3, "crit_damage06", ""));
-	GlobalUpgrades.push(new Upgrade("crit_damage08", "Massive Inspiration, Level 8", "Inspiration now gives you 6.0x points.", 3, "crit_damage07", ""));
+	GlobalUpgrades.push(new Upgrade("crit_damage04", "Massive Inspiration, Level 4", "Inspiration now gives you 4.0x points.", 4, "crit_damage03", ""));
+	GlobalUpgrades.push(new Upgrade("crit_damage05", "Massive Inspiration, Level 5", "Inspiration now gives you 4.5x points.", 4, "crit_damage04", ""));
+	GlobalUpgrades.push(new Upgrade("crit_damage06", "Massive Inspiration, Level 6", "Inspiration now gives you 5.0x points.", 4, "crit_damage05", ""));
+	GlobalUpgrades.push(new Upgrade("crit_damage07", "Massive Inspiration, Level 7", "Inspiration now gives you 5.5x points.", 5, "crit_damage06", ""));
+	GlobalUpgrades.push(new Upgrade("crit_damage08", "Massive Inspiration, Level 8", "Inspiration now gives you 6.0x points.", 5, "crit_damage07", ""));
 	GlobalUpgrades.push(new Upgrade("crit_chance01", "Reliable Inspiration, Level 1", "Inspiration now has 10% chance to occur.", 3, "crit", ""));
 	GlobalUpgrades.push(new Upgrade("crit_chance02", "Reliable Inspiration, Level 2", "Inspiration now has 15% chance to occur.", 3, "crit_chance01", ""));
 	GlobalUpgrades.push(new Upgrade("crit_chance03", "Reliable Inspiration, Level 3", "Inspiration now has 20% chance to occur.", 3, "crit_chance02", ""));
-	GlobalUpgrades.push(new Upgrade("crit_chance04", "Reliable Inspiration, Level 4", "Inspiration now has 25% chance to occur.", 3, "crit_chance03", ""));
-	GlobalUpgrades.push(new Upgrade("crit_chance05", "Reliable Inspiration, Level 5", "Inspiration now has 30% chance to occur.", 3, "crit_chance04", ""));
-	GlobalUpgrades.push(new Upgrade("crit_chance06", "Reliable Inspiration, Level 6", "Inspiration now has 35% chance to occur.", 3, "crit_chance05", ""));
-	GlobalUpgrades.push(new Upgrade("crit_chance07", "Reliable Inspiration, Level 7", "Inspiration now has 40% chance to occur.", 3, "crit_chance06", ""));
-	GlobalUpgrades.push(new Upgrade("crit_chance08", "Reliable Inspiration, Level 8", "Inspiration now has 45% chance to occur.", 3, "crit_chance07", ""));
-	GlobalUpgrades.push(new Upgrade("crit_chance09", "Reliable Inspiration, Level 9", "Inspiration now has 50% chance to occur.", 3, "crit_chance08", ""));
+	GlobalUpgrades.push(new Upgrade("crit_chance04", "Reliable Inspiration, Level 4", "Inspiration now has 25% chance to occur.", 4, "crit_chance03", ""));
+	GlobalUpgrades.push(new Upgrade("crit_chance05", "Reliable Inspiration, Level 5", "Inspiration now has 30% chance to occur.", 4, "crit_chance04", ""));
+	GlobalUpgrades.push(new Upgrade("crit_chance06", "Reliable Inspiration, Level 6", "Inspiration now has 35% chance to occur.", 4, "crit_chance05", ""));
+	GlobalUpgrades.push(new Upgrade("crit_chance07", "Reliable Inspiration, Level 7", "Inspiration now has 40% chance to occur.", 5, "crit_chance06", ""));
+	GlobalUpgrades.push(new Upgrade("crit_chance08", "Reliable Inspiration, Level 8", "Inspiration now has 45% chance to occur.", 5, "crit_chance07", ""));
+	GlobalUpgrades.push(new Upgrade("crit_chance09", "Reliable Inspiration, Level 9", "Inspiration now has 50% chance to occur.", 5, "crit_chance08", ""));
 	GlobalUpgrades.push(new Upgrade("cheat_base", "Cheating", "Unlock the cheats. Be careful with those though.", 3, null, ""));
 	GlobalUpgrades.push(new Upgrade("cheat_extraLife", "Extra Life", "Let's pretend that one failed exam didn't happen, ok?", 1, "cheat_base", "cheat&repeatable"));
 	GlobalUpgrades.push(new Upgrade("cheat_twin", "Find a Twin", "You ask your twin to come to the next exam instead of you.", 2, "cheat_base", "cheat&repeatable"));
@@ -688,6 +688,10 @@ function UpdateUpgradeList()
 			// Cheat warning
 			if (Upgrade.IsClassified(GlobalUpgrades[i].Id, "cheat")) {
 				Div += "<p class=\"HomeUpgradesCheatWarning\">You have a chance to be caught cheating!</p>";
+			}
+			// Reset warning
+			if (Upgrade.IsClassified(GlobalUpgrades[i].Id, "reset")) {
+				Div += "<p class=\"HomeUpgradesCheatWarning\">This will reset your progress, but keep your upgrades and currency.</p>";
 			}
 			Div += "</div>";
 			// Button
