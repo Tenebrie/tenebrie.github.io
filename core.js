@@ -224,8 +224,8 @@ function Initialization()
 	// GlobalUpgrades.push(new Upgrade(id, DisplayedName, Description, Cost, ParentId, Classification))
 	GlobalUpgrades.push(new Upgrade("click01", "Enthusiasm", "Each click now gives you 2 points.", 3, null, ""));
 	GlobalUpgrades.push(new Upgrade("click02", "Courage", "Each click now gives you 3 points.", 3, "click01", ""));
-	GlobalUpgrades.push(new Upgrade("click03", "Persistence", "Each click now gives you 4 points.", 3, "click02", ""));
-	GlobalUpgrades.push(new Upgrade("click04", "Dedication", "Each click now gives you 5 points.", 3, "click03", ""));
+	GlobalUpgrades.push(new Upgrade("click03", "Persistence", "Each click now gives you 4 points.", 4, "click02", ""));
+	GlobalUpgrades.push(new Upgrade("click04", "Dedication", "Each click now gives you 5 points.", 4, "click03", ""));
 	GlobalUpgrades.push(new Upgrade("click05", "Determination", "Each click now gives you 10 points.", 7, "click04", ""));
 	GlobalUpgrades.push(new Upgrade("speed01", "Time Management, Introductory course", "Your clicks are now 50% faster.", 3, null, ""));
 	GlobalUpgrades.push(new Upgrade("speed02", "Time Management, Advanced course", "Your clicks are now 2 times faster.", 3, "speed01", ""));
@@ -682,16 +682,16 @@ function UpdateUpgradeList()
 			// Upgrade name
 			Div += "<div><div>" + GlobalUpgrades[i].Name + "</div>";
 			// Upgrade cost
-			Div += "<div>Cost: " + GlobalUpgrades[i].Cost + "</div>";
+			Div += "<p>Cost: " + GlobalUpgrades[i].Cost + "</p>";
 			// Upgrade description
-			Div += "<div class=\"HomeUpgradesText\">" + GlobalUpgrades[i].Description + "</div>";
+			Div += "<p class=\"HomeUpgradesText\">" + GlobalUpgrades[i].Description + "</p>";
 			// Cheat warning
 			if (Upgrade.IsClassified(GlobalUpgrades[i].Id, "cheat")) {
-				Div += "<div class=\"HomeUpgradesCheatWarning\">You have a chance to be caught cheating!</div>";
+				Div += "<p class=\"HomeUpgradesCheatWarning\">You have a chance to be caught cheating!</p>";
 			}
 			Div += "</div>";
 			// Button
-			Div += "<button id=\"UpgBtn_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesButton btn btn-primary\" onclick=\"BuyUpgrade_OnClick(this.id)\">Buy<span class=\"glyphicon glyphicon-shopping-cart\"></span></button>";
+			Div += "<button id=\"UpgBtn_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesButton btn btn-primary\" onclick=\"BuyUpgrade_OnClick(this.id)\">Buy <span class=\"glyphicon glyphicon-shopping-cart\"></span></button>";
 			// Div closing tag
 			Div += "</div>"
 			document.getElementById("HomeUpgrades").innerHTML += Div;
