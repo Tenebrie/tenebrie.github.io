@@ -173,7 +173,7 @@ function Initialization()
 	// You can change the names here if you wish, but be careful with formatting.
 	var LevelNames =
 	[
-		"Admission Exam || August, Year 1",
+		"Entrance Examination || August, Year 1",
 		"Orientation Week Exam || September, Year 1",
 		"Teachers' Names Exam || October, Year 1",
 		"Basics of Clicking Exam || November, Year 1",
@@ -199,7 +199,7 @@ function Initialization()
 		"Determination Exam || January, Year 3",
 		"Clicker Game Design Exam || February, Year 3",
 		"Clicker Game Programming Exam || March, Year 3",
-		"Clicker Game Gaming Exam || April, Year 3",
+		"Nanobots Fundamentals Exam || April, Year 3",
 		"What Am I Doing With My Life Exam || May, Year 3",
 		"Basics of Clicker Thesis || September, Year 4",
 		"Advanced Cheating Exam || October, Year 4",
@@ -788,6 +788,7 @@ function UpdateHome()
 	// Determine the outcome message
 	var ExamStatus;
 	if (Upgrade.IsPurchased("time_travel")) { ExamStatus = "<span class='exam_success'>Welcome to the Clicker University!</span>"; }
+	else if (CurrentExamOrdinal >= GlobalLevels.length - 1) { ExamStatus = "<span class='exam_success'>Congratulations!<br>You have successfully gratuated from the Clicker University!</span>"; }
 	else if (Grade == 0 && DebugMode == false) { ExamStatus = "<span class='exam_failed'>You have failed the exam!</span>"; }
 	else if (Grade == 0 && DebugMode == true) { ExamStatus = "<span class='exam_failed'>You have failed the exam! But it's debug mode so it's all k.</span>"; }
 	else { ExamStatus = "<span class='exam_success'>Congratulations! <br>You have passed the exam with grade " + Grade; + "</span>"}
