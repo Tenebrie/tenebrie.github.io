@@ -4,37 +4,42 @@
 		<meta charset="UTF-8">
 		<script src="../core.js"></script>
 		<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body onload="Initialization()">
 		<div id="Title" class="container">
-			<div id="TitleLetter" class="container">
-				<div class="col-md-12">
-					<img id="logo" class="img-responsive center-block" src="../Pictures/idlelogo.png">
+			<div class="col-md-12">
+				<img id="logo" class="img-responsive center-block" src="../Pictures/idlelogo.png">
+			</div>
+
+			<div class="col-md-12">
+				<p>Dear Mr Gamer,</p>
+
+				<p>We are pleased to inform you that you have a place at Clicker University.</p>
+				<p>After reviewing your application and all the supporting documents, we have 
+				determinated that you are exactly that kind of gamer that we are looking for to 
+				carry on at Clicker University. It is a great honor for us to have your participation on the matter.</p>
+				<p>Once again, congratulations. Get ready your computer and start to clicking!</p>
+				
+				<p>Sincerely,</p>
 				</div>
 
-				<div class="col-md-12">
-					<p>Dear Mr Gamer,</p>
+			<div class="col-md-3 col-xs-4">
+				<img id="signature" src="../Pictures/signature.png" class="img-responsive">
+			</div>
+			
+			<div class="col-md-12 col-xs-12">
+				<p>Clicker University Admissions</p>
+			</div>
 
-					<p>We are pleased to inform you that you have a place at Clicker University.</p>
-					<p>After reviewing your application and all the supporting documents, we have 
-					determinated that you are exactly that kind of gamer that we are looking for to 
-					carry on at Clicker University. It is a great honor for us to have your participation on the matter.</p>
-					<p>Once again, congratulations. Get ready your computer and start to clicking!</p>
-					
-					<p>Sincerely,</p>
-
-					<p>Clicker University Admissions</p>
-				</div>
-
-				<div class="col-md-3 col-xs-4">
-					<img id="signature" src="../Pictures/signature.png" class="img-responsive">
-					<button id="TitleStartButton" class="btn btn-success btn-lg" onclick="StartGame_OnClick()">
-						Start Game
-					</button>
-				</div>
+			<div class="col-md-12 col-xs-12">
+				<button id="TitleStartButton" class="btn btn-success btn-lg" onclick="StartGame_OnClick()">
+					Start Game
+				</button>
 			</div>
 		</div>
-		<div id="Exam" class="jumbotron">
+		<div id="Exam" class="container">
+			<span id="ExamTimeProgress"></span>
 			<span id="ExamName">Unnamed exam</span>
 			<span id="ExamNumber">???</span>
 			<div id="ExamPoints">
@@ -48,12 +53,24 @@
 				<span id="ExamGradeLabel">Grade:</span>
 				<span id="ExamGradeValue">?</span>
 			</div>
-			<table>
-				<tr><th><button id="ExamWorkHard" onclick="WorkHard_OnClick()">Work Hard<br><progress id="ExamWorkProgress" max="1000" value="1000"></progress></button></th></tr>
-				<tr><th><button id="ExamEndButton" onclick="EndExam_OnClick()">Finish Exam<hr><span id="ExamTimeProgress"></span></button></th></tr>
+			<div class="col-md-12">
+				<button id="ExamWorkHard" class="btn btn-primary" onclick="WorkHard_OnClick()">
+					Work Hard
+					<span class="glyphicon glyphicon-plus"></span>
+				</button>
+			</div>
+			<div class="col-md-12">
+				<progress id="ExamWorkProgress" max="1000" value="1000"></progress>
+			</div>
+			<div class="col-md-12">
+				<button id="ExamEndButton" class="btn btn-danger" onclick="EndExam_OnClick()">
+					Finish Exam
+					<span class="glyphicon glyphicon-exclamation-sign"></span>
+				</button>
+			</div>
 			</table>
 		</div>
-		<div id="Home" class="jumbotron">
+		<div id="Home" class="container">
 			<div id="HomeExamStatus"></div>
 			<div id="HomeExamsPassed"></div>
 			<div id="HomeExamsFailed"></div>
