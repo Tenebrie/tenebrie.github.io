@@ -482,8 +482,20 @@ function ShowHome()
 	if (ShowStatistics == true)
 	{
 		var Timestamp = new Date();
-		var Stats_TimeTaken = (Timestamp - Stats_Timestamp) / 1000;
-		document.getElementById("Stats_TimeTaken").innerHTML = Stats_TimeTaken + " seconds";
+		var SecondsRaw = Math.floor((Timestamp - Stats_Timestamp) / 1000);
+		// Calculate values
+		var Hours = Math.floor(SecondsRaw / 3600);
+		var Minutes = Math.floor(SecondsRaw / 60) - Hours * 60;
+		var Seconds = SecondsRaw - Minutes * 60 - Hours * 60;
+		// Display values
+		var Stats_TimeTaken = "";
+		if (Hours < 10) { Stats_TimeTaken += "0"; }
+		Stats_TimeTaken += Hours + ":";
+		if (Minutes < 10) { Stats_TimeTaken += "0"; }
+		Stats_TimeTaken += Minutes + ":";
+		if (Seconds < 10) { Stats_TimeTaken += "0"; }
+		Stats_TimeTaken += Seconds;
+		document.getElementById("Stats_TimeTaken").innerHTML = Stats_TimeTaken;
 		document.getElementById("Stats_TotalClicks").innerHTML = Stats_TotalClicks;
 		document.getElementById("Stats_TotalExams").innerHTML = Stats_TotalExams;
 		document.getElementById("Stats_TotalUpgrades").innerHTML = Stats_TotalUpgrades;
@@ -664,7 +676,7 @@ function UpdateUpgradeList()
 		if (Upgrade.IsVisible(GlobalUpgrades[i].Id))
 		{
 			// Div tag
-			Div = "<div id=\"Upg_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesFloater well\">";
+			Div = "<div id=\"Upg_" + GlobalUpgrades[i].Id + "\" class=\"HomeUpgradesFloater well col-md-12 col-xs-12\">";
 			// Upgrade name
 			Div += "<div><div>" + GlobalUpgrades[i].Name + "</div>";
 			// Upgrade cost
