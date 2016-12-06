@@ -530,7 +530,7 @@ function WorkHard_Timer()
 		}
 		else {
 			var Progress = document.getElementById("ExamWorkProgressNew");
-			Progress.aria-valuenow = Value;
+			Progress.setAttribute("aria-valuenow", Value);
 		}
 	}
 }
