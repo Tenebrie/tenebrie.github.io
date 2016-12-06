@@ -532,7 +532,6 @@ function WorkHard_Timer()
 		else {
 			// Bootstrap
 			var Progress = document.getElementById("ExamWorkProgressNew");
-			Progress.style.animation = '2s linear 0s normal none infinite progress-bar-stripes';
 			if (Value == 0) {
 				Progress.style.transition = '0s';
 				Progress.style.width = '0%';
