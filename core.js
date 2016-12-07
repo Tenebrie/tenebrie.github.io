@@ -751,7 +751,7 @@ function Exam_Timer()
 		if (ExamPoints < GetCurrentExamPointsGoal())
 		{
 			ExamPoints += GetNanobotPointsPerTick();
-			Stats_TotalPointsFromBots += ExamPoints;
+			Stats_TotalPointsFromBots += GetNanobotPointsPerTick();
 			if (ExamPoints > GetCurrentExamPointsGoal()) { ExamPoints = GetCurrentExamPointsGoal(); }
 			UpdateExamPoints();
 		}
