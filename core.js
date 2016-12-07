@@ -311,7 +311,7 @@ function Initialization()
 	GlobalUpgrades.push(new Upgrade("cheat_twin", "Find a Twin", "You ask your twin to come to the next exam instead of you.<br>You skip the next exam and get a random grade.", 2, "cheat_base", "cheat&repeatable"));
 	GlobalUpgrades.push(new Upgrade("cheat_fakePaper", "Fake Paper", "You bring your own paper to the exam, hoping that teachers wouldn't notice.<br>You get random amount of points at the beginning of the next exam.", 1, "cheat_base", "cheat&consumable"));
 	GlobalUpgrades.push(new Upgrade("cheat_bribe", "Bribe a Teacher", "A simple chocolate bar can melt any heart.<br>Your time for the next exam is doubled.", 1, "cheat_base", "cheat&consumable"));
-	GlobalUpgrades.push(new Upgrade("cheat_bots", "Bag of Nanobots", "You bring a whole bag of nanobots. Their effectiveness is doubled.", 1, "cheat_base", "cheat&consumable"));
+	GlobalUpgrades.push(new Upgrade("cheat_bots", "Bag of Nanobots", "You bring a whole bag of nanobots. Their effectiveness is doubled.", 1, "cheat_base&auto", "cheat&consumable"));
 	// Debug stuff
 	if (DebugMode == true) {
 		CurrencyUnits += 100;
