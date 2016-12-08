@@ -1,0 +1,13 @@
+#Wrap
+{
+	display: block;
+	width: 1000px;
+	margin: auto;
+}
+
+.PopStats
+{
+	float: left;
+	width: 300px;
+	margin: 5px;
+}
