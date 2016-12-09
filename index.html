@@ -6,176 +6,24 @@
 		<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
-	<body onload="Initialization()">
-		<div id="Title" class="container biggestFont">
-			<div class="col-md-12">
-				<img id="logo" class="img-responsive center-block" src="Pictures/clickerlogo.png">
-			</div>
+	<body>
+		<div class="jumbotron text-center"><h1>Hello World!</h1></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 text-center">
+					<h3>Column A</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur augue nulla, gravida non magna ut, molestie rutrum metus. Ut gravida nunc enim, nec suscipit libero tempor in. Quisque ullamcorper consequat ante, eu dictum leo elementum faucibus. Integer suscipit neque sed nisi malesuada, in varius erat mattis. Phasellus ut erat viverra, placerat ex ac, accumsan neque. Nullam in molestie nisi. Integer ac tempus ipsum. Praesent arcu neque, ultricies in metus quis, consequat semper metus. Donec sit amet neque ut mi rhoncus pulvinar nec ut enim. Nulla scelerisque et augue nec consectetur. Aliquam mattis nisi ac finibus condimentum. Proin dolor sapien, tristique a blandit vitae, placerat ut mi. Suspendisse pulvinar nunc gravida tortor gravida, et accumsan eros elementum. Nam vestibulum orci vel metus rhoncus vestibulum. Donec in rutrum magna.</p>
+					<p>Donec elementum nisl enim, ut mattis tellus pharetra eu. Fusce sit amet dolor bibendum, sollicitudin ipsum id, bibendum orci. Cras mattis hendrerit felis eget ornare. Nulla est arcu, lobortis consectetur luctus sed, mollis sed ex. Curabitur ligula justo, blandit ac consectetur quis, eleifend bibendum eros. Sed porta sapien quis ex blandit, a fringilla purus varius. Sed pharetra magna rutrum, mattis augue ut, congue sem. Curabitur sed sapien a lorem consectetur pellentesque. Donec fermentum dolor nibh, eu blandit mi fermentum ac.</p>
+				</div>
+				<div class="col-sm-4 text-center">
+					<h3>Column B</h3>
+					<p>Aenean lorem lorem, cursus et rutrum a, pulvinar sit amet dolor. Nunc sollicitudin dapibus aliquet. Nulla nunc tellus, blandit sed ipsum nec, vehicula rhoncus nisl. Etiam finibus tristique nulla, non dignissim purus ultricies ut. Mauris egestas sapien id turpis tempor, vel dapibus tellus rutrum. Nullam pulvinar, enim sed luctus venenatis, sapien justo sodales enim, eu luctus lacus arcu ac diam. Phasellus condimentum nec lacus et consequat. Pellentesque eget lorem ut arcu vestibulum mollis. Duis facilisis, orci nec varius pretium, tortor diam vestibulum quam, vitae sodales mauris nunc ac nibh. Sed tempus dui eget lorem pellentesque molestie. Aliquam finibus nunc nec purus rutrum, eget dictum arcu luctus. Sed ipsum nisl, laoreet a convallis vitae, aliquam lobortis erat. Nullam quis lectus non mi ullamcorper blandit. Donec at nulla eget elit tempus interdum pellentesque vitae sapien. Sed facilisis eros lorem, in fermentum mi placerat nec. Integer tempor eget neque et egestas.</p>
+				</div>
+				<div class="col-sm-4 text-center">
+					<h3>Column C</h3>
+					<p>Aliquam iaculis odio in commodo molestie. Morbi sit amet facilisis justo. Cras facilisis scelerisque nisi. Etiam mollis, arcu vehicula malesuada pretium, mi odio posuere diam, pharetra tempor neque quam at purus. Proin id mi vitae ex ultrices accumsan non quis massa. Maecenas fermentum gravida venenatis. Sed ac magna risus. Donec venenatis facilisis consequat. In hac habitasse platea dictumst. Donec in sapien ac erat commodo ullamcorper ac et ex. Nullam varius rutrum turpis vel egestas. Pellentesque ac tortor risus. Nam pretium lacus risus, et aliquam nulla volutpat quis. Ut volutpat imperdiet ante, eget mattis dolor mattis at. Donec eget pellentesque turpis.</p>
 
-			<div class="col-md-12">
-				<p>Dear Mr Gamer,</p>
-
-				<p>We are pleased to inform you that you have been admitted to the world famous Clicker University.</p>
-				<p>After reviewing your application and all the supporting documents, we have 
-				determined that you are exactly the kind of gamer we are looking for.
-				Your studies begin with the entrance examination held at our main campus in Clickkeli on 26th August 2026.</p>
-				<p>Once again, congratulations. We are waiting for your arrival in August.</p>
-				
-				<p>Sincerely,</p>
-				</div>
-
-			<div class="col-md-3 col-xs-4">
-				<img id="signature" src="Pictures/signature.png" class="img-responsive">
-			</div>
-			
-			<div class="col-md-12 col-xs-12">
-				<p>Clicker University Admissions Office</p>
-				<p>14.07.2026</p>
-			</div>
-
-			<div class="col-md-12 col-xs-12">
-				<button id="TitleStartButton" class="btn btn-success btn-lg" onclick="StartGame_OnClick()">
-					<span class="glyphicon glyphicon-play"></span>
-					Start Game
-				</button>
-			</div>
-		</div>
-		<div id="Exam" class="container">
-			<div class="page-header">
-					<p id="ExamDate" class="text-right biggestFont">
-						Undated exam
-					</p>
-
-					<h3 id="ExamName" class="text-center">
-						Unnamed exam
-					</h3>
-			</div>
-			<div class="text-right">
-				<span>
-					<p class="biggestFont">
-						<span>Remaining time:</span>
-						<span id="ExamTimeProgress"></span>
-					</p>
-				</span>
-			</div>
-			<div id="ExamPoints" class="col-md-12 col-xs-12">
-				<span id="ExamPointsLabel" class="biggerFont">Points:</span>
-				<span id="ExamPointsCurrent" class="biggerFont">???</span>
-				<span id="ExamPointsSeparator" class="biggerFont">/</span>
-				<span id="ExamPointsMax" class="biggerFont">???</span>
-			</div>
-			<div id="ExamGrade" class="col-md-12 col-xs-12 biggerFont">
-				<span id="ExamGradeLabel">Grade:</span>
-				<span id="ExamGradeValue">?</span>
-			</div>
-			<div class="col-md-12 col-xs-12">
-				<div class="progress">
-				 	<div id="ExamWorkProgressNew" class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="1000"
-				  		aria-valuemin="0" aria-valuemax="1000" style="width:100%">
-				  	</div>
-				</div>
-			</div>
-			<div class="col-md-6 col-xs-6">
-				<button id="ExamWorkHard" class="btn btn-primary btn-block" onclick="WorkHard_OnClick()">
-					<span class="glyphicon glyphicon-education"></span>
-					Work Hard
-				</button>
-			</div>
-
-			<div class="col-md-6 col-xs-6">
-				<button id="ExamEndButton" class="btn btn-danger btn-block" onclick="EndExam_OnClick()">
-					<span class="glyphicon glyphicon-exclamation-sign"></span>
-					Finish Exam
-				</button>
-			</div>
-			</table>
-		</div>
-		<div id="Home" class="container">
-			<div class="container page-header">
-				<div class="col-md-12 col-xs-12">
-					<h3 id="HomeExamStatus"></h3>
-					<p id="HomeExamsPassed" class="biggerFont"></p>
-				</div>
-
-				<div class="col-md-8 col-xs-8">
-					<p id="HomeExamsFailed" class="biggerFont"></p>
-				</div>
-
-				<div class="col-md-4 col-xs-4 text-right">
-					<button id="NextExamBtn" class="btn btn-lg btn-success" onclick="NextExam_OnClick()">
-						<span class="glyphicon glyphicon-step-forward"></span>
-						Next Exam
-					</button>
-				</div>
-			</div>
-			<div id="HomeContinue" class="container">
-				<div class="col-md-5 col-xs-5 text-left">
-					<p id="HomeUpgradesLabel" class="biggestFont">Upgrades:</p>
-				</div>
-				<div class="col-md-7 cold-xs-7 text-right">
-					<p class="biggerFont">
-						<span id="HomeCurrencyUnits" ></span>
-						<span class="glyphicon glyphicon-briefcase"></span>
-					</p>
-				</div>
-				<div class="col-md-12 cold-xs-12">
-					<p id="HomeUpgrades"></p>
-				</div>
-			</div>
-			<div id="HomeGameOver" class="container">
-				<div id="HomeGameOver_Win"><img src="Pictures/certificate.png" width="100%"></div>
-				<div id="HomeGameOver_Fail" class="biggestFont">
-					<p>You have failed too many exams and have been expelled from the university!</p>
-				</div>
-				<div id="HomeGameOver_Cheat" class="biggestFont">
-					<p>You have been caught cheating and have been expelled from the university!</p>
-				</div>
-				<div id="HomeGameOverStatistics" class="well">
-					<p class="biggestFont">
-						<span class="glyphicon glyphicon-stats"></span>
-						Statistics:
-					</p>
-					<p>
-						Time taken:
-						<span id="Stats_TimeTaken"></span>
-					</p>
-					<p>
-						Total clicks:
-						<span id="Stats_TotalClicks"></span>
-					</p>
-					<p>
-						Points from clicks:
-						<span id="Stats_TotalPoints"></span>
-					</p>
-					<p>
-						Points from nanobots:
-						<span id="Stats_TotalPointsFromBots"></span>
-					</p>
-					<p>
-						Exams played:
-						<span id="Stats_TotalExams"></span>
-					</p>
-					<p>
-						Upgrades purchased:
-						<span id="Stats_TotalUpgrades"></span>
-					</p>
-					<p>
-						Cheats used:
-						<span id="Stats_TotalCheats"></span>
-					</p>
-					<p>
-						Money accumulated:
-						<span id="Stats_TotalMoney"></span>
-					</p>
-					<p>
-						Time travels:
-						<span id="Stats_TimeTravels"></span>
-					</p>
-					<p>
-						GPA (Grade Point Average):
-						<span id="Stats_GPA"></span>
-					</p>
-					<button class="btn btn-info" onclick="location.reload()"><span class="glyphicon glyphicon-repeat"></span> Re-Enroll</button>
+					<p>Maecenas sit amet laoreet lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi ut elit eu velit scelerisque vestibulum vel in lorem. Duis sed interdum magna. Praesent a velit massa. Nam et urna dapibus, facilisis massa at, pretium ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis ultrices convallis felis.</p>
 				</div>
 			</div>
 		</div>
