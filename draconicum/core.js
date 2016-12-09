@@ -547,7 +547,7 @@ function UpdateDragonActivity(pop) {
 function SetActivity(pop, activity) {
 	// Save old activity
 	var oldActivity = population[pop].activity;
-	if (activities[activity] == undefined) { console.log(activity); return; }
+	if (activities[activity] == undefined) { console.log(activity); throw 5; }
 	// Already in the correct location
 	if (population[pop].location == activities[activity].location || activities[activity].location == '*') {
 		population[pop].activity = activity;
