@@ -226,14 +226,12 @@ function Initialization() {
 //=====================================================================
 // Localization
 //=====================================================================
+
+
+
 function LoadLocaleData(locale) {
 	var filename = "localization/" + locale + ".json";
-	$.ajax({
-  		url: filename,
-  		done: function(response) {
-  			console.log(response);
-  		}
-	});
+	$.ajax({url:filename,success:function(json){alert("хуйня какая-то");}});
 
 	//var filename = "style.css";
 	/*var req = new XMLHttpRequest();
