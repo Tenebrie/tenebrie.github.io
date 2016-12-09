@@ -226,18 +226,26 @@ function Initialization() {
 //=====================================================================
 // Localization
 //=====================================================================
+
+
+
 function LoadLocaleData(locale) {
 	var filename = "localization/" + locale + ".json";
-	var req = new XMLHttpRequest();
+	$.ajax({url:filename,success:function(json){alert("хуйня какая-то");}});
+
+	//var filename = "style.css";
+	/*var req = new XMLHttpRequest();
 	req.onreadystatechange = function() {
 		if (req.readyState == XMLHttpRequest.DONE) {
+			console.log(req.status);
+			console.log(req.responseText);
 			ParseLocaleData(req.responseText);
 			ApplyStaticLocale();
 		}
 	}
 	req.open("GET", filename, true);
 	req.overrideMimeType("application/json");
-	req.send();
+	req.send();*/
 }
 
 function ParseLocaleData(data) {
