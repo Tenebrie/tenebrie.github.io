@@ -8,6 +8,16 @@
 .PopStats
 {
 	float: left;
-	width: 300px;
+	width: 323px;
 	margin: 5px;
+}
+
+.PopActivity
+{
+	font-weight: 600;
+}
+
+.PopDesire
+{
+	font-style: italic;
 }

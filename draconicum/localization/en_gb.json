@@ -1,0 +1,23 @@
+{
+	"activities":
+	{
+		"idle": "Doing nothing",
+		"goto_eat":
+		[
+			"Looking for something to eat",
+			"Going to eat something",
+		],
+		"eating": "Eating",
+		"goto_drink": "Going to find some water",
+		"drinking": "Drinking water",
+		"goto_sleep": "Going to sleep",
+		"sleeping": "Sleeping",
+		"waking": "Slowly waking up",
+		"goto_hunt": "Going to the hunt",
+		"hunting": "Hunting",
+		"goto_unload": "Going to unload items",
+		"unloading": "Unloading items",
+		"goto_relax": "Looking for a place to relax",
+		"relaxing": "Relaxing",
+	}
+}
