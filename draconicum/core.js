@@ -452,7 +452,7 @@ function UpdatePopStats(pop) {
 
 function UpdatePopDesires(pop) {
 	var desire = [];
-	for (var i = 0; i < 16; i++) { desire[i] = new Object(); }
+	for (var i = 0; i < 16; i++) { desire[i] = new Object(); desire[i].value = -10000; }
 
 	// Save old desire to compare later
 	var oldDesire = population[pop].desire;
@@ -482,13 +482,11 @@ function UpdatePopDesires(pop) {
 	desire[7].value = energy / 2.00 + PopHasPerk(pop, 'hyperactive') * 25.00;
 
 	// Sort the list
-	for (var i = 0; i < desire.length; i++) {
-		desire.sort(function(a, b) {
-			if (a.value > b.value) { return -1; }
-			if (a.value < b.value) { return 1; }
-			return 0;
-		});
-	}
+	desire.sort(function(a, b) {
+		if (a.value > b.value) { return -1; }
+		if (a.value < b.value) { return 1; }
+		return 0;
+	});
 	// Set new desire
 	population[pop].desire = desire[0].id;
 	if (population[pop].desire != oldDesire) {
@@ -547,7 +545,6 @@ function UpdateDragonActivity(pop) {
 function SetActivity(pop, activity) {
 	// Save old activity
 	var oldActivity = population[pop].activity;
-	if (activities[activity] == undefined) { console.log(activity); throw 5; }
 	// Already in the correct location
 	if (population[pop].location == activities[activity].location || activities[activity].location == '*') {
 		population[pop].activity = activity;
