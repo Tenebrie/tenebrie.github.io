@@ -2,28 +2,25 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<script src="core.js"></script>
+		<script>
+			function GoToClicker() { window.location.href = "clicker/"; }
+			function GoToDraconicum() { window.location.href = "draconicum/"; }
+		</script>
 		<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-		<div class="jumbotron text-center"><h1>Hello World!</h1></div>
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4 text-center">
-					<h3>Column A</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur augue nulla, gravida non magna ut, molestie rutrum metus. Ut gravida nunc enim, nec suscipit libero tempor in. Quisque ullamcorper consequat ante, eu dictum leo elementum faucibus. Integer suscipit neque sed nisi malesuada, in varius erat mattis. Phasellus ut erat viverra, placerat ex ac, accumsan neque. Nullam in molestie nisi. Integer ac tempus ipsum. Praesent arcu neque, ultricies in metus quis, consequat semper metus. Donec sit amet neque ut mi rhoncus pulvinar nec ut enim. Nulla scelerisque et augue nec consectetur. Aliquam mattis nisi ac finibus condimentum. Proin dolor sapien, tristique a blandit vitae, placerat ut mi. Suspendisse pulvinar nunc gravida tortor gravida, et accumsan eros elementum. Nam vestibulum orci vel metus rhoncus vestibulum. Donec in rutrum magna.</p>
-					<p>Donec elementum nisl enim, ut mattis tellus pharetra eu. Fusce sit amet dolor bibendum, sollicitudin ipsum id, bibendum orci. Cras mattis hendrerit felis eget ornare. Nulla est arcu, lobortis consectetur luctus sed, mollis sed ex. Curabitur ligula justo, blandit ac consectetur quis, eleifend bibendum eros. Sed porta sapien quis ex blandit, a fringilla purus varius. Sed pharetra magna rutrum, mattis augue ut, congue sem. Curabitur sed sapien a lorem consectetur pellentesque. Donec fermentum dolor nibh, eu blandit mi fermentum ac.</p>
+				<div class="col-sm-6 text-center vertical-center">
+					<button type="button" class="btn col-sm-6 btn-lg btn-primary" onclick="GoToClicker()">
+						<span class="glyphicon glyphicon-arrow-left"></span> Clicker
+					</button>
 				</div>
-				<div class="col-sm-4 text-center">
-					<h3>Column B</h3>
-					<p>Aenean lorem lorem, cursus et rutrum a, pulvinar sit amet dolor. Nunc sollicitudin dapibus aliquet. Nulla nunc tellus, blandit sed ipsum nec, vehicula rhoncus nisl. Etiam finibus tristique nulla, non dignissim purus ultricies ut. Mauris egestas sapien id turpis tempor, vel dapibus tellus rutrum. Nullam pulvinar, enim sed luctus venenatis, sapien justo sodales enim, eu luctus lacus arcu ac diam. Phasellus condimentum nec lacus et consequat. Pellentesque eget lorem ut arcu vestibulum mollis. Duis facilisis, orci nec varius pretium, tortor diam vestibulum quam, vitae sodales mauris nunc ac nibh. Sed tempus dui eget lorem pellentesque molestie. Aliquam finibus nunc nec purus rutrum, eget dictum arcu luctus. Sed ipsum nisl, laoreet a convallis vitae, aliquam lobortis erat. Nullam quis lectus non mi ullamcorper blandit. Donec at nulla eget elit tempus interdum pellentesque vitae sapien. Sed facilisis eros lorem, in fermentum mi placerat nec. Integer tempor eget neque et egestas.</p>
-				</div>
-				<div class="col-sm-4 text-center">
-					<h3>Column C</h3>
-					<p>Aliquam iaculis odio in commodo molestie. Morbi sit amet facilisis justo. Cras facilisis scelerisque nisi. Etiam mollis, arcu vehicula malesuada pretium, mi odio posuere diam, pharetra tempor neque quam at purus. Proin id mi vitae ex ultrices accumsan non quis massa. Maecenas fermentum gravida venenatis. Sed ac magna risus. Donec venenatis facilisis consequat. In hac habitasse platea dictumst. Donec in sapien ac erat commodo ullamcorper ac et ex. Nullam varius rutrum turpis vel egestas. Pellentesque ac tortor risus. Nam pretium lacus risus, et aliquam nulla volutpat quis. Ut volutpat imperdiet ante, eget mattis dolor mattis at. Donec eget pellentesque turpis.</p>
-
-					<p>Maecenas sit amet laoreet lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi ut elit eu velit scelerisque vestibulum vel in lorem. Duis sed interdum magna. Praesent a velit massa. Nam et urna dapibus, facilisis massa at, pretium ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis ultrices convallis felis.</p>
+				<div class="col-sm-6 text-center vertical-center">
+					<button type="button" class="btn col-sm-6 btn-lg btn-primary" onclick="GoToDraconicum()">
+						Draconicum <span class="glyphicon glyphicon-arrow-right"></span>
+					</button>
 				</div>
 			</div>
 		</div>
