@@ -82,7 +82,7 @@ class Pop {
 		this.activityTimer = -1;
 		this.activityQueue = [];
 
-		this.desire = "";
+		this.desire = "idle";
 		this.desireString = "";
 		this.energy = 100;	// [0; 100]
 		this.needsFood = 0;
@@ -228,16 +228,26 @@ function Initialization() {
 //=====================================================================
 function LoadLocaleData(locale) {
 	var filename = "localization/" + locale + ".json";
-	var req = new XMLHttpRequest();
+	$.ajax({
+  		url: filename,
+  		done: function(response) {
+  			console.log(response);
+  		}
+	});
+
+	//var filename = "style.css";
+	/*var req = new XMLHttpRequest();
 	req.onreadystatechange = function() {
 		if (req.readyState == XMLHttpRequest.DONE) {
+			console.log(req.status);
+			console.log(req.responseText);
 			ParseLocaleData(req.responseText);
 			ApplyStaticLocale();
 		}
 	}
 	req.open("GET", filename, true);
 	req.overrideMimeType("application/json");
-	req.send();
+	req.send();*/
 }
 
 function ParseLocaleData(data) {
@@ -547,6 +557,7 @@ function UpdateDragonActivity(pop) {
 function SetActivity(pop, activity) {
 	// Save old activity
 	var oldActivity = population[pop].activity;
+	if (activities[activity] == undefined) { console.log(activity); return; }
 	// Already in the correct location
 	if (population[pop].location == activities[activity].location || activities[activity].location == '*') {
 		population[pop].activity = activity;
