@@ -267,12 +267,14 @@ function ApplyLocale(type, input) {
 	if (localeData != undefined) {
 		if (type == "generic")
 			output = FetchLocaleValue(localeData.generic, input);
+		else if (type == "location")
+			output = FetchLocaleValue(localeData.locations, input);
 		else if (type == "activity")
 			output = FetchLocaleValue(localeData.activities, input);
 		else if (type == "desire")
 			output = FetchLocaleValue(localeData.desires, input);
-		else if (type == "location")
-			output = FetchLocaleValue(localeData.locations, input);
+		else if (type == "item")
+			output = FetchLocaleValue(localeData.items, input);
 	}
 	return output;
 }
@@ -616,7 +618,7 @@ function ShowPopulation() {
 		else {
 			for (var y = 0; y < population[i].items.Count(); y++) {
 				var count = Math.floor(population[i].items.list[y].count);
-				var name = population[i].items.list[y].id;
+				var name = ApplyLocale("item", population[i].items.list[y].id);
 				div += "<div>- " + count + "x " + name + "</div>";
 			}
 		}
