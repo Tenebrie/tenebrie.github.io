@@ -71,8 +71,10 @@ class Inventory {
 	}
 }
 
+popIdGen = 0;
 class Pop {
 	constructor(race) {
+		this.id = popIdGen++;
 		this.name = Name.Generate(race);
 		this.race = race;
 		this.age = 0;
@@ -83,16 +85,19 @@ class Pop {
 		this.activityQueue = [];
 
 		this.desire = "idle";
+		this.desireList = [];
 		this.desireString = "";
 		this.energy = 100;	// [0; 100]
 		this.needsFood = 0;
 		this.needsWater = 0;
 		this.needsSleep = 0;
 		this.needsShower = 20;
+		this.needsSocial = 50;
 
 		this.location = "nest";
 		this.items = new Inventory();
 		this.huntingTimer = 0;
+		this.socializeFailTimer = 0;
 
 		this.statsSize = GetRandom(0.70, 1.30);
 		this.statsSpeed = GetRandom(0.80, 1.20);
@@ -124,17 +129,44 @@ class Pop {
 	}
 }
 
+class SocialGroup {
+	constructor() {
+		this.members = [];
+		this.activity = "";
+		this.activityTimer = -1;
+		this.desire = "";
+		this.desireList = [];
+	}
+	AddPop(id) {
+		if (this.HasPop(id) == false) {
+			this.members.push(id);
+		}
+	}
+	HasPop(id) {
+		for (var i = 0; i < this.members.length; i++) {
+			if (this.members[i] == id) { return true; }
+		}
+		return false;
+	}
+	RemovePop(id) {
+		for (var i = 0; i < this.members.length; i++) {
+			if (this.members[i] == id) { this.members.splice(i, 1); }
+		}
+	}
+}
+
 //=====================================================================
 // Global scope variables
 //=====================================================================
 var population = [];
 var activities = [];
 var locations = [];
+var socialGroups = [];
 
 var nestFood = 0;
 var localeData;
 
-var debugMode = false;
+var debugMode = true;
 
 //=====================================================================
 // Initialization
@@ -144,7 +176,7 @@ function Initialization() {
 	var activityList = ['idle', 'goto_eat', 'eating', 'sleeping', 'drinking',
 	'goto_sleep', 'waking', 'goto_drink', 'goto_hunt', 'hunting', 'goto_unload',
 	'unloading', 'goto_relax', 'relaxing', 'cleaning', 'goto_swim', 'swimming',
-	'running'];
+	'running', 'group_create', 'group_leave', 'gofrom_swim', 'waiting'];
 
 	for (var i = 0; i < activityList.length; i++) {
 		activities[activityList[i]] = new Object();
@@ -153,6 +185,7 @@ function Initialization() {
 		activities[activityList[i]].location = 'nest';
 		activities[activityList[i]].physicalLoad = 0.00;
 		activities[activityList[i]].mentalLoad = 0.00;
+		activities[activityList[i]].social = 0;
 	}
 	activities['idle'].length = -1.00;
 	activities['idle'].location = '*';
@@ -189,12 +222,20 @@ function Initialization() {
 	activities['goto_swim'].chain = 'swimming';
 	activities['goto_swim'].length = 10.00;
 	activities['goto_swim'].location = '*';
+	activities['swimming'].chain = 'gofrom_swim';
 	activities['swimming'].length = 30.00;
 	activities['swimming'].location = 'river';
 	activities['swimming'].physicalLoad = 1.50;
+	activities['gofrom_swim'].length = 10.00;
+	activities['gofrom_swim'].location = '*';
 	activities['running'].length = 10.00;
 	activities['running'].location = '*';
 	activities['running'].physicalLoad = 1.00;
+	activities['group_create'].length = 10.00;
+	activities['group_create'].location = '*';
+	activities['group_leave'].length = 5.00;
+	activities['group_leave'].location = '*';
+	activities['waiting'].location = '*';
 
 	var locationList = ['nest', 'river', 'forest'];
 	for (var i = 0; i < locationList.length; i++) {
@@ -214,13 +255,21 @@ function Initialization() {
 	}
 	// Assign the event handlers
 	window.setInterval(ShowNestStats, 1000 / VFPS);
+	window.setInterval(ShowPopulation, 1000 / VFPS);
 
 	// Load locale
 	LoadLocaleData("ru_ru");
-	// Start stuff
-	StartAI();
-	// Show stuff
-	ShowPopulation();
+	// Wait until locale
+	var initTimer = setInterval(function() {
+		if (localeData != undefined) {
+			// Start stuff
+			StartAI();
+			// Show stuff
+			ShowPopulation();
+			// Kill timer
+			clearInterval(initTimer);
+		}
+	}, 50)
 }
 
 //=====================================================================
@@ -284,6 +333,83 @@ function ApplyLocale(type, input) {
 //=====================================================================
 
 //=====================================================================
+// Social groups
+//=====================================================================
+function PopFromId(id) {
+	for (var i = 0; i < population.length; i++) {
+		if (population[i].id == id) { return i; }
+	}
+	return undefined;
+}
+
+function GetSocialCount(role) {
+	var count = 0;
+	for (var i = 0; i < population.length; i++) {
+		if (population[i].currentRole == role) {
+			count += 1;
+		}
+	}
+	return count;
+}
+
+function StartSocialGroup(pop) {
+	var group = new SocialGroup();
+	group.AddPop(population[pop].id);
+	socialGroups.push(group);
+}
+
+function AddToGroup(owner, newbie) {
+	for (var i = 0; i < socialGroups.length; i++) {
+		if (socialGroups[i].HasPop(population[owner].id)) {
+			socialGroups[i].AddPop(population[newbie].id);
+		}
+	}
+}
+
+function IsInGroup(pop) {
+	if (population[pop] == undefined)
+		return false;
+
+	for (var i = 0; i < socialGroups.length; i++) {
+		if (socialGroups[i].HasPop(population[pop].id)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function AreInGroup(a, b) {
+	for (var i = 0; i < socialGroups.length; i++) {
+		if (socialGroups[i].HasPop(population[a].id) && socialGroups[i].HasPop(population[b].id)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function GetPopGroup(pop) {
+	if (population[pop] == undefined)
+		return undefined;
+
+	for (var i = 0; i < socialGroups.length; i++) {
+		if (socialGroups[i].HasPop(population[pop].id)) {
+			return i;
+		}
+	}
+	return undefined;
+}
+
+function RemoveFromGroup(pop) {
+	for (var i = 0; i < socialGroups.length; i++) {
+		if (socialGroups[i].HasPop(population[pop].id)) {
+			socialGroups[i].RemovePop(population[pop].id);
+			// Destroy groups with a single pop
+			if (socialGroups[i].members.length <= 1) { socialGroups.splice(i, 1); }
+		}
+	}
+}
+
+//=====================================================================
 // AI functions
 //=====================================================================
 var VFPS = 10;
@@ -293,6 +419,12 @@ function StartAI() {
 }
 
 function UpdatePops() {
+	// For each group...
+	for (var i = 0; i < socialGroups.length; i++) {
+		// TODO: ADD ABILITY FOR MEMBERS TO LEAVE THE GROUP
+		UpdateGroupDesires(i);
+		SetGroupActivity(i, socialGroups[i].desire);
+	}
 	// For each pop...
 	for (var i = 0; i < population.length; i++) {
 		// Update stats
@@ -303,12 +435,6 @@ function UpdatePops() {
 		PreUpdateActivity(i);
 		if (population[i].race == "dragon") { UpdateDragonActivity(i); }
 	}
-	// Determine activity
-	for (var i = 0; i < population.length; i++) {
-		
-	}
-	// Update
-	ShowPopulation();
 }
 
 function GetPopModifier(pop, mod) {
@@ -328,6 +454,9 @@ function GetPopModifier(pop, mod) {
 		var fromHunt = (population[pop].activity == 'hunting') ? 2.00 : 0.00;
 		return 1.00 + fromHunt;
 	}
+	if (mod == "drain_social") {
+		return 1.00;
+	}
 	if (mod == "regen_energy") {
 		if (curAct.substring(0, 6) == "travel") { return 0.00; }
 		var fromFood = (100 - Math.min(100, population[pop].needsFood)) / 100;
@@ -344,16 +473,6 @@ function GetPopModifier(pop, mod) {
 	}
 }
 
-function GetSocialCount(role) {
-	var count = 0;
-	for (var i = 0; i < population.length; i++) {
-		if (population[i].currentRole == role) {
-			count += 1;
-		}
-	}
-	return count;
-}
-
 function PopHasPerk(pop, id) {
 	for (var i = 0; i < population[pop].perks.length; i++) {
 		if (population[pop].perks[i] == id) {
@@ -361,6 +480,15 @@ function PopHasPerk(pop, id) {
 		}
 	}
 	return false;
+}
+
+function GetPopDesireIndex(pop, activity) {
+	for (var i = 0; i < population[pop].desireList.length; i++) {
+		if (population[pop].desireList[i] == activity) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 function AdjustPopStat(pop, stat, amount) {
@@ -371,12 +499,21 @@ function AdjustPopStat(pop, stat, amount) {
 	}
 }
 
+function TickPopTimer(pop, timer, amount) {
+	if (timer == "socializeFail") {
+		population[pop].socializeFailTimer -= amount;
+		if (population[pop].socializeFailTimer < 0.00)
+			population[pop].socializeFailTimer = 0.00;
+	}
+}
+
 function UpdatePopStats(pop) {
 	// Needs grow
 	population[pop].needsFood += 0.30 * GetPopModifier(pop, "drain_food") / LFPS;
 	population[pop].needsWater += 0.50 * GetPopModifier(pop, "drain_water") / LFPS;
 	population[pop].needsSleep += 0.15 * GetPopModifier(pop, "drain_sleep") / LFPS;
 	population[pop].needsShower += 0.07 * GetPopModifier(pop, "drain_shower") / LFPS;
+	population[pop].needsSocial += 0.20 * GetPopModifier(pop, "drain_social") / LFPS;
 	// Energy
 	AdjustPopStat(pop, 'energy', 0.50 * GetPopModifier(pop, "regen_energy") / LFPS);
 	// Needs drop
@@ -422,6 +559,12 @@ function UpdatePopStats(pop) {
 			if (population[pop].energy < 0) { population[pop].activityTimer = 0; }
 		}
 	}
+	// Any social activity
+	if (IsInGroup(pop)) {
+		population[pop].needsSocial -= 0.50 / LFPS;
+		if (population[pop].needsSocial < 0.00)
+			population[pop].needsSocial = 0.00;
+	}
 	// TODO: IN-PROGRESS EFFECTS GO HERE
 	// Hunting for meat
 	if (population[pop].activity == "hunting") {
@@ -448,11 +591,19 @@ function UpdatePopStats(pop) {
 			population[pop].currentRole = 'none';
 		}
 	}
+	// Leaving the group
+	if (population[pop].activity == "waiting") {
+		if (GetRandom(0.00, 1.00) <= 0.05) {
+			SetActivity(pop, "group_leave");
+		}
+	}
+	// TIMERS
+	TickPopTimer(pop, "socializeFail", 1.00 / LFPS);
 }
 
 function UpdatePopDesires(pop) {
 	var desire = [];
-	for (var i = 0; i < 16; i++) { desire[i] = new Object(); desire[i].value = -10000; }
+	for (var i = 0; i < 32; i++) { desire[i] = new Object(); desire[i].value = -10000; }
 
 	// Save old desire to compare later
 	var oldDesire = population[pop].desire;
@@ -462,6 +613,9 @@ function UpdatePopDesires(pop) {
 	var needsWater = population[pop].needsWater;
 	var needsSleep = population[pop].needsSleep;
 	var needsShower = population[pop].needsShower;
+	var needsSocial = population[pop].needsSocial;
+
+	var socializeFail = population[pop].socializeFailTimer;
 
 	// Initialize dynamic databank
 	desire[0].id = 'goto_relax';
@@ -480,6 +634,10 @@ function UpdatePopDesires(pop) {
 	desire[6].value = (45.00 + needsShower) * (energy / 100) + PopHasPerk(pop, 'likesWater') * 25.00;
 	desire[7].id = 'running';
 	desire[7].value = energy / 2.00 + PopHasPerk(pop, 'hyperactive') * 25.00;
+	desire[8].id = 'group_create';
+	desire[8].value = needsSocial - socializeFail - (IsInGroup(pop) ? 1000 : 0);
+	desire[9].id = 'group_leave';
+	desire[9].value = 50 - needsSocial - (IsInGroup(pop) ? 0 : 1000);
 
 	// Sort the list
 	desire.sort(function(a, b) {
@@ -489,9 +647,48 @@ function UpdatePopDesires(pop) {
 	});
 	// Set new desire
 	population[pop].desire = desire[0].id;
+	population[pop].desireList = desire;
 	if (population[pop].desire != oldDesire) {
 		population[pop].desireString = ApplyLocale("desire", population[pop].desire);
 	}
+}
+
+function UpdateGroupDesires(grp) {
+	if (socialGroups[grp] == undefined)
+		return;
+
+	var desireList = [];
+	// For each member...
+	for (var i = 0; i < socialGroups[grp].members.length; i++) {
+		var member = population[PopFromId(socialGroups[grp].members[i])];
+		// For each desire in member...
+		for (var y = 0; y < member.desireList.length; y++) {
+			var matchFound = false;
+			// Check each local desire...
+			for (var u = 0; u < desireList.length; u++) {
+				// If match - directly add data
+				if (desireList[u].id == member.desireList[y].id) {
+					matchFound = true;
+					desireList[u].value += member.desireList[y].value;
+				}
+			}
+			// Else add the new desire id and value
+			if (matchFound == false) {
+				var newDesire = new Object();
+				newDesire.id = member.desireList[y].id;
+				newDesire.value = member.desireList[y].value;
+				desireList.push(newDesire);
+			}
+		}
+	}
+	// Sort the list
+	desireList.sort(function(a, b) {
+		if (a.value > b.value) { return -1; }
+		if (a.value < b.value) { return 1; }
+		return 0;
+	});
+	socialGroups[grp].desireList = desireList;
+	socialGroups[grp].desire = desireList[0].id;
 }
 
 function PreUpdateActivity(pop) {
@@ -512,6 +709,37 @@ function PreUpdateActivity(pop) {
 			// Drop decimals from inventory before unloading
 			if (population[pop].activity == 'goto_unload') {
 				population[pop].items.DropDecimals();
+			}
+			// Creating a group
+			if (population[pop].activity == 'group_create') {
+				// Find somebody else
+				var mates = [];
+				for (var i = 0; i < population.length; i++) {
+					if (population[i].id != population[pop].id && population[i].location == population[pop].location && IsInGroup(i) == false) {
+						//var wantsToSocialize = (GetPopDesireIndex(i, 'group_create') <= 2);
+						var wantsToSocialize = (population[pop].activity == 'group_create');
+						if (wantsToSocialize) {
+							mates.push(i);
+						}
+					}
+				}
+				// Push everyone to group
+				if (mates.length > 0) {
+					StartSocialGroup(pop);
+					for (var i = 0; i < mates.length; i++) {
+						AddToGroup(pop, mates[i]);
+					}
+					//console.log("Group " + socialGroups.length + " size: " + socialGroups[socialGroups.length - 1].members.length);
+				}
+				// Be sad
+				else {
+					population[pop].socializeFailTimer = 100;
+				}
+			}
+			// Leaving a group
+			if (population[pop].activity == 'group_leave') {
+				RemoveFromGroup(pop);
+				population[pop].socializeFailTimer = 100;
 			}
 		}
 	}
@@ -538,11 +766,17 @@ function UpdateDragonActivity(pop) {
 	}
 	// Do what it wants
 	else {
-		SetActivity(pop, population[pop].desire);
+		// If single - look for own desires
+		if (IsInGroup(pop) == false)
+			SetActivity(pop, population[pop].desire);
+		// If in group - wait
+		else
+			SetActivity(pop, 'waiting');
 	}
 }
 
 function SetActivity(pop, activity) {
+	if (activity == undefined || activity == "") return;
 	// Save old activity
 	var oldActivity = population[pop].activity;
 	// Already in the correct location
@@ -554,6 +788,7 @@ function SetActivity(pop, activity) {
 	else {
 		population[pop].activityQueue.unshift(activity);
 		population[pop].activity = "travel_" + activities[activity].location;
+		// TODO: THINGSTHINGS
 		var distance = Math.abs(locations[population[pop].location].distance - locations[activities[activity].location].distance);
 		population[pop].activityTimer = (distance * 1000) / GetPopModifier(pop, "speed");
 		if (PopHasPerk(pop, "fastFlyer")) { population[pop].activityTimer /= 2.00; }
@@ -563,6 +798,27 @@ function SetActivity(pop, activity) {
 	// Check the activity string
 	if (population[pop].activity != oldActivity) {
 		population[pop].activityString = ApplyLocale("activity", population[pop].activity);
+	}
+}
+
+function SetGroupActivity(grp, activity) {
+	var activityTimer = 0;
+	if (grp != undefined) {
+		// Check if everyone's ready
+		for (var i = 0; i < socialGroups[grp].members.length; i++) {
+			if (population[PopFromId(socialGroups[grp].members[i])].activity != 'waiting') {
+				return;
+			}
+		}
+		// Set the activity and calculate common timer
+		for (var i = 0; i < socialGroups[grp].members.length; i++) {
+			SetActivity(PopFromId(socialGroups[grp].members[i]), activity);
+			activityTimer = Math.max(activityTimer, population[PopFromId(socialGroups[grp].members[i])].activityTimer);
+		}
+		// Set the timers
+		for (var i = 0; i < socialGroups[grp].members.length; i++) {
+			population[PopFromId(socialGroups[grp].members[i])].activityTimer = activityTimer;
+		}
 	}
 }
 
@@ -606,8 +862,12 @@ function ShowPopulation() {
 			div += "<div>- Food: " + Math.round(population[i].needsFood) + "</div>";
 			div += "<div>- Water: " + Math.round(population[i].needsWater) + "</div>";
 			div += "<div>- Sleep: " + Math.round(population[i].needsSleep) + "</div>";
+			div += "<div>- Shower: " + Math.round(population[i].needsShower) + "</div>";
+			div += "<div>- Social: " + Math.round(population[i].needsSocial) + "</div>";
 			div += "</div>";
 		}
+		// Group
+		div += "<div>" + ApplyLocale("generic", "group") + ": " + GetPopGroup(i) + "</div>";
 		// Items
 		div += "<div>" + ApplyLocale("generic", "items") + ":";
 		if (population[i].items.Count() == 0) {
