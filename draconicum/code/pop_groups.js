@@ -93,7 +93,7 @@ function PopLookForGroup(pop) {
 	for (var i = 0; i < population.length; i++) {
 		if (population[i].id != population[pop].id && population[i].location == population[pop].location && PopIsInGroup(i) == false) {
 			//var wantsToSocialize = (GetPopDesireIndex(i, 'group_join') <= 2);
-			var wantsToSocialize = (population[pop].activity == 'group_join');
+			var wantsToSocialize = (population[i].activity == 'group_join');
 			if (wantsToSocialize) {
 				mates.push(i);
 			}
