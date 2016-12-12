@@ -18,6 +18,8 @@ var debugMode = false;
 //=====================================================================
 // Initialization
 //=====================================================================
+window.onload = function() { Initialization(); } 
+
 function Initialization() {
 	// Let's consider that we're starting a new game on every page load for now
 	var activityList = ['idle', 'goto_eat', 'eating', 'sleeping', 'drinking',
