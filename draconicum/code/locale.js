@@ -35,19 +35,36 @@ function FetchLocaleValue(source, key) {
 	return output;
 }
 
-function ApplyLocale(type, input) {
+function ApplyLocale(type, input, pop) {
 	var output = input;
 	if (localeData != undefined) {
+		var source;
+		// Prefer group text over individual text
+		if (pop != undefined && PopIsInGroup(pop)) {
+			if (type == "activity")
+				source = localeData.activities_ingroup;
+			else if (type == "desire")
+				source = localeData.desires_ingroup;
+
+			if (source != undefined) {
+				output = FetchLocaleValue(source, input);
+				if (output != input)
+					return output;
+			}
+		}
+		// Not in group or no group text found, fallback to individual
 		if (type == "generic")
-			output = FetchLocaleValue(localeData.generic, input);
+			source = localeData.generic;
 		else if (type == "location")
-			output = FetchLocaleValue(localeData.locations, input);
+			source = localeData.locations;
 		else if (type == "activity")
-			output = FetchLocaleValue(localeData.activities, input);
+			source = localeData.activities;
 		else if (type == "desire")
-			output = FetchLocaleValue(localeData.desires, input);
+			source = localeData.desires;
 		else if (type == "item")
-			output = FetchLocaleValue(localeData.items, input);
+			source = localeData.items;
+
+		output = FetchLocaleValue(source, input);
 	}
 	return output;
 }

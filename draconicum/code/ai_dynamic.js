@@ -185,6 +185,14 @@ function UpdatePopStats(pop) {
 		if (population[pop].needsSocial < 0.00)
 			population[pop].needsSocial = 0.00;
 	}
+	// Crying lonely
+	if (population[pop].activity == "crying_lonely") {
+		population[pop].needsSocial -= 0.75 / LFPS;
+		if (population[pop].needsSocial < 0.00) {
+			population[pop].needsSocial = 0.00;
+			population[pop].activityTimer = 0;
+		}
+	}
 	// In-progress effects
 	UpdatePopInProgress(pop);
 	// TIMERS
@@ -210,7 +218,6 @@ function UpdatePopDesires(pop) {
 	var needsSocial = population[pop].needsSocial;
 
 	var itemCount = population[pop].items.CountTotal();
-	var socializeFail = population[pop].socializeFailTimer;
 
 	// Initialize dynamic databank
 	desire[0].id = 'goto_relax';
@@ -226,15 +233,27 @@ function UpdatePopDesires(pop) {
 	desire[5].id = 'cleaning';
 	desire[5].value = 15.00 + needsShower + GetPopPerkBool(pop, 'cleanie') * 25.00;
 	desire[6].id = 'goto_swim';
-	desire[6].value = (45.00 + needsShower) * (energy / 100) + GetPopPerkBool(pop, 'likesWater') * 25.00;
+	desire[6].value = (40.00 + needsShower) * (energy / 100) + GetPopPerkBool(pop, 'likesWater') * 25.00;
 	desire[7].id = 'running';
 	desire[7].value = energy / 2.00 + GetPopPerkBool(pop, 'hyperactive') * 25.00;
 	desire[8].id = 'group_join';
-	desire[8].value = needsSocial - socializeFail - (PopIsInGroup(pop) ? 1000 : 0);
+	desire[8].value = needsSocial - (PopIsInGroup(pop) ? 1000 : 0) - GetPopPerkBool(pop, 'asocial') * 25.00;
 	desire[9].id = 'group_leave';
-	desire[9].value = 80 - needsSocial * 2 - (PopIsInGroup(pop) ? 0 : 1000);
+	desire[9].value = 80 - needsSocial * 2 - (PopIsInGroup(pop) ? 0 : 1000) + GetPopPerkBool(pop, 'asocial') * 25.00;
 	desire[10].id = 'goto_unload';
 	desire[10].value = itemCount * 5;
+	desire[11].id = 'crying_lonely';
+	desire[11].value = needsSocial / 3 - (PopIsInGroup(pop) ? 1000 : 0) + GetPopPerkBool(pop, 'lonely') * 25.00;
+	desire[12].id = 'playing';
+	desire[12].value = needsSocial + GetPopPerkBool(pop, 'hyperactive') * 15.00 + GetPopPerkBool(pop, 'playful') * 15.00;
+
+	// Apply cooldowns and group size requirements
+	for (var i = 0; i < desire.length; i++) {
+		if (desire[i].id != undefined) {
+			desire[i].value -= GetPopActivityCooldown(pop, desire[i].id);
+			desire[i].value -= (PopGetGroupSize(pop) >= activities[desire[i].id].social ? 0 : 1000);
+		}
+	}
 
 	// Sort the list
 	desire.sort(function(a, b) {
@@ -246,6 +265,6 @@ function UpdatePopDesires(pop) {
 	population[pop].desire = desire[0].id;
 	population[pop].desireList = desire;
 	if (population[pop].desire != oldDesire) {
-		population[pop].desireString = ApplyLocale("desire", population[pop].desire);
+		population[pop].desireString = ApplyLocale("desire", population[pop].desire, pop);
 	}
 }

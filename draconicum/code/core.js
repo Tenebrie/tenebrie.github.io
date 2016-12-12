@@ -13,7 +13,7 @@ var socialGroups = [];
 var nestFood = 0;
 var localeData;
 
-var debugMode = true;
+var debugMode = false;
 
 //=====================================================================
 // Initialization
@@ -23,7 +23,8 @@ function Initialization() {
 	var activityList = ['idle', 'goto_eat', 'eating', 'sleeping', 'drinking',
 	'goto_sleep', 'waking', 'goto_drink', 'goto_hunt', 'hunting', 'goto_unload',
 	'unloading', 'goto_relax', 'relaxing', 'cleaning', 'goto_swim', 'swimming',
-	'running', 'group_join', 'group_leave', 'gofrom_swim', 'waiting'];
+	'running', 'group_join', 'group_leave', 'gofrom_swim', 'waiting', 'crying_lonely',
+	'crying_stop', 'playing'];
 
 	for (var i = 0; i < activityList.length; i++) {
 		activities[activityList[i]] = new Object();
@@ -33,6 +34,7 @@ function Initialization() {
 		activities[activityList[i]].physicalLoad = 0.00;
 		activities[activityList[i]].mentalLoad = 0.00;
 		activities[activityList[i]].social = 0;
+		activities[activityList[i]].cooldown = 50;
 	}
 	activities['idle'].length = -1.00;
 	activities['idle'].location = '*';
@@ -67,20 +69,30 @@ function Initialization() {
 	activities['goto_swim'].chain = 'swimming';
 	activities['goto_swim'].length = 10.00;
 	activities['goto_swim'].location = 'river';
+	activities['goto_swim'].cooldown = 200;
 	activities['swimming'].chain = 'gofrom_swim';
 	activities['swimming'].length = 30.00;
 	activities['swimming'].location = 'river';
-	activities['swimming'].physicalLoad = 1.50;
+	activities['swimming'].physicalLoad = 2.50;
 	activities['gofrom_swim'].length = 10.00;
 	activities['gofrom_swim'].location = 'river';
 	activities['running'].length = 10.00;
 	activities['running'].location = '*';
-	activities['running'].physicalLoad = 1.00;
+	activities['running'].physicalLoad = 2.00;
 	activities['group_join'].length = 10.00;
 	activities['group_join'].location = '*';
+	activities['group_join'].cooldown = 250.00;
 	activities['group_leave'].length = 5.00;
 	activities['group_leave'].location = '*';
 	activities['waiting'].location = '*';
+	activities['crying_lonely'].chain = 'crying_stop';
+	activities['crying_lonely'].length = 55.00;
+	activities['crying_lonely'].location = '*';
+	activities['crying_stop'].length = 10.00;
+	activities['crying_stop'].location = '*';
+	activities['playing'].length = 30.00;
+	activities['playing'].location = '*';
+	activities['playing'].social = 2;
 
 	var locationList = ['nest', 'river', 'forest'];
 	for (var i = 0; i < locationList.length; i++) {

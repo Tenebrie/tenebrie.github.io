@@ -34,9 +34,9 @@ function ShowPopulation() {
 			div += "<div>- Shower: " + Math.round(population[i].needsShower) + "</div>";
 			div += "<div>- Social: " + Math.round(population[i].needsSocial) + "</div>";
 			div += "</div>";
+			// Group
+			div += "<div>" + ApplyLocale("generic", "group") + ": " + PopGetGroup(i) + "</div>";
 		}
-		// Group
-		div += "<div>" + ApplyLocale("generic", "group") + ": " + PopGetGroup(i) + "</div>";
 		// Items
 		div += "<div>" + ApplyLocale("generic", "items") + ":";
 		if (population[i].items.Count() == 0) {

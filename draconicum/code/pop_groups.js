@@ -63,6 +63,18 @@ function PopGetGroup(pop) {
 }
 
 //=====================================================================
+// Get amount of members of pop's social group
+//=====================================================================
+function PopGetGroupSize(pop) {
+	if (population[pop] == undefined)
+		return 0;
+	var group = socialGroups[PopGetGroup(pop)];
+	if (group == undefined)
+		return 1;
+	return group.members.length;
+}
+
+//=====================================================================
 // Remove a pop from a social group (and destroy it, if needed)
 //=====================================================================
 function PopRemoveFromGroup(pop) {
@@ -104,6 +116,7 @@ function PopLookForGroup(pop) {
 		PopStartSocialGroup(pop);
 		for (var i = 0; i < mates.length; i++) {
 			PopsAddToGroup(pop, mates[i]);
+			population[mates[i]].activityTimer = 0;
 		}
 		//console.log("Group " + socialGroups.length + " size: " + socialGroups[socialGroups.length - 1].members.length);
 	}

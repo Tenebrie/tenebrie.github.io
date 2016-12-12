@@ -32,3 +32,14 @@ function GetPopDesireIndex(pop, activity) {
 	}
 	return -1;
 }
+
+//=====================================================================
+// Get pop's current activity cooldown
+//=====================================================================
+function GetPopActivityCooldown(pop, activity) {
+	for (var i = 0; i < population[pop].activityCooldown.length; i++) {
+		if (population[pop].activityCooldown[i].id == activity)
+			return population[pop].activityCooldown[i].timer / 1000;
+	}
+	return 0;
+}

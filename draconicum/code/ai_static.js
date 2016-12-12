@@ -41,8 +41,23 @@ function PreUpdateActivity(pop) {
 		{
 			// Reset the value to exactly zero
 			population[pop].activityTimer = 0;
-			// TODO: ON-COMPLETION EFFECTS GO HERE!
+			// On-completion effects
 			UpdatePopOnCompletion(pop);
+			// Set the activity cooldown
+			if (activities[population[pop].activity] != undefined) {
+				var cooldown = new Object();
+				cooldown.id = population[pop].activity;
+				cooldown.timer = activities[population[pop].activity].cooldown * 1000;
+				population[pop].activityCooldown.push(cooldown);
+			}
+		}
+	}
+	// Activity cooldowns
+	for (var i = 0; i < population[pop].activityCooldown.length; i++) {
+		population[pop].activityCooldown[i].timer -= 1000 / LFPS;
+		if (population[pop].activityCooldown[i].timer <= 0.00) {
+			population[pop].activityCooldown.splice(i, 1);
+			i -= 1;
 		}
 	}
 }
@@ -107,7 +122,7 @@ function SetActivity(pop, activity) {
 	if (activity == 'goto_hunt') { population[pop].currentRole = 'hunter'; }
 	// Check the activity string
 	if (population[pop].activity != oldActivity) {
-		population[pop].activityString = ApplyLocale("activity", population[pop].activity);
+		population[pop].activityString = ApplyLocale("activity", population[pop].activity, pop);
 	}
 }
 
@@ -117,7 +132,7 @@ function TravelTo(pop, location) {
 	population[pop].activityTimer = (distance * 1000) / GetPopModifier(pop, "speed");
 	if (GetPopPerkBool(pop, "fastFlyer")) { population[pop].activityTimer /= 2.00; }
 
-	population[pop].activityString = ApplyLocale("activity", population[pop].activity);
+	population[pop].activityString = ApplyLocale("activity", population[pop].activity, pop);
 }
 
 //=====================================================================

@@ -11,6 +11,7 @@ class Pop {
 		this.activityString = "";
 		this.activityTimer = -1;
 		this.activityQueue = [];
+		this.activityCooldown = [];
 
 		this.desire = "idle";
 		this.desireList = [];
@@ -20,7 +21,7 @@ class Pop {
 		this.needsWater = 0;
 		this.needsSleep = 0;
 		this.needsShower = 20;
-		this.needsSocial = 50;
+		this.needsSocial = 20;
 
 		this.location = "nest";
 		this.items = new Inventory();
@@ -40,19 +41,21 @@ class Pop {
 		var perkDataBank = [];
 		for (var i = 0; i < 32; i++) { perkDataBank[i] = new Object(); }
 		perkDataBank[0].id = 'likesWater';
-		perkDataBank[0].chance = 0.25;
+		perkDataBank[0].chance = 0.15;
 		perkDataBank[1].id = 'hyperactive';
-		perkDataBank[1].chance = 0.25;
+		perkDataBank[1].chance = 0.15;
 		perkDataBank[2].id = 'hunter';
-		perkDataBank[2].chance = 0.25;
+		perkDataBank[2].chance = 0.15;
 		perkDataBank[3].id = 'cleanie';
-		perkDataBank[3].chance = 0.25;
+		perkDataBank[3].chance = 0.15;
 		perkDataBank[4].id = 'fastFlyer';
-		perkDataBank[4].chance = 0.25;
+		perkDataBank[4].chance = 0.15;
 		perkDataBank[5].id = 'asocial';
-		perkDataBank[5].chance = 0.25;
+		perkDataBank[5].chance = 0.15;
 		perkDataBank[6].id = 'lonely';
-		perkDataBank[6].chance = 0.25;
+		perkDataBank[6].chance = 0.15;
+		perkDataBank[7].id = 'playful';
+		perkDataBank[7].chance = 0.15;
 
 		for (var i = 0; i < perkDataBank.length; i++) {
 			if (GetRandom(0.00, 1.00) <= perkDataBank[i].chance) {
