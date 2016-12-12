@@ -1,6 +1,9 @@
 
 class Name {
 	static Generate(race) {
+		// Static names:
+			// Лення'Лян
+		// Dynamic names:
 		var name = "";
 		var left = ['Нар', 'Зер', 'Кин', 'Лен', 'Ван', 'Тар'];
 		var center = ['ра', 'ну', 'ма', 'кро', 'ня'];

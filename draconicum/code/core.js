@@ -115,6 +115,7 @@ function Initialization() {
 	// Assign the event handlers
 	window.setInterval(ShowNestStats, 1000 / VFPS);
 	window.setInterval(ShowPopulation, 1000 / VFPS);
+	Find("PopulationAdd").addEventListener("click", function() { AddNewDragon(); });
 
 	// Load locale
 	LoadLocaleData("ru_ru");

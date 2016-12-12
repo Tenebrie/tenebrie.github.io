@@ -20,6 +20,7 @@ function ParseLocaleData(data) {
 function ApplyStaticLocale() {
 	Find("PopulationLabel").innerHTML = ApplyLocale("generic", "population") + ":";
 	Find("FoodLabel").innerHTML = ApplyLocale("generic", "food") + ":";
+	Find("PopulationAdd").innerHTML = ApplyLocale("generic", "add");
 }
 
 function FetchLocaleValue(source, key) {
