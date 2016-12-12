@@ -1,4 +1,6 @@
 
-function AddNewDragon() {
-	population.push(new Pop('dragon'));
+function AddNewDragon(count) {
+	for (var i = 0; i < count; i++) {
+		population.push(new Pop("dragon"));
+	}
 }

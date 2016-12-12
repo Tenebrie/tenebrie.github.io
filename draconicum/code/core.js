@@ -2,8 +2,8 @@
 //=====================================================================
 // Global scope variables
 //=====================================================================
-var VFPS = 10;
-var LFPS = 10;
+var VFPS = 3;
+var LFPS = 3;
 
 var population = [];
 var activities = [];
@@ -109,13 +109,14 @@ function Initialization() {
 	locations['forest'].distance = 45.00;
 
 	// Generate population
-	for (var i = 0; i < 3; i++) {
+	for (var i = 0; i < 10; i++) {
 		population.push(new Pop("dragon"));
 	}
 	// Assign the event handlers
 	window.setInterval(ShowNestStats, 1000 / VFPS);
 	window.setInterval(ShowPopulation, 1000 / VFPS);
-	Find("PopulationAdd").addEventListener("click", function() { AddNewDragon(); });
+	Find("PopulationAdd").addEventListener("click", function() { AddNewDragon(1); });
+	Find("PopulationAdd10").addEventListener("click", function() { AddNewDragon(10); });
 
 	// Load locale
 	LoadLocaleData("ru_ru");
