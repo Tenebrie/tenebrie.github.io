@@ -103,7 +103,7 @@ function initMusicList() {
 	musicList.push(new Song(3, 150, "Пять минут"));
 	musicList.push(new Song(3, 200, "We Wish You a Merry Christmas"));
 	musicList.push(new Song(3, 250, "Jingle Bells"));
-	musicList.push(new Song(3, 300, "Щелкунчик - Танец феи Драже"));
+	musicList.push(new Song(3, 300, "Пётр Ильич Чайковский - Щелкунчик"));
 
 	musicList.push(new Song(4, 100, "Дискотека Авария - Disco Superstar"));
 	musicList.push(new Song(4, 150, "Филипп Киркоров - Диско-партизаны"));
