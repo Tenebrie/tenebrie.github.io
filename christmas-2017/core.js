@@ -174,7 +174,7 @@ function initMusicTable() {
 // Score table
 //=================================================================================
 var playerScore = [];
-var players = ["Моника", "Саша", "Сергей", "Стелла", "Мартин", "Таня"];
+var players = ["Моника", "Саша", "Сергей", "Стелла", "Мартин"];
 
 function initScoreTable() {
 	var table = document.getElementById("table_score");
