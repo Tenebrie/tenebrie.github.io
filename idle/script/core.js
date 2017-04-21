@@ -11,15 +11,15 @@ function initialization() {
 	// Create timers
 	setInterval(advanceGame, 50);
 	// Create a hero
-	playerHero = new Hero(ClassEnum.Wizard);
+	playerHero = new Hero(ClassEnum.Warrior);
 	playerHero.updateStats();
 	// Force update
 	updateHeroStatus();
 	// Debug
-	for (var i = 0; i < 25; i++) {
-		storedLootItems.push(generateItem(RarityEnum.Common));
+	/*for (var i = 0; i < 25; i++) {
+		storedLootItems.push(generateItem(RarityEnum.Rare));
 	}
-	releaseCombatLoot();
+	releaseCombatLoot();*/
 }
 
 function advanceGame() {

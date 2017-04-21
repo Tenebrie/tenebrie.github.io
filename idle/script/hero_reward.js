@@ -6,7 +6,9 @@ function generateCombatLoot() {
 	for (var i = 0; i < engagedEnemies.length; i++) {
 		storedLootExp += engagedEnemies[i].expReward;
 
-		if (getRandomInt(0, 100) <= 50) { storedLootItems.push(generateItem(RarityEnum.Common)); }
+		var roll = getRandomInt(0, 100);
+		if (roll <= 30) { storedLootItems.push(generateItem(RarityEnum.Common, playerHero.level)); }
+		else if (roll <= 50) { storedLootItems.push(generateItem(RarityEnum.Rare, playerHero.level)); }
 	}
 }
 

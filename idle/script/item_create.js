@@ -3,7 +3,7 @@ function generateItem(rarity) {
 	var selected = [];
 	// Searching for suitable items in the database
 	for (var i = 0; i < databaseItemList.length; i++) {
-		if (databaseItemList[i].rarity == rarity) {
+		if (databaseItemList[i].rarity == rarity && databaseItemList[i].rollLevel.isInside(playerHero.level)) {
 			selected.push(databaseItemList[i]);
 		}
 	}
@@ -11,10 +11,11 @@ function generateItem(rarity) {
 	if (selected.length > 0) {
 		var selectedIndex = getRandomInt(0, selected.length);
 		var item = new Item();
-		item.instantianate(selected[selectedIndex]);
+		item.instantianate(selected[selectedIndex], playerHero.level);
 		return item;
 	}
 	else {
 		console.log('Can\'t generate an item! (Rarity: ' + rarity + ")");
 	}
 }
+

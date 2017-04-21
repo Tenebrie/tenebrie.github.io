@@ -21,10 +21,25 @@ function onClick_itemInventory(index) {
 		playerInventory.unselectAllItems();
 	}
 	updateHeroInventory();
+	updateDisplayedItemStats();
+}
+
+function onClick_itemEquipment(index) {
+	if (playerInventory.isEquipmentSelected(index) == false) {
+		playerInventory.unselectAllItems();
+		playerInventory.selectEquipmentItem(index);
+	}
+	else {
+		playerInventory.unselectAllItems();
+	}
+	updateHeroInventory();
+	updateDisplayedItemStats();
 }
 
 function onClick_itemEquip() {
 	playerInventory.equipAllSelected();
+	playerInventory.unselectAllItems();
+	playerHero.updateStats();
 	updateHeroInventory();
 	updateHeroEquipment();
 }

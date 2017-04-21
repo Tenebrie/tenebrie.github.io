@@ -1,11 +1,12 @@
 
 ClassEnum = {
-	Barbarian : "Barbarian",
-	Monk : "Monk",
-	DemonHunter : "Demon Hunter",
-	WitchDoctor : "Witch Doctor",
+	Warrior : "Warrior",
+	Rogue : "Rogue",
 	Wizard : "Wizard",
-	Crusader : "Crusader"
+	Priest : "Priest",
+	Bard : "Bard",
+
+	Any : "Any"
 };
 
 ActionEnum = {
@@ -20,10 +21,8 @@ ItemSlotEnum = {
 	Hands : "Hands",
 	Legs : "Legs",
 	Feet : "Feet",
-	MainHand : "Main Hand",
-	OffHand : "Off Hand",
-	Amulet : "Amulet",
-	Ring : "Ring"
+	Back : "Back",
+	Amulet : "Amulet"
 };
 
 ItemEquipTypeEnum = {
@@ -42,5 +41,11 @@ RarityEnum = {
 	Common : "Common",
 	Rare : "Rare",
 	Epic : "Epic",
-	Legendary : "Legendary"
+	Legendary : "Legendary",
+	Set : "Set"
+};
+
+AffixTypeEnum = {
+	Prefix : "Prefix",
+	Suffix : "Suffix"
 };

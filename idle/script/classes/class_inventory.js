@@ -1,9 +1,10 @@
 
 function Inventory() {
 	this.itemList = [];
-	this.selectedList = [];
-
 	this.equippedList = [];
+
+	// Indexes to the main list
+	this.selectedList = [];
 	this.selectedEquipList = [];
 }
 
@@ -21,12 +22,35 @@ Inventory.prototype.isItemSelected = function(index) {
 	return false;
 }
 
+Inventory.prototype.isEquipmentSelected = function(index) {
+	for (var i = 0; i < this.selectedEquipList.length; i++) {
+		if (this.selectedEquipList[i] == index) {
+			return true;
+		}
+	}
+	return false;
+}
+
 Inventory.prototype.selectItem = function(index) {
 	this.selectedList.push(index);
 }
 
+Inventory.prototype.selectEquipmentItem = function(index) {
+	this.selectedEquipList.push(index);
+}
+
+Inventory.prototype.getSelectedItem = function() {
+	if (this.selectedList.length > 0)
+		return this.itemList[this.selectedList[0]];
+	else if (this.selectedEquipList.length > 0)
+		return this.equippedList[this.selectedEquipList[0]];
+	else
+		return undefined;
+}
+
 Inventory.prototype.unselectAllItems = function(index) {
 	this.selectedList = [];
+	this.selectedEquipList = [];
 }
 
 Inventory.prototype.equipItem = function(index) {
@@ -43,12 +67,12 @@ Inventory.prototype.equipItem = function(index) {
 	var ringFound = [];
 
 	var canDualWield = true;
+	var canDualCrossbow = false;
 	var canTwoHandWithShield = true;
 	for (var i = 0; i < this.equippedList.length; i++) {
 		if (this.equippedList[i].equipType == ItemEquipTypeEnum.Shield) { hasShield = true; }
 		if (this.equippedList[i].equipType == ItemEquipTypeEnum.Quiver) { hasQuiver = true; }
 	}
-
 
 	for (var i = 0; i < this.equippedList.length; i++) {
 		// Generic items, only one in slot
@@ -102,8 +126,10 @@ Inventory.prototype.equipItem = function(index) {
 		{
 			itemsToUnequip.push(i);
 		}
+
 		// One-handed crossbows with quiver
-		else if (equipType == ItemEquipTypeEnum.OneHandCrossbow && this.equippedList[i].equipType == ItemEquipTypeEnum.OneHandCrossbow && hasQuiver == true)
+		else if (equipType == ItemEquipTypeEnum.OneHandCrossbow && this.equippedList[i].equipType == ItemEquipTypeEnum.OneHandCrossbow
+			&& (hasQuiver == true || canDualCrossbow == false))
 		{
 			itemsToUnequip.push(i);
 			//break;
