@@ -25,6 +25,7 @@ class Pop {
 
 		this.location = "nest";
 		this.items = new Inventory();
+		this.updateTimer = 0;
 		this.huntingTimer = 0;
 		this.patienceTimer = 0;
 		this.socializeFailTimer = 0;

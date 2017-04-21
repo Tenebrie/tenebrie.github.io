@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!-- Enumerators -->
+		<script src="script/values/enum_core.js"></script>
+		<!-- Support -->
+		<script src="script/support.js"></script>
+		<!-- Classes -->
+		<script src="script/classes/class_interval.js"></script>
+		<script src="script/classes/class_item.js"></script>
+		<script src="script/classes/class_inventory.js"></script>
+		<script src="script/classes/class_unit.js"></script>
+		<script src="script/classes/class_hero.js"></script>
+		<script src="script/classes/class_monster.js"></script>
+		<!-- Database -->
+		<script src="script/values/db_gen.js"></script>
+		<script src="script/values/db_items.js"></script>
+		<script src="script/values/db_monsters.js"></script>
+		<script src="script/values/db_core.js"></script>
+		<!-- Behaviors -->
+		<script src="script/variables.js"></script>
+		<script src="script/item_create.js"></script>
+		<script src="script/monster_create.js"></script>
+		<script src="script/hero_stats.js"></script>
+		<script src="script/hero_engage.js"></script>
+		<script src="script/hero_combat.js"></script>
+		<script src="script/hero_reward.js"></script>
+		<script src="script/update.js"></script>
+		<script src="script/event.js"></script>
+		<script src="script/core.js"></script>
+		<!-- End of scripts -->
+		<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="buttons.css">
+		<link rel="stylesheet" type="text/css" href="layout.css">
+	</head>
+	<body id="body" onload="initialization()">
+		<div id="sectionHero">
+			<div id="heroStatus">
+				<span>Level <span id="heroLevel">1</span> <span id="heroClass">Hero</span></span>
+				<br><br>
+				<span>Health: </span><span id="heroHealth">100</span><br>
+				<span>Resource: </span><span id="heroResource">0</span>
+				<br><br>
+				<span>Experience: </span><span id="heroExp">0</span> / <span id="heroExpNeeded">100</span><br>
+				<span>Current action: </span><span id="heroAction">In town</span>
+				<br><br>
+				<span>Gold: </span><span id="heroGold">0</span>
+				<br><br>
+				<span>Damage: </span><span id="heroDamageMin">0</span>-<span id="heroDamageMax">0</span><br>
+				<span>Armor: </span><span id="heroArmor">0</span><br>
+			</div>
+			<div id="heroControls">
+				<button id="gotoField">Go farming</button>
+				<button id="gotoTown">Return to town</button>
+			</div>
+		</div>
+		<div id="sectionInventory">
+			Inventory:
+			<div id="heroInventory">
+
+			</div>
+			<button id="itemEquip">Equip</button>
+			<button id="itemSell">Sell</button>
+			<button id="itemDisenchant">Disenchant</button>
+		</div>
+		<div id="sectionEquipment">
+			Equipped:
+			<div id="heroEquipment">
+			</div>
+		</div>
+	</body>
+</html>

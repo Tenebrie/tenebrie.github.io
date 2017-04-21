@@ -68,12 +68,12 @@ function GetPopModifier(pop, mod) {
 //=====================================================================
 // Apply activity in-progress effects
 //=====================================================================
-function UpdatePopInProgress(pop) {
+function UpdatePopInProgress(pop, TMOD) {
 	// TODO: IN-PROGRESS EFFECTS GO HERE
 	// Hunting for meat
 	if (population[pop].activity == "hunting") {
-		AdjustPopStat(pop, 'energy', -activities['hunting'].physicalLoad / LFPS);
-		population[pop].huntingTimer += 1000 / LFPS;
+		AdjustPopStat(pop, 'energy', -activities['hunting'].physicalLoad * TMOD);
+		population[pop].huntingTimer += 1000 * TMOD;
 		if (population[pop].huntingTimer >= 1000) {
 			population[pop].huntingTimer = 0;
 			if (GetRandom(0.00, 1.00) <= 0.50) {
@@ -88,7 +88,7 @@ function UpdatePopInProgress(pop) {
 	}
 	// Unloading items from inventory
 	if (population[pop].activity == "unloading") {
-		var isMoreLeft = population[pop].items.UnloadItemsToNest(10.00 / LFPS);
+		var isMoreLeft = population[pop].items.UnloadItemsToNest(10.00 * TMOD);
 		if (isMoreLeft == false) {
 			// Reset the role and stop activity
 			population[pop].activityTimer = 0;
@@ -127,22 +127,22 @@ function UpdatePopOnCompletion(pop) {
 //=====================================================================
 // Modify stats and needs
 //=====================================================================
-function UpdatePopStats(pop) {
+function UpdatePopStats(pop, TMOD) {
 	// Needs grow
-	population[pop].needsFood += 0.30 * GetPopModifier(pop, "drain_food") / LFPS;
-	population[pop].needsWater += 0.50 * GetPopModifier(pop, "drain_water") / LFPS;
-	population[pop].needsSleep += 0.15 * GetPopModifier(pop, "drain_sleep") / LFPS;
-	population[pop].needsShower += 0.07 * GetPopModifier(pop, "drain_shower") / LFPS;
-	population[pop].needsSocial += 0.20 * GetPopModifier(pop, "drain_social") / LFPS;
+	population[pop].needsFood += 0.30 * GetPopModifier(pop, "drain_food") * TMOD;
+	population[pop].needsWater += 0.50 * GetPopModifier(pop, "drain_water") * TMOD;
+	population[pop].needsSleep += 0.15 * GetPopModifier(pop, "drain_sleep") * TMOD;
+	population[pop].needsShower += 0.07 * GetPopModifier(pop, "drain_shower") * TMOD;
+	population[pop].needsSocial += 0.20 * GetPopModifier(pop, "drain_social") * TMOD;
 	// Energy
-	AdjustPopStat(pop, 'energy', 0.50 * GetPopModifier(pop, "regen_energy") / LFPS);
+	AdjustPopStat(pop, 'energy', 0.50 * GetPopModifier(pop, "regen_energy") * TMOD);
 	// Needs drop
 	// Eat
 	if (population[pop].activity == "eating") {
 		if (nestFood > 0.00) {
-			nestFood -= 2.00 / LFPS;
+			nestFood -= 2.00 * TMOD;
 			if (nestFood < 0.00) { nestFood = 0.00; }
-			population[pop].needsFood -= 15.00 / LFPS;
+			population[pop].needsFood -= 15.00 * TMOD;
 			if (population[pop].needsFood <= 0.00) {
 				population[pop].needsFood = 0.00;
 				population[pop].activityTimer = 0;
@@ -153,7 +153,7 @@ function UpdatePopStats(pop) {
 	}
 	// Drink
 	if (population[pop].activity == "drinking") {
-		population[pop].needsWater -= 30.00 / LFPS;
+		population[pop].needsWater -= 30.00 * TMOD;
 		if (population[pop].needsWater <= 0.00) {
 			population[pop].needsWater = 0.00;
 			population[pop].activityTimer = 0;
@@ -161,7 +161,7 @@ function UpdatePopStats(pop) {
 	}
 	// Sleep
 	if (population[pop].activity == "sleeping") {
-		population[pop].needsSleep -= 10.00 / LFPS;
+		population[pop].needsSleep -= 10.00 * TMOD;
 		if (population[pop].needsSleep <= 0.00) {
 			population[pop].needsSleep = 0.00;
 		}
@@ -169,35 +169,35 @@ function UpdatePopStats(pop) {
 	// Shower
 	if (population[pop].activity == "cleaning" || population[pop].activity == "swimming") {
 		if (population[pop].activity == "cleaning") {
-			population[pop].needsShower -= 5.00 / LFPS;
+			population[pop].needsShower -= 5.00 * TMOD;
 			if (population[pop].needsShower < 0) { population[pop].needsShower = 0; }
 		}
 		if (population[pop].activity == "swimming") {
-			population[pop].needsShower -= 15.00 / LFPS;
+			population[pop].needsShower -= 15.00 * TMOD;
 			if (population[pop].needsShower < 0) { population[pop].needsShower = 0; }
-			AdjustPopStat(pop, 'energy', -activities['swimming'].physicalLoad / LFPS);
+			AdjustPopStat(pop, 'energy', -activities['swimming'].physicalLoad * TMOD);
 			if (population[pop].energy < 0) { population[pop].activityTimer = 0; }
 		}
 	}
 	// Any social activity
 	if (PopIsInGroup(pop)) {
-		population[pop].needsSocial -= 0.50 / LFPS;
+		population[pop].needsSocial -= 0.50 * TMOD;
 		if (population[pop].needsSocial < 0.00)
 			population[pop].needsSocial = 0.00;
 	}
 	// Crying lonely
 	if (population[pop].activity == "crying_lonely") {
-		population[pop].needsSocial -= 0.75 / LFPS;
+		population[pop].needsSocial -= 0.75 * TMOD;
 		if (population[pop].needsSocial < 0.00) {
 			population[pop].needsSocial = 0.00;
 			population[pop].activityTimer = 0;
 		}
 	}
 	// In-progress effects
-	UpdatePopInProgress(pop);
+	UpdatePopInProgress(pop, TMOD);
 	// TIMERS
-	TickPopTimer(pop, "patience", 1.00 / LFPS);
-	TickPopTimer(pop, "socializeFail", 1.00 / LFPS);
+	TickPopTimer(pop, "patience", 1.00 * TMOD);
+	TickPopTimer(pop, "socializeFail", 1.00 * TMOD);
 }
 
 //=====================================================================
@@ -229,11 +229,11 @@ function UpdatePopDesires(pop) {
 	desire[3].id = 'goto_sleep';
 	desire[3].value = needsSleep / 2;
 	desire[4].id = 'goto_hunt';
-	desire[4].value = 10.00 + (75 - nestFood) - GetRoleCount('hunter') * 100 + GetPopPerkBool(pop, 'hunter') * 25.00;
+	desire[4].value = 10.00 + (GetFoodDemand() - nestFood) - GetRoleCount('hunter') * 100 + GetPopPerkBool(pop, 'hunter') * 25.00;
 	desire[5].id = 'cleaning';
 	desire[5].value = 15.00 + needsShower + GetPopPerkBool(pop, 'cleanie') * 25.00;
 	desire[6].id = 'goto_swim';
-	desire[6].value = (40.00 + needsShower) * (energy / 100) + GetPopPerkBool(pop, 'likesWater') * 25.00;
+	desire[6].value = (35.00 + needsShower) * (energy / 100) + GetPopPerkBool(pop, 'likesWater') * 25.00;
 	desire[7].id = 'running';
 	desire[7].value = energy / 2.00 + GetPopPerkBool(pop, 'hyperactive') * 25.00;
 	desire[8].id = 'group_join';
@@ -241,7 +241,7 @@ function UpdatePopDesires(pop) {
 	desire[9].id = 'group_leave';
 	desire[9].value = 80 - needsSocial * 2 - (PopIsInGroup(pop) ? 0 : 1000) + GetPopPerkBool(pop, 'asocial') * 25.00;
 	desire[10].id = 'goto_unload';
-	desire[10].value = itemCount * 5;
+	desire[10].value = itemCount * 10;
 	desire[11].id = 'crying_lonely';
 	desire[11].value = needsSocial / 3 - (PopIsInGroup(pop) ? 1000 : 0) + GetPopPerkBool(pop, 'lonely') * 25.00;
 	desire[12].id = 'playing';

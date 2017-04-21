@@ -13,7 +13,7 @@ function ShowNestStats() {
 function ShowPopulation() {
 	var output = "";
 	if (localeData == undefined) { return; }
-	for (var i = 0; i < population.length; i++) {
+	for (var i = 0; i < Math.min(50, population.length); i++) {
 		var div = "<div class='PopStats'>";
 		// Name
 		div += "<div>" + ApplyLocale("generic", population[i].race) + " " + population[i].name + "</div>";

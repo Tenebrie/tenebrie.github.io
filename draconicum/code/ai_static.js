@@ -9,6 +9,7 @@ function StartAI() {
 //=====================================================================
 // Main AI update function
 //=====================================================================
+var PopUpdateOptimizationIndex = 0;
 function UpdatePops() {
 	// For each group...
 	for (var i = 0; i < socialGroups.length; i++) {
@@ -16,26 +17,36 @@ function UpdatePops() {
 		SetGroupActivity(i, socialGroups[i].desire);
 	}
 	// For each pop...
-	for (var i = 0; i < population.length; i++) {
+	var currentTime = performance.now();
+	var PopUpdateMaximumIndex = PopUpdateOptimizationIndex + 50;
+	for (var i = PopUpdateOptimizationIndex; i < Math.min(PopUpdateMaximumIndex, population.length); i++) {
+		// Update time modifier
+		var TMOD = (currentTime - population[i].updateTimer) / 1000;
+		population[i].updateTimer = currentTime;
 		// Update stats
-		UpdatePopStats(i);
+		UpdatePopStats(i, TMOD);
 		// Update desires
 		UpdatePopDesires(i);
 		// Update current activity
-		PreUpdateActivity(i);
+		PreUpdateActivity(i, TMOD);
 		if (population[i].race == "dragon") { UpdateDragonActivity(i); }
+		// Optimization
+		PopUpdateOptimizationIndex += 1;
+		if (PopUpdateOptimizationIndex >= population.length) {
+			PopUpdateOptimizationIndex = 0;
+		}
 	}
 }
 
 //=====================================================================
 // Activity check before the chains and desires apply
 //=====================================================================
-function PreUpdateActivity(pop) {
+function PreUpdateActivity(pop, TMOD) {
 	// Move activity timer
 	if (population[pop].activityTimer > 0)
 	{
 		// Move the timer value
-		population[pop].activityTimer -= 1000 / LFPS;
+		population[pop].activityTimer -= 1000 * TMOD;
 		// Reached zero
 		if (population[pop].activityTimer <= 0)
 		{
@@ -54,7 +65,7 @@ function PreUpdateActivity(pop) {
 	}
 	// Activity cooldowns
 	for (var i = 0; i < population[pop].activityCooldown.length; i++) {
-		population[pop].activityCooldown[i].timer -= 1000 / LFPS;
+		population[pop].activityCooldown[i].timer -= 1000 * TMOD;
 		if (population[pop].activityCooldown[i].timer <= 0.00) {
 			population[pop].activityCooldown.splice(i, 1);
 			i -= 1;

@@ -1,0 +1,18 @@
+
+#sectionHero {
+	width: 20%;
+	float: left;
+	display: block;
+}
+
+#sectionInventory {
+	width: 20%;
+	float: left;
+	display: block;
+}
+
+#sectionEquipment {
+	width: 20%;
+	float: left;
+	display: block;
+}
