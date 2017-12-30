@@ -2,8 +2,6 @@
 // Page initialization
 window.onload = function() {
 	// Fullscreen
-	//document.getElementById("btn_fullscreen").addEventListener("click", btn_fullscreen_onclick);
-	//stopFullScreen();
 	// Score table
 	initScoreTable();
 	// Music list
@@ -13,13 +11,6 @@ window.onload = function() {
 	initMusicControls();
 	// Answer window
 	initAnswerWindow();
-}
-
-//=================================================================================
-// Answer window
-//=================================================================================
-function initAnswerWindow() {
-	//document.getElementById("")
 }
 
 //=================================================================================
@@ -115,14 +106,6 @@ function initMusicList() {
 	musicList.push(new Song(6, 200, "Britney Spears - Toxic"));
 	musicList.push(new Song(6, 300, "Queen - We Will Rock You"));
 	musicList.push(new Song(6, 400, "Joe Dassin - L'ete Indien"));
-	//var songNum = 0;
-	/*for (var i = 0; i < 7; i++) {
-		//categoryList.push("Категория " + i);
-		for (var y = 0; y < 4; y++) {
-			var rowId = (i > 9) ? i : "0" + i;
-			musicList.push(new Song(i, (y + 1) * 100, "Тестовая песня " + songNum++, rowId + "_" + y * 100 +".ogg"));
-		}
-	}*/
 }
 
 function initMusicTable() {
@@ -155,8 +138,8 @@ function initMusicTable() {
 		var rowId = (musicList[i].category > 9) ? musicList[i].category : "0" + musicList[i].category;
 		var fullId = rowId + "_" + musicList[i].cost;
 		var button = document.getElementById("song" + fullId);
-		button.addEventListener("click", function(arg) {
-			selectedSongId = arg.target.id.substring(4);
+		button.addEventListener("click", function() {
+			selectedSongId = this.id.substring(4);
 			var songCat = parseInt(selectedSongId.substring(0, 2));
 			var songCost = parseInt(selectedSongId.substring(3));
 			document.getElementById("table_music_answer").innerHTML = categoryList[songCat] + " - " + songCost;
@@ -175,7 +158,7 @@ function initMusicTable() {
 // Score table
 //=================================================================================
 var playerScore = [];
-var players = ["Моника", "Саша", "Сергей", "Стелла", "Мартин", "Таня"];
+var players = ["Моника", "Саша", "Сергей", "Стелла", "Мартин"];
 
 function initScoreTable() {
 	var table = document.getElementById("table_score");
@@ -205,8 +188,8 @@ function initScoreTable() {
 	// Register the event handlers
 	for (var i = 0; i < players.length; i++) {
 		var playerId = (i > 9) ? i : "0" + i;
-		document.getElementById("scoreplus" + playerId).addEventListener("click", function(arg){ addScore(arg.target.id.substring(9)); });
-		document.getElementById("scoreminus" + playerId).addEventListener("click", function(arg){ subScore(arg.target.id.substring(10)); });
+		document.getElementById("scoreplus" + playerId).addEventListener("click", function(){ addScore(this.id.substring(9)); });
+		document.getElementById("scoreminus" + playerId).addEventListener("click", function(){ subScore(this.id.substring(10)); });
 	}
 }
 
@@ -228,6 +211,35 @@ function updateScoreTable() {
 		var display = document.getElementById("score" + playerId);
 		display.innerHTML = playerScore[i];
 	}
+}
+
+//=================================================================================
+// Console controls
+//=================================================================================
+function table(cmd, arg) {
+	if (cmd === 'add') {
+		players.push(arg);
+		initScoreTable();
+	}
+	else if (cmd === 'remove') {
+		var index = parseInt(arg);
+		if (index >= 0 && index < players.length) {
+			players.splice(index, 1);
+			playerScore.splice(index, 1);
+			initScoreTable();
+		}
+		else {
+			console.error('Incorrect index!');
+		}
+	}
+	else if (cmd === 'reset') {
+		playerScore = [];
+		initScoreTable();
+	}
+	else if (cmd === 'render') {
+		initScoreTable();
+	}
+	return 'Success!';
 }
 
 //=================================================================================

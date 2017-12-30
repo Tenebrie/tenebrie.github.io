@@ -2,8 +2,6 @@
 // Page initialization
 window.onload = function() {
 	// Fullscreen
-	//document.getElementById("btn_fullscreen").addEventListener("click", btn_fullscreen_onclick);
-	//stopFullScreen();
 	// Score table
 	initScoreTable();
 	// Music list
@@ -13,13 +11,6 @@ window.onload = function() {
 	initMusicControls();
 	// Answer window
 	initAnswerWindow();
-}
-
-//=================================================================================
-// Answer window
-//=================================================================================
-function initAnswerWindow() {
-	//document.getElementById("")
 }
 
 //=================================================================================
@@ -154,8 +145,8 @@ function initMusicTable() {
 		var rowId = (musicList[i].category > 9) ? musicList[i].category : "0" + musicList[i].category;
 		var fullId = rowId + "_" + musicList[i].cost;
 		var button = document.getElementById("song" + fullId);
-		button.addEventListener("click", function(arg) {
-			selectedSongId = arg.target.id.substring(4);
+		button.addEventListener("click", function() {
+			selectedSongId = this.id.substring(4);
 			var songCat = parseInt(selectedSongId.substring(0, 2));
 			var songCost = parseInt(selectedSongId.substring(3));
 			document.getElementById("table_music_answer").innerHTML = categoryList[songCat] + " - " + songCost;
@@ -204,8 +195,8 @@ function initScoreTable() {
 	// Register the event handlers
 	for (var i = 0; i < players.length; i++) {
 		var playerId = (i > 9) ? i : "0" + i;
-		document.getElementById("scoreplus" + playerId).addEventListener("click", function(arg){ addScore(arg.target.id.substring(9)); });
-		document.getElementById("scoreminus" + playerId).addEventListener("click", function(arg){ subScore(arg.target.id.substring(10)); });
+		document.getElementById("scoreplus" + playerId).addEventListener("click", function(){ addScore(this.id.substring(9)); });
+		document.getElementById("scoreminus" + playerId).addEventListener("click", function(){ subScore(this.id.substring(10)); });
 	}
 }
 
@@ -227,6 +218,35 @@ function updateScoreTable() {
 		var display = document.getElementById("score" + playerId);
 		display.innerHTML = playerScore[i];
 	}
+}
+
+//=================================================================================
+// Console controls
+//=================================================================================
+function table(cmd, arg) {
+	if (cmd === 'add') {
+		players.push(arg);
+		initScoreTable();
+	}
+	else if (cmd === 'remove') {
+		var index = parseInt(arg);
+		if (index >= 0 && index < players.length) {
+			players.splice(index, 1);
+			playerScore.splice(index, 1);
+			initScoreTable();
+		}
+		else {
+			console.error('Incorrect index!');
+		}
+	}
+	else if (cmd === 'reset') {
+		playerScore = [];
+		initScoreTable();
+	}
+	else if (cmd === 'render') {
+		initScoreTable();
+	}
+	return 'Success!';
 }
 
 //=================================================================================
