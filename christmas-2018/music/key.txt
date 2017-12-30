@@ -1,0 +1,220 @@
+
+
+
+
+Bonnie Tyler - I Need a Hero
+Depeche Mode Personal Jesus / Sounds of Silence
+Scorpions - Wind of Change
+a-Ha - Take me on (Sweden)
+Led Zeppelin
+Queen - Show must go on
+Dr. Alban - It's my life
+Jamiroquai - Virtual Insanity
+Red Hot Chili Peppers - Californication
+The Weather Girls - It's Raining Men
+Kiss - I Was Made For Lovin' You
+Baccara - Yes Sir, I Can Boogie
+Shakira
+The Godfather theme (https://www.youtube.com/watch?v=HWqKPWO5T4o)
+
+
+
+
+
+
+
+Папа:
+1. Ласковый май
+2. Машина времени
+3. Мираж
+
+Мама (по версии мамы):
+1. Машина времени (старое)
+2. The Final Countdown
+3. Рамштайн
+
+Мама:
+1. Рамштайн
+2. Лепс
+3. Челентано
+
+Саша:
+Benny Benassi
+
+Мартин:
+Время и Стекло –Тролль
+SEREBRO – Между нами любовь
+PPAP – Pen Pineapple Apple Pen
+
+
+
+
+
+
+	musicList.push(new Song(0, 100, "Максим Леонидов - Девочка-видение"));
+	musicList.push(new Song(0, 200, "Boney M - Rasputin"));
+	musicList.push(new Song(0, 300, "Веселые Ребята - Уходило лето"));
+	musicList.push(new Song(0, 400, "Земляне - Трава у дома"));
+
+	musicList.push(new Song(1, 100, "Джентельмены удачи"));
+	musicList.push(new Song(1, 200, "У природы нет плохой погоды (Служебный роман)"));
+	musicList.push(new Song(1, 300, "Кин-Дза-Дза"));
+	musicList.push(new Song(1, 400, "В бой идут одни старики"));
+
+	musicList.push(new Song(2, 100, "Ричард Вагнер - Полет валькирий"));
+	musicList.push(new Song(2, 200, "Моцарт - Симфония №40, часть 1"));
+	musicList.push(new Song(2, 300, "Эдвард Григ - В пещере Горного Короля"));
+	musicList.push(new Song(2, 400, "Иоганн Себастьян Бах - Токката и фуга ре минор"));
+
+	musicList.push(new Song(3, 100, "PSY - Gangnam Style"));
+	musicList.push(new Song(3, 200, "Yolanda be Cool - Papa Americano"));
+	musicList.push(new Song(3, 300, "Michael Jackson - Billie Jean"));
+	musicList.push(new Song(3, 400, "Пьер Нарцисс - Шоколадный Заяц"));
+
+	musicList.push(new Song(4, 100, "Александр Рыбак - Fairytale (Remix)"));
+	musicList.push(new Song(4, 200, "Дискотека Авария - Пей Пиво"));
+	musicList.push(new Song(4, 300, "Виктор Цой - Звезда по имени Солнце (Remix)"));
+	musicList.push(new Song(4, 400, "Crazy Frog - Axel F"));
+
+	musicList.push(new Song(5, 100, "Государственный гимн СССР"));
+	musicList.push(new Song(5, 200, "Государственный гимн США"));
+	musicList.push(new Song(5, 300, "Государственный гимн Эстонской ССР"));
+	musicList.push(new Song(5, 400, "Государственный гимн Израиля"));
+
+	musicList.push(new Song(6, 100, "Игорь Корнелюк - Город, которого нет"));
+	musicList.push(new Song(6, 200, "Britney Spears - Toxic"));
+	musicList.push(new Song(6, 300, "Queen - We Will Rock You"));
+	musicList.push(new Song(6, 400, "Joe Dassin - L'ete Indien"));
+
+
+
+	musicList.push(new Song(0, 100, "Deep Purple - Smoke on the Water"));
+	musicList.push(new Song(0, 150, "Pink Floyd - Another Brick in the Wall"));
+	musicList.push(new Song(0, 200, "ABBA - Gimme! Gimme! Gimme!"));
+	musicList.push(new Song(0, 250, "Eagles - Hotel California"));
+	musicList.push(new Song(0, 300, "Kiss - I Was Made For Loving You"));
+
+	musicList.push(new Song(1, 100, "Сергей Лазарев - You Are The Only One (Russia)"));
+	musicList.push(new Song(1, 150, "IVAN - Help You Fly (Belarus)"));
+	musicList.push(new Song(1, 200, "Jamala - 1944 (Ukraine)"));
+	musicList.push(new Song(1, 250, "Poli Genova - If Love Was a Crime (Bulgaria)"));
+	musicList.push(new Song(1, 300, "Dami Im - Sound Of Silence (Australia)"));
+
+	musicList.push(new Song(2, 100, "Ghostbusters / Охотники за Привидениями"));
+	musicList.push(new Song(2, 150, "Back to the Future / Назад в Будущее"));
+	musicList.push(new Song(2, 200, "007: James Bond / Агент 007"));
+	musicList.push(new Song(2, 250, "Mission Impossible / Миссия Невыполнима"));
+	musicList.push(new Song(2, 300, "Star Wars / Звездные Войны"));
+
+	musicList.push(new Song(3, 100, "Ирония Судьбы"));
+	musicList.push(new Song(3, 150, "Пять минут"));
+	musicList.push(new Song(3, 200, "We Wish You a Merry Christmas"));
+	musicList.push(new Song(3, 250, "Jingle Bells"));
+	musicList.push(new Song(3, 300, "Пётр Ильич Чайковский - Щелкунчик"));
+
+	musicList.push(new Song(4, 100, "Дискотека Авария - Disco Superstar"));
+	musicList.push(new Song(4, 150, "Филипп Киркоров - Диско-партизаны"));
+	musicList.push(new Song(4, 200, "Бурановские Бабушки - Party for Everybody"));
+	musicList.push(new Song(4, 250, "LMFAO - Party Rock Anthem"));
+	musicList.push(new Song(4, 300, "PSY - Hangover"));
+
+	musicList.push(new Song(5, 100, "Крылатые качели"));
+	musicList.push(new Song(5, 150, "Учат в школе"));
+	musicList.push(new Song(5, 200, "Пока часы 12 бьют"));
+	musicList.push(new Song(5, 250, "Кабы не было зимы"));
+	musicList.push(new Song(5, 300, "Умка"));
+
+	musicList.push(new Song(6, 100, "Деревня Дураков"));
+	musicList.push(new Song(6, 150, "Ylvis - What Does the Fox Say"));
+	musicList.push(new Song(6, 200, "Эдуард Хиль - Песня без слов"));
+	musicList.push(new Song(6, 250, "Lordi - Hard Rock Hallelujah (Instrumental)"));
+	musicList.push(new Song(6, 300, "Людвиг ван Бетховен - Ода к Радости"));
+
+
+--------------------------------------------------------------------------------------------
+00 - Российская минутка:
++ 1. Григорий Лепс - Рюмка водки на столе
++ 2. Алла Пугачева - Волшебник недоучка
++ 3. Машина Времени - Поворот
++ 4. Наутилус Помпилиус - Скованные одной цепью
++ 5. Аквариум - Город золотой (К/Ф "Асса")
+
+01 - Звучит не так:
++ 1. Jingle Bells (Sad version)
++ 2. Abney Park - Katyusha
++ 3. Benny Hill
++ 4. Dschinghis Khan - Moskau
++ 5. Bonnie Tyler - Holding Out For A Hero
+
+02 - Музыка из фильмов:
++ 1. Harry Potter
++ 2. Pirates of the Carribbean
++ 3. Indiana Jones
++ 4. Lord of the Rings
++ 5. Game of Thrones, Season 01 Finale
+
+03 - Eurovision winners:
++ 1. Conchita Wurst - Rise Like a Phoenix [2014, Austria]
++ 2. Loreen - Euphoria [2012, Sweden]
++ 3. Marija Serifovic - Molitva [2007, Serbia]
++ 4. Mans Zelmerlow - Heroes [2015, Sweden]
++ 5. Salvador Sobral - Amar Pelos Dois [2017, Portugal]
+
+--------------------------------------------------------------------------------------------
+10 - Потанцульки:
++ 1. Los del Rio - Macarena
++ 2. Spice Girls - Wannabe
++ 3. The Weather Girls - It's Raining Men
++ 4. Kaoma - Lambada
++ 5. Ricky Martin - Livin' La Vida Loca
+
+11 - Классический Дисней:
++ 1. Король Лев
++ 2. Красавица и чудовище
++ 3. Мулан
++ 4. Русалочка
++ 5. Робин Гуд
+
+12 - M. J. Special:
++ 1. Michael Jackson - Thriller
++ 2. Michael Jackson - Bad
++ 3. Michael Jackson - Billie Jean
++ 4. Michael Jackson - Black or White
++ 5. Michael Jackson - Earth Song
+
+13 - Небесная тематика:
++ 1. AC/DC - Highway to Hell
++ 2. Depeche Mode - Personal Jesus
++ 3. Coolio - Gangsta's Paradise
++ 4. Guns N' Roses - Paradise City
++ 5. Two Steps From Hell - Heart of Courage
+
+14 - Разное:
++ 1. Queen - Show Must Go On
++ 2. Eiffel 65 - Blue
++ 3. Rammstein - Amerika
++ 4. Daft Punk - Around The World
++ 5. a-ha - Take On Me
+
+--------------------------------------------------------------------------------------------
+Блиц (Папа):
+1. Status Quo - In The Army Now (https://www.youtube.com/watch?v=kmCyUePGMrM)
+2. 
+3. 
+
+Блиц (Мама):
+1. Joe Dassin - A Toi (https://www.youtube.com/watch?v=xwiPiQFqD-U)
+2. 
+3. 
+
+Блиц (Стелла):
+1. 
+2. 
+3. Shakira - Waka Wara (https://www.youtube.com/watch?v=pRpeEdMmmQ0)
+
+---------------------------------------------------------------------------------------------
+Суперигра:
+1. Игра Престолов (https://www.youtube.com/watch?v=EOmsmFZe900)
+2. Scorpions - Wind of Change (https://www.youtube.com/watch?v=cHhtFjP5Uqk)
+3. Celine Dion - My Heart Will Go On (https://www.youtube.com/watch?v=gWhH32mJ6OA)
+4. Охотники за привидениями (https://www.youtube.com/watch?v=LvoSeYF0s9A)
