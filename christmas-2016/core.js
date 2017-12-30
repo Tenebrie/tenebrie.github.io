@@ -9,8 +9,6 @@ window.onload = function() {
 	initMusicTable();
 	// Music controls
 	initMusicControls();
-	// Answer window
-	initAnswerWindow();
 }
 
 //=================================================================================
