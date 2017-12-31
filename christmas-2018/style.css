@@ -19,6 +19,10 @@
 	font-size: 28px;
 }
 
+.scoreFontRight {
+  text-align: right;
+}
+
 .songCatFont {
 	color: white;
 	font-size: 30px;

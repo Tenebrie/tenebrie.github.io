@@ -1,76 +1,66 @@
 
-.container
-{
+.container {
     width: 100%;
 }
 
-.biggerFont
-{
+.biggerFont {
 	font-size: 16px;
 }
 
-.biggestFont
-{
+.biggestFont {
 	font-size: 18px;
 }
 
-.scoreLabelFont
-{
+.scoreLabelFont {
 	color: white;
 }
 
-.scoreFont
-{
+.scoreFont {
 	color: white;
 	font-size: 28px;
 }
 
-.songCatFont
-{
+.scoreFontRight {
+  text-align: right;
+}
+
+.songCatFont {
 	color: white;
 	font-size: 30px;
 }
 
-.answerFont
-{
+.answerFont {
 	text-align: center;
 	color: white;
 	font-size: 36px;
 }
 
-.songBtnFont
-{
+.songBtnFont {
 	font-size: 30px;
 }
 
-.btn-song
-{
+.btn-song {
 	width: 85%;
 }
 
-.table_music_col00
-{
+.table_music_col00 {
 	width: 18%;
 }
 
-.table_music_td
-{
+.table_music_td {
 	height: 100px;
 	text-align: center;
 }
 
-.table tbody>tr>td.vert-middle
-{
+.table tbody>tr>td.vert-middle {
     vertical-align: middle;
 }
 
-.btn-vert-middle
-{ 
+.btn-vert-middle {
 	vertical-align: middle;
 }
 
-.btn-close
-{
+.btn-close {
 	position: fixed;
 	right: 2px;
 	top: 2px;
@@ -78,21 +68,18 @@
 	padding: 5px;
 }
 
-#module_01_controls
-{
+#module_01_controls {
 	position: fixed;
 	bottom: 3px;
 	right: 5px;
 }
 
-#span_selectedSongId
-{
+#span_selectedSongId {
 	vertical-align: middle;
 	margin-left: 50px;
 }
 
-#module_01_answer
-{
+#module_01_answer {
 	position: absolute;
 	left: 5%;
 	top: 45%;
@@ -102,18 +89,15 @@
 	border: 3px;
 }
 
-body
-{
+body {
 	overflow: hidden;
 }
 
-#table_music_main
-{
+#table_music_main {
 	margin-top: 5px;
 }
 
-.background-image
-{
+.background-image {
 	background: no-repeat center center fixed; 
 	background-size: cover;
 	display: block;

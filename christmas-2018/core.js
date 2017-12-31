@@ -1,7 +1,7 @@
 // Database
 var DB = {
 	currentPage: 0,
-	totalPages: 3,
+	totalPages: 4,
 	
 	songFileFormat: '.ogg',
 };
@@ -68,6 +68,10 @@ function performPageTransition() {
 	// Second module
 	else if (DB.currentPage === 2) {
 		document.getElementById("table_music_answer").innerHTML = 'Второй тур!';
+	}
+	// Final module
+	else if (DB.currentPage === 3) {
+		document.getElementById("table_music_answer").innerHTML = 'Супер игра!';
 	}
 }
 
@@ -202,6 +206,14 @@ function initMusicList(page) {
 		musicList.push(new Song(14, 350, "Daft Punk - Around The World"));
 		musicList.push(new Song(14, 400, "a-ha - Take On Me"));
 	}
+	else if (page === 3) {
+		categoryList = ["#1 (30 нот)", "#2 (26 нот)", "#3 (18 нот)", "#4 (37 нот)"];
+		
+		musicList.push(new Song(20, 1000, "Игра Престолов"));
+		musicList.push(new Song(21, 1000, "Celine Dion - My Heart Will Go On"));
+		musicList.push(new Song(22, 1000, "Scorpions - Wind of Change"));
+		musicList.push(new Song(23, 1000, "Охотники за привидениями"));
+	}
 }
 
 function initMusicTable(page) {
@@ -220,7 +232,7 @@ function initMusicTable(page) {
 			// New row
 			content += "<tr>";
 			// Category name
-			var categoryName = (currentCategory > 9) ? categoryList[currentCategory - 10] : categoryList[currentCategory];
+			var categoryName = (currentCategory > 9) ? categoryList[currentCategory % 10] : categoryList[currentCategory];
 			content += "<td class='table_music_td vert-middle'><span class='songCatFont'>" + categoryName + "</span></td>";
 		}
 		// Current song
@@ -240,7 +252,7 @@ function initMusicTable(page) {
 			selectedSongId = this.id.substring(4);
 			var songCat = parseInt(selectedSongId.substring(0, 2));
 			var songCost = parseInt(selectedSongId.substring(3));
-			var songCatName = categoryList[songCat > 9 ? songCat - 10 : songCat];
+			var songCatName = categoryList[songCat > 9 ? songCat % 10 : songCat];
 			document.getElementById("table_music_answer").innerHTML = songCatName + " - " + songCost;
 			// Find the song name
 			for (var y = 0; y < musicList.length; y++) {
@@ -275,7 +287,7 @@ function initScoreTable() {
 		content += players[i] + ":";
 		content += "</td>";
 		// Player score
-		content += "<td id='score" + playerId + "' class='scoreFont'>";
+		content += "<td id='score" + playerId + "' class='scoreFont scoreFontRight'>";
 		content += "0";
 		content += "</td>";
 		// Buttons

@@ -179,7 +179,7 @@ function initScoreTable() {
 		content += players[i] + ":";
 		content += "</td>";
 		// Player score
-		content += "<td id='score" + playerId + "' class='scoreFont'>";
+		content += "<td id='score" + playerId + "' class='scoreFont scoreFontRight'>";
 		content += "0";
 		content += "</td>";
 		// Buttons
