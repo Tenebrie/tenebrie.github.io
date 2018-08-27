@@ -345,8 +345,20 @@
       ];
 
       var commitedPages = [];
-
+      
       $(function() {
+        applyMainJson();
+        $('#inputJson')[0].value = JSON.stringify(mainBookData, null, 4);
+        $('#evaluateJsonButton').on('click', function() {
+          mainBookData = JSON.parse($('#inputJson')[0].value);
+          commitedPages = [];
+          applyMainJson();
+          addLeftRightTagsToPages();
+          $('.book-main').booklet();
+        });
+      });
+
+      function applyMainJson() {
         var currentPage = 0;
         var currentPageChild = 0;
         var commitedPageChildren = [];
@@ -447,7 +459,7 @@
         
         $(".book-main").html(resultHtml);
         $("#resultHtml")[0].value = resultHtml;
-      });
+      }
 
     </script>
   </head>
@@ -467,10 +479,19 @@
       </div>
     </div>
     
-    <textarea style="width: 100%; height: 300px" id="resultHtml"></textarea>
+    <div>
+      <span class="editor-label">Код:</span>
+      <textarea style="width: 100%; height: 300px" id="inputJson"></textarea>
+    </div>
+    <button id="evaluateJsonButton">Применить код</button>
+    
+    <div>
+      <span class="editor-label">Результат:</span>
+      <textarea style="width: 100%; height: 300px" id="resultHtml"></textarea>
+    </div>
 
     <script>
-      $(function() {
+      function addLeftRightTagsToPages() {
         var pagesFound = 0;
         $('.book-page').each(function(index, element) {
           if (pagesFound % 2 === 0) {
@@ -480,7 +501,9 @@
           }
           pagesFound += 1;
         });
-
+      }
+    
+      $(function() {
         $.fn.booklet.defaults.width = 960;
         $.fn.booklet.defaults.height = 706;
         $.fn.booklet.defaults.speed = 600;
@@ -495,6 +518,7 @@
         $.fn.booklet.defaults.closed = true;
         $.fn.booklet.defaults.closedFrontChapter = mainBookData[0].header;
         $.fn.booklet.defaults.closedBackChapter = 'Конец';
+        addLeftRightTagsToPages();
         var booklet = $('.book-main').booklet();
       });
     </script>
