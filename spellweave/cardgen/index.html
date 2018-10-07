@@ -1,0 +1,52 @@
+<html>
+<head>
+	<link rel="stylesheet" href="style.css" />
+	<link href="https://fonts.googleapis.com/css?family=K2D" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+	<script src="js/external/jquery-1.12.4.js"></script>
+	<script src="js/external/vue-2.5.17.js"></script>
+	<script src="js/external/vuex-3.0.1.js"></script>
+	<script src="js/external/vue-router-3.0.1.js"></script>
+	<script src="js/external/html2canvas1.0.0-alpha12.js"></script>
+	<script src="js/external/dom-to-image.js"></script>
+
+	<script src="js/constant.js"></script>
+	<script src="js/util.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/store.js"></script>
+	<script src="js/directive.js"></script>
+	<script src="js/templates.js"></script>
+	<script src="js/component/component.js"></script>
+	<script src="js/component/vue-card-canvas.js"></script>
+	<script src="js/component/vue-card-library.js"></script>
+	<script src="js/route.js"></script>
+</head>
+
+<body>
+<div id="main-container">
+	<div class="card-container">
+		<div class="canvas-container">
+			<vue-card-canvas></vue-card-canvas>
+		</div>
+	</div>
+
+	<div class="toolbar">
+		<div class="tabs-container">
+			<router-link class="tab one" to='/features'>Features</router-link><!--
+			--><router-link class="tab two" to='/texts'>Texts</router-link><!--
+			--><router-link class="tab three" to='/junk'>Junk</router-link><!--
+			--><router-link class="tab four" to='/output'>Output</router-link>
+			<hr />
+		</div>
+
+		<div class='router-view-container'>
+			<router-view></router-view>
+		</div>
+	</div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
