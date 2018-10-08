@@ -24,11 +24,11 @@ export const vueStore = new Vuex.Store({
 	plugins: [ autosaverPlugin ],
 });
 
-import app from './app.vue';
-export const application = new Vue({
+import application from './app.vue';
+export const app = new Vue({
 	el: '#app',
 	render: function(createElement) {
-		return createElement(app);
+		return createElement(application);
 	},
 	mounted: function() {
 	},
