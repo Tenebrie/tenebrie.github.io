@@ -337,15 +337,15 @@ body {
   border-bottom-color: #FFAAFF;
   transition: all 0s;
 }
-#main-container #wrapper {
+#main-container .dropdown-wrapper {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-#main-container #wrapper .card-drop {
+#main-container .dropdown-wrapper .card-drop {
   max-width: 200px;
   position: relative;
 }
-#main-container #wrapper .card-drop button {
+#main-container .dropdown-wrapper .card-drop button {
   display: block;
   width: 100%;
   height: 34px;
@@ -354,24 +354,22 @@ body {
   text-decoration: none;
   color: #9E9E9E;
   background-color: #1b1b1b;
-  transition: all 0.3s;
 }
-#main-container #wrapper .card-drop button i {
+#main-container .dropdown-wrapper .card-drop button i {
   display: inline-block;
   width: 20px;
 }
-#main-container #wrapper .card-drop button:hover {
+#main-container .dropdown-wrapper .card-drop button:hover {
   color: #FFF;
   background-color: #333;
 }
-#main-container #wrapper .card-drop button.button-top {
+#main-container .dropdown-wrapper .card-drop button.button-top {
   position: relative;
   z-index: 300;
-  transition: all 0.3s;
   background-color: #1b1b1b;
   font: 16px/1.4 "Roboto", sans-serif;
 }
-#main-container #wrapper .card-drop button.button-top .caret-down {
+#main-container .dropdown-wrapper .card-drop button.button-top .caret-down {
   display: block;
   position: absolute;
   font-size: 1.3em;
@@ -382,21 +380,21 @@ body {
   line-height: 34px;
   transition: all 0.3s;
 }
-#main-container #wrapper .card-drop button.button-top.active {
+#main-container .dropdown-wrapper .card-drop button.button-top.active {
   color: #FFF;
   border-color: #FFF;
   background-color: #1b1b1b;
 }
-#main-container #wrapper .card-drop button.button-top.active .caret-down {
+#main-container .dropdown-wrapper .card-drop button.button-top.active .caret-down {
   transform: rotate(180deg);
 }
-#main-container #wrapper .card-drop button.button-top.active, #main-container #wrapper .card-drop button.button-top:hover {
+#main-container .dropdown-wrapper .card-drop button.button-top.active, #main-container .dropdown-wrapper .card-drop button.button-top:hover {
   background-color: #333;
 }
-#main-container #wrapper .card-drop button.button-top.active .caret-down, #main-container #wrapper .card-drop button.button-top:hover .caret-down {
+#main-container .dropdown-wrapper .card-drop button.button-top.active .caret-down, #main-container .dropdown-wrapper .card-drop button.button-top:hover .caret-down {
   color: #FFF;
 }
-#main-container #wrapper .card-drop ul {
+#main-container .dropdown-wrapper .card-drop ul {
   display: block;
   position: absolute;
   width: 100%;
@@ -404,19 +402,19 @@ body {
   top: 0;
   list-style: none;
 }
-#main-container #wrapper .card-drop ul li {
+#main-container .dropdown-wrapper .card-drop ul li {
   position: absolute;
   width: 100%;
-  transition: all 0.3s ease-out;
+  transition: top 0.3s ease-out;
 }
-#main-container #wrapper .card-drop ul li button:active {
+#main-container .dropdown-wrapper .card-drop ul li button:active {
   color: #FFAAFF;
   transition: all 0s;
 }
-#main-container #wrapper .card-drop ul li.active button {
+#main-container .dropdown-wrapper .card-drop ul li.active button {
   color: #FFAAFF;
 }
-#main-container #wrapper .card-drop ul li.closed button:hover {
+#main-container .dropdown-wrapper .card-drop ul li.closed button:hover {
   cursor: default;
   background-color: #1b1b1b;
 }

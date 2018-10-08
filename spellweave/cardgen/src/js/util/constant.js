@@ -1,6 +1,5 @@
 const Event = {
 	CARD_STATE_UPDATED: 'cardStateUpdated',
-	CARD_TEXT_UPDATED: 'cardTextUpdated',
 	SAVE_CARD_AS_IMAGE: 'saveCardAsImage',
 	DELETE_FROM_LIBRARY: 'deleteFromLibrary',
 	SELECT_ALL_LIBRARY: 'selectAllLibrary',
@@ -11,4 +10,10 @@ const Event = {
 
 const Color = {
 	DEFAULT_CARD_TEXT: '#CCCCCC',
+};
+
+const Type = {
+	ACTION: 'action',
+	PATH: 'path',
+	RELEASE: 'release',
 };

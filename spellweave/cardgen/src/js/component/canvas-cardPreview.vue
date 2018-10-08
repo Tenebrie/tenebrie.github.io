@@ -28,10 +28,6 @@
 				this.renderCanvas();
 			});
 
-			this.$root.$on(Event.CARD_TEXT_UPDATED, () => {
-				this.renderCanvas();
-			});
-
 			this.renderCanvasAfterDelay();
 			window.addEventListener('resize', () => {
 				this.renderCanvasAfterDelay();
@@ -69,6 +65,9 @@
 						this.drawImageFromFile(ctx, 'res/bg_attribute.png');
 					}
 
+					let manaCostFileName = 'manacost_' + this.$store.state.cardState.cardManaCost + '.png';
+					this.drawImageFromFile(ctx, 'res/' + manaCostFileName);
+
 					let cardName = this.$store.state.cardState.cardName;
 					let cardDescription = this.$store.state.cardState.cardDescription;
 
@@ -77,7 +76,7 @@
 							this.renderText(ctx, '24px K2D', 'black', cardName, realWidth / 2, 140, 24, 270);
 						}
 					});
-					this.renderText(ctx, '18px K2D', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 350, 16, realWidth - 50, 200, 200);
+					this.renderText(ctx, '18px K2D', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 350, 20, realWidth - 50, 200);
 
 				}.bind(this);
 				backgroundImg.src = 'res/bg_path.png';
@@ -133,6 +132,7 @@
 					paragraphs.splice(0, 1);
 					this.renderTextLine(ctx, color, currentLineText, targetX, currentLineY);
 					currentLineY += lineHeight * 1.2;
+					console.log(currentLineY);
 				}
 			},
 

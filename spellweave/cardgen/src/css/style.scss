@@ -316,11 +316,11 @@ body {
   }
 
   //===============================================
-  #wrapper {
+  .dropdown-wrapper {
 	margin-top: 10px;
 	margin-bottom: 10px;
 
-	.card-drop{
+	.card-drop {
 	  max-width: 200px;
 	  position: relative;
 
@@ -333,7 +333,6 @@ body {
 		text-decoration: none;
 		color: $inactive-color;
 		background-color: $dropdown-background-color;
-		transition: all $transition-duration;
 		i {
 		  display: inline-block;
 		  width: 20px;
@@ -346,7 +345,6 @@ body {
 	  button.button-top {
 		position: relative;
 		z-index: 300;
-		transition: all $transition-duration;
 		background-color: $dropdown-background-color;
 		font: 16px/1.4 "Roboto", sans-serif;
 
@@ -390,7 +388,7 @@ body {
 		li {
 		  position: absolute;
 		  width: 100%;
-		  transition: all $transition-duration ease-out;
+		  transition: top $transition-duration ease-out;
 
 		  button {
 			&:active {

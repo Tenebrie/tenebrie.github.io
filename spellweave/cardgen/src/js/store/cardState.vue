@@ -8,19 +8,12 @@
 			isFreeDraw: false,
 			cardName: '',
 			cardDescription: '',
+			cardType: Type.PATH,
+			cardManaCost: 1,
 		},
 		getters: {
 			// isFreeBuild: () => state => {
 			// 	return state.isFreeBuild;
-			// },
-			// isFreeDraw: () => state => {
-			// 	return state.isFreeDraw;
-			// },
-			// cardName: () => state => {
-			// 	return state.cardName;
-			// },
-			// cardDescription: () => state => {
-			// 	return state.cardDescription;
 			// },
 		},
 
@@ -30,6 +23,8 @@
 				state.cardDescription = value.cardDescription;
 				state.isFreeBuild = value.isFreeBuild;
 				state.isFreeDraw = value.isFreeDraw;
+				state.cardType = value.cardType;
+				state.cardManaCost = value.cardManaCost;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 			clear(state) {
@@ -37,6 +32,8 @@
 				state.cardDescription = '';
 				state.isFreeBuild = false;
 				state.isFreeDraw = false;
+				state.cardType = Type.PATH;
+				state.cardManaCost = 1;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 			setFreeBuild(state, value) {
@@ -49,11 +46,19 @@
 			},
 			setCardName(state, value) {
 				state.cardName = value;
-				app.$emit(Event.CARD_TEXT_UPDATED);
+				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 			setCardDescription(state, value) {
 				state.cardDescription = value;
-				app.$emit(Event.CARD_TEXT_UPDATED);
+				app.$emit(Event.CARD_STATE_UPDATED);
+			},
+			setCardType(state, value) {
+				state.cardType = value;
+				app.$emit(Event.CARD_STATE_UPDATED);
+			},
+			setCardManaCost(state, value) {
+				state.cardManaCost = value;
+				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 		},
 	};
