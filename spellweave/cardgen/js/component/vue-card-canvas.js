@@ -2,7 +2,7 @@ Vue.component('vue-card-canvas', {
 	data: function() {
 		return {
 			previewContext: null,
-			canvasRenderThrottleTimer: null,
+			canvasRenderDebounceTimer: null,
 		}
 	},
 	mounted: function() {
@@ -15,30 +15,32 @@ Vue.component('vue-card-canvas', {
 		ctx.scale(dpr, dpr);
 		this.previewContext = ctx;
 
-		this.$root.$on(EVENT.SAVE_CARD_AS_IMAGE, () => {
+		this.$root.$on(Event.SAVE_CARD_AS_IMAGE, () => {
 			this.saveCanvasToFile();
 		});
 
-		this.$root.$on(EVENT.CARD_STATE_UPDATED, () => {
+		this.$root.$on(Event.CARD_STATE_UPDATED, () => {
 			this.renderCanvas();
 		});
 
-		this.$root.$on(EVENT.CARD_TEXT_UPDATED, () => {
+		this.$root.$on(Event.CARD_TEXT_UPDATED, () => {
 			this.renderCanvas();
 		});
 
-		// this.renderCanvasAfterDelay();
-		new ResizeObserver(this.renderCanvasAfterDelay).observe(this.$el);
+		this.renderCanvasAfterDelay();
+		window.addEventListener('resize', () => {
+			this.renderCanvasAfterDelay();
+		});
 	},
 	methods: {
 		renderCanvasAfterDelay: function() {
-			if (this.canvasRenderThrottleTimer === null) {
-				this.canvasRenderThrottleTimer = setTimeout(this.renderCanvas, 20);
+			if (this.canvasRenderDebounceTimer === null) {
+				this.canvasRenderDebounceTimer = setTimeout(this.renderCanvas, 20);
 			}
 		},
 
 		clearCanvasRenderThrottleTimer: function() {
-			this.canvasRenderThrottleTimer = null;
+			this.canvasRenderDebounceTimer = null;
 		},
 
 		renderCanvas: function() {
@@ -49,7 +51,7 @@ Vue.component('vue-card-canvas', {
 				let sourceWidth = backgroundImg.width;
 				let sourceHeight = backgroundImg.height;
 				let realWidth = ctx.canvas.offsetWidth;
-				let targetHeight = realWidth / (sourceWidth / sourceHeight);
+				let targetHeight = sourceWidth / (sourceWidth / sourceHeight);
 				let parent = $(this.$el).parent();
 				$(this.$el).attr("width", sourceWidth).attr("height", targetHeight);
 				$(this.$el).css('height', targetHeight);
@@ -70,7 +72,7 @@ Vue.component('vue-card-canvas', {
 						this.renderText(ctx, '24px K2D', 'black', cardName, realWidth / 2, 140, 24, 270);
 					}
 				});
-				this.renderText(ctx, '18px K2D', COLOR.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 350, 16, realWidth - 50, 200, 200);
+				this.renderText(ctx, '18px K2D', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 350, 16, realWidth - 50, 200, 200);
 
 			}.bind(this);
 			backgroundImg.src = 'res/bg_path.png';

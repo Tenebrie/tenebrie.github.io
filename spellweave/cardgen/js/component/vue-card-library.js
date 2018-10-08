@@ -25,8 +25,8 @@ Vue.component('vue-cb-libraryItem', {
 Vue.component('vue-btn-selectAll', {
 	methods: {
 		onClick: function () {
-			this.$root.$emit(EVENT.ENABLE_LIBRARY_SELECTION);
-			this.$root.$emit(EVENT.SELECT_ALL_LIBRARY);
+			this.$root.$emit(Event.ENABLE_LIBRARY_SELECTION);
+			this.$root.$emit(Event.SELECT_ALL_LIBRARY);
 		}
 	},
 	template: `<button v-on:click='onClick'><i class="fas fa-check-square"></i> Select all</button>`
@@ -35,7 +35,7 @@ Vue.component('vue-btn-selectAll', {
 Vue.component('vue-btn-unselectAll', {
 	methods: {
 		onClick: function () {
-			this.$root.$emit(EVENT.UNSELECT_ALL_LIBRARY);
+			this.$root.$emit(Event.UNSELECT_ALL_LIBRARY);
 		}
 	},
 	template: `<button v-on:click='onClick'><i class="fas fa-square"></i> Unselect all</button>`
@@ -44,8 +44,8 @@ Vue.component('vue-btn-unselectAll', {
 Vue.component('vue-btn-cancelSelection', {
 	methods: {
 		onClick: function () {
-			this.$root.$emit(EVENT.UNSELECT_ALL_LIBRARY);
-			this.$root.$emit(EVENT.CANCEL_LIBRARY_SELECTION);
+			this.$root.$emit(Event.UNSELECT_ALL_LIBRARY);
+			this.$root.$emit(Event.CANCEL_LIBRARY_SELECTION);
 		}
 	},
 	template: `<button v-on:click='onClick'><i class="fas fa-ban"></i> Cancel</button>`
@@ -54,7 +54,7 @@ Vue.component('vue-btn-cancelSelection', {
 Vue.component('vue-btn-deleteFromLibrary', {
 	methods: {
 		onClick: function () {
-			this.$root.$emit(EVENT.DELETE_FROM_LIBRARY);
+			this.$root.$emit(Event.DELETE_FROM_LIBRARY);
 		}
 	},
 	template: `<button class='btn-red' v-on:click='onClick'><i class="fas fa-trash-alt"></i> Delete</button>`
@@ -67,13 +67,13 @@ Vue.component('vue-table-cardLibrary', {
 		}
 	},
 	mounted: function() {
-		this.$root.$on(EVENT.ENABLE_LIBRARY_SELECTION, () => {
+		this.$root.$on(Event.ENABLE_LIBRARY_SELECTION, () => {
 			this.isInSelectState = true;
 		});
-		this.$root.$on(EVENT.CANCEL_LIBRARY_SELECTION, () => {
+		this.$root.$on(Event.CANCEL_LIBRARY_SELECTION, () => {
 			this.isInSelectState = false;
 		});
-		this.$root.$on(EVENT.DELETE_FROM_LIBRARY, () => {
+		this.$root.$on(Event.DELETE_FROM_LIBRARY, () => {
 			this.isInSelectState = false;
 		});
 	},
@@ -99,7 +99,7 @@ Vue.component('vue-table-cardLibrary', {
 		
 			<div class='library-items-container-wrapper'>
 				<div class='library-items-container'>
-					<div class='library-item-wrapper' v-for='item in library.slice().reverse()'>
+					<div class='library-item-wrapper' v-for='item in library.slice().reverse()' :key='item.id'>
 						<vue-table-cardLibraryItem :item='item'></vue-table-cardLibraryItem>
 					</div>
 				</div>
@@ -116,13 +116,13 @@ Vue.component('vue-table-cardLibraryItem', {
 		}
 	},
 	mounted: function() {
-		this.$root.$on(EVENT.SELECT_ALL_LIBRARY, () => {
+		this.$root.$on(Event.SELECT_ALL_LIBRARY, () => {
 			this.isSelected = true;
 		});
-		this.$root.$on(EVENT.UNSELECT_ALL_LIBRARY, () => {
+		this.$root.$on(Event.UNSELECT_ALL_LIBRARY, () => {
 			this.isSelected = false;
 		});
-		this.$root.$on(EVENT.DELETE_FROM_LIBRARY, () => {
+		this.$root.$on(Event.DELETE_FROM_LIBRARY, () => {
 			if (this.isSelected) {
 				this.$store.commit('cardLibrary/delete', this.$store.getters['cardLibrary/getCardById'](this.item.id));
 			}

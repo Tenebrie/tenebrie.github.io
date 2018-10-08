@@ -28,30 +28,30 @@ const cardState = {
 			state.cardDescription = value.cardDescription;
 			state.isFreeBuild = value.isFreeBuild;
 			state.isFreeDraw = value.isFreeDraw;
-			app.$emit(EVENT.CARD_STATE_UPDATED);
+			app.$emit(Event.CARD_STATE_UPDATED);
 		},
 		clear(state) {
 			state.cardName = '';
 			state.cardDescription = '';
 			state.isFreeBuild = false;
 			state.isFreeDraw = false;
-			app.$emit(EVENT.CARD_STATE_UPDATED);
+			app.$emit(Event.CARD_STATE_UPDATED);
 		},
 		setFreeBuild(state, value) {
 			state.isFreeBuild = value;
-			app.$emit(EVENT.CARD_STATE_UPDATED);
+			app.$emit(Event.CARD_STATE_UPDATED);
 		},
 		setFreeDraw(state, value) {
 			state.isFreeDraw = value;
-			app.$emit(EVENT.CARD_STATE_UPDATED);
+			app.$emit(Event.CARD_STATE_UPDATED);
 		},
 		setCardName(state, value) {
 			state.cardName = value;
-			app.$emit(EVENT.CARD_TEXT_UPDATED);
+			app.$emit(Event.CARD_TEXT_UPDATED);
 		},
 		setCardDescription(state, value) {
 			state.cardDescription = value;
-			app.$emit(EVENT.CARD_TEXT_UPDATED);
+			app.$emit(Event.CARD_TEXT_UPDATED);
 		},
 	},
 };

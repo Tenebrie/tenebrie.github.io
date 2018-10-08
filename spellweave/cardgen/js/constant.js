@@ -1,4 +1,4 @@
-const EVENT = {
+const Event = {
 	CARD_STATE_UPDATED: 'cardStateUpdated',
 	CARD_TEXT_UPDATED: 'cardTextUpdated',
 	SAVE_CARD_AS_IMAGE: 'saveCardAsImage',
@@ -9,6 +9,6 @@ const EVENT = {
 	CANCEL_LIBRARY_SELECTION: 'cancelLibrarySelection',
 };
 
-const COLOR = {
+const Color = {
 	DEFAULT_CARD_TEXT: '#CCCCCC',
 };

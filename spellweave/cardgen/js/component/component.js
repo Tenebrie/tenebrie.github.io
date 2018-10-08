@@ -130,7 +130,7 @@ Vue.component('vue-btn-newCard', {
 Vue.component('vue-btn-renderCard', {
 	methods: {
 		onClick: function () {
-			this.$root.$emit(EVENT.SAVE_CARD_AS_IMAGE);
+			this.$root.$emit(Event.SAVE_CARD_AS_IMAGE);
 		}
 	},
 	template: `<button v-on:click='onClick'>Save as image</button>`
@@ -160,7 +160,6 @@ Vue.component('vue-btn-saveCard', {
 			item.id = uuidv4();
 
 			this.$store.commit('cardLibrary/push', item);
-			this.$root.$emit(EVENT.UNSELECT_ALL_LIBRARY);
 		}
 	},
 	template: `<button v-on:click='onClick'>Save to Library</button>`
