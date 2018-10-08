@@ -18,6 +18,7 @@ Spellweave Card Generator
   - File type: `Vue.js template`
   - Program: `npx`
   - Arguments: `webpack`
+  - Working directory: `$ProjectFileDir$/spellweave/cardgen`
 
 #### Just run once ####
 - Compile styles: `npx sass src/css/style.scss build/style.css`
