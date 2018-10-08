@@ -1,6 +1,6 @@
 
-@import "variables";
-@import "checkbox";
+@import "./variables";
+@import "./checkbox";
 
 * {
   box-sizing: border-box;
@@ -38,7 +38,7 @@ body {
 	position: relative;
 	flex-grow: 1;
 	flex-basis: 30%;
-	background: white url("./res/bg_alpha.png") repeat fixed center;
+	background: white url("../res/bg_alpha.png") repeat fixed center;
 
 	.canvas-container {
 	  height: 100%;

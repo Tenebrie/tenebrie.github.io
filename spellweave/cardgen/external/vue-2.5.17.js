@@ -1,5 +1,5 @@
 /*!
- * Vue.js v2.5.17
+ * Vue.src v2.5.17
  * (c) 2014-2018 Evan You
  * Released under the MIT License.
  */
@@ -7147,7 +7147,7 @@
 		}
 	}
 
-// check platforms/web/util/attrs.js acceptValue
+// check platforms/web/util/attrs.src acceptValue
 
 
 	function shouldUpdateValue (elm, checkVal) {
@@ -10691,7 +10691,7 @@
 				} catch (e) {
 					if (e.toString().match(/unsafe-eval|CSP/)) {
 						warn$$1(
-							'It seems you are using the standalone build of Vue.js in an ' +
+							'It seems you are using the standalone build of Vue.src in an ' +
 							'environment with Content Security Policy that prohibits unsafe-eval. ' +
 							'The template compiler cannot work in this environment. Consider ' +
 							'relaxing the policy to allow unsafe-eval or pre-compiling your ' +
