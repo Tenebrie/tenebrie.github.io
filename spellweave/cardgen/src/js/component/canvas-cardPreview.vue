@@ -65,8 +65,11 @@
 						this.drawImageFromFile(ctx, 'res/bg_attribute.png');
 					}
 
-					let manaCostFileName = 'manacost_' + this.$store.state.cardState.cardManaCost + '.png';
-					this.drawImageFromFile(ctx, 'res/' + manaCostFileName);
+					let cardManaCost = this.$store.state.cardState.cardManaCost;
+					if (cardManaCost >= 1 && cardManaCost <= 12) {
+						let manaCostFileName = 'manacost_' + cardManaCost + '.png';
+						this.drawImageFromFile(ctx, 'res/' + manaCostFileName);
+					}
 
 					let cardName = this.$store.state.cardState.cardName;
 					let cardDescription = this.$store.state.cardState.cardDescription;
@@ -111,7 +114,7 @@
 						if (currentLineText !== null) {
 							currentTextCandidate = currentLineText + ' ' + currentTextCandidate;
 						}
-						let width = ctx.measureText(this.stripMarkup(currentTextCandidate)).width;
+						let width = ctx.measureText(stripMarkup(currentTextCandidate)).width;
 						if (width < maxWidth) {
 							currentLineText = currentTextCandidate;
 							words.splice(0, 1);
@@ -141,7 +144,7 @@
 					throw 'Unable to render null text';
 				}
 
-				let cleanText = this.stripMarkup(text);
+				let cleanText = stripMarkup(text);
 				let width = ctx.measureText(cleanText).width;
 				let renderTargetX = targetX - width / 2;
 
@@ -160,7 +163,7 @@
 
 				while (words.length > 0) {
 					let word = words[0];
-					let cleanWord = this.stripMarkup(word);
+					let cleanWord = stripMarkup(word);
 					if (words.length > 1) {
 						cleanWord += ' ';
 					}
@@ -200,7 +203,7 @@
 					if (results === null) {
 						results = firstClosingColorTagPattern.exec(word);
 						if (results !== null) {
-							ctx.fillStyle = color;
+							ctx.fillStyle = defaultColor;
 							ctx.fillText(cleanWord, currentLineX, targetY);
 						}
 					}
@@ -243,11 +246,6 @@
 					nakedOpeningColorTagPattern.lastIndex = 0;
 					nakedClosingColorTagPattern.lastIndex = 0;
 				}
-			},
-
-			stripMarkup: function(text) {
-				const htmlTagPattern = /<[^>]+>/g;
-				return text.replace(htmlTagPattern, '');
 			},
 
 			drawImage: function(ctx, image) {

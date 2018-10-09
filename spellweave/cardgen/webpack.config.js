@@ -8,8 +8,18 @@ module.exports = {
 		rules: [
 			{
 				test: /\.vue$/,
-				loader: 'vue-loader',
+				use: [
+					'vue-loader',
+				]
 			},
+			{
+				test: /\.s[a|c]ss$/,
+				use: [
+					'vue-style-loader',
+					'css-loader',
+					'sass-loader'
+				],
+			}
 		]
 	},
 	plugins: [
@@ -22,11 +32,11 @@ module.exports = {
 			Store: path.resolve(__dirname, 'src/js/store/'),
 			View: path.resolve(__dirname, 'src/js/view/'),
 
-			Style: path.resolve(__dirname, 'src/style/'),
+			Style: path.resolve(__dirname, 'src/css/'),
 		}
 	},
 	output: {
 		filename: 'main.js',
 		path: path.resolve(__dirname, 'build')
-	}
+	},
 };

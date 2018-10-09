@@ -1,6 +1,5 @@
 
 @import "./variables";
-@import "./checkbox";
 
 * {
   box-sizing: border-box;
@@ -151,266 +150,66 @@ body {
   }
 
   //======================================================================
-  .text-input {
-	margin: 10px;
 
-	label {
-	  font: 16px/1.4 "Roboto", sans-serif;
-	  letter-spacing: 0.5px;
-	  margin-left: 3px;
-	}
-
-	input[type='text'], textarea {
-	  font: 16px/1.4 "Roboto", sans-serif;
-	  letter-spacing: 0.5px;
-	  padding: 10px;
-	  margin-top: 5px;
-	  resize: none;
-	  display: block;
-	  color: $primary-color;
-	  border: 1px solid $inactive-color;
-	  border-radius: 3px;
-	  outline: none;
-	  transition: all $transition-duration;
-	  background-color: $textarea-background-color;
-
-	  &:focus {
-		border-color: $primary-color;
-		background-color: transparent;
-	  }
-	}
-
-	.card-title {
-	  width: 100%;
-	}
-
-	.card-description {
-	  width: 100%;
-	}
-  }
 
   //======================================================================
-  button {
-	display: inline-block;
-	padding: 0.35em 1.2em;
-	border: 1px solid $inactive-color;
-	margin: 0.6em 0.3em;
-	border-radius: 0.12em;
-	box-sizing: border-box;
-	text-decoration: none;
-	font-family: 'Roboto', sans-serif;
-	font-weight: 300;
-	color: $inactive-color;
-	background-color: transparent;
-	text-align: center;
-	transition: all $transition-duration;
-	cursor: pointer;
-	outline: none;
+
+  //======================================================================
+
+  //===============================================
+
+
+}
+
+button {
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  border: 1px solid $inactive-color;
+  margin: 0.6em 0.3em;
+  border-radius: 0.12em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: $inactive-color;
+  background-color: transparent;
+  text-align: center;
+  transition: all $transition-duration;
+  cursor: pointer;
+  outline: none;
+
+  &:focus, &:hover {
+	color: $primary-color;
+	border: 1px solid $primary-color;
+	background-color: $button-background-color;
+  }
+
+  &:active {
+	color: $accent-color;
+	border: 1px solid $accent-color;
+	background-color: $button-background-color;
+	transition: all 0s;
+  }
+
+  &.btn-red {
+	color: lighten(red, 15%);
+	border-color: lighten(red, 15%);
 
 	&:focus, &:hover {
-	  color: $primary-color;
-	  border: 1px solid $primary-color;
-	  background-color: $button-background-color;
+	  color: red;
+	  border-color: red;
 	}
 
 	&:active {
-	  color: $accent-color;
-	  border: 1px solid $accent-color;
-	  background-color: $button-background-color;
-	  transition: all 0s;
-	}
-
-	&.btn-red {
-	  color: lighten(red, 15%);
-	  border-color: lighten(red, 15%);
-
-	  &:focus, &:hover {
-		color: red;
-		border-color: red;
-	  }
-
-	  &:active {
-		color: darken(red, 20%);
-		border-color: darken(red, 20%);
-	  }
+	  color: darken(red, 20%);
+	  border-color: darken(red, 20%);
 	}
   }
+}
 
-  @media all and (max-width: 30em) {
-	button {
-	  display: block;
-	  margin: 0.4em auto;
-	}
+@media all and (max-width: 30em) {
+  button {
+	display: block;
+	margin: 0.4em auto;
   }
-
-  //======================================================================
-  .table-card-library {
-	display: flex;
-	flex-direction: column;
-
-	.library-items-container-wrapper {
-	  overflow-y: auto;
-	  padding-right: 10px;
-
-	  &::-webkit-scrollbar {
-		width: 5px;
-	  }
-
-	  &::-webkit-scrollbar-track {
-		background-color: #00000022;
-	  }
-
-	  &::-webkit-scrollbar-thumb {
-		background-color: $inactive-color;
-		&:hover {
-		  background-color: $primary-color;
-		}
-	  }
-
-	}
-	.library-items-container {
-		overflow-y: auto;
-
-	  .library-item {
-		width: 100%;
-		color: $inactive-color;
-		border-bottom: 1px solid $inactive-color;
-		height: 40px;
-		transition: all $transition-duration;
-		cursor: pointer;
-		user-select: none;
-		display: flex;
-		vertical-align: middle;
-		padding-left: 20px;
-
-		.library-item-checkbox {
-		  flex-basis: 30px;
-		  padding-top: 7px;
-		}
-
-		.library-item-value {
-		  text-overflow: ellipsis;
-		  white-space: nowrap;
-		  overflow: hidden;
-		  flex-basis: 30%;
-		  margin-right: 20px;
-		  line-height: 40px;
-		}
-
-		div {
-		  display: inline-block;
-		}
-
-		&:hover {
-		  color: $primary-color;
-		  border-bottom-color: $primary-color;
-		}
-
-		&:active {
-		  color: $accent-color;
-		  border-bottom-color: $accent-color;
-		  transition: all .0s;
-		}
-	  }
-	}
-  }
-
-  //===============================================
-  .dropdown-wrapper {
-	margin-top: 10px;
-	margin-bottom: 10px;
-
-	.card-drop {
-	  max-width: 200px;
-	  position: relative;
-
-	  button {
-		display: block;
-		width: 100%;
-		height: $dropdown-element-height;
-		margin: 0;
-		padding: 6px 0 6px 0;
-		text-decoration: none;
-		color: $inactive-color;
-		background-color: $dropdown-background-color;
-		i {
-		  display: inline-block;
-		  width: 20px;
-		}
-		&:hover {
-		  color: $primary-color;
-		  background-color: $dropdown-background-color-active;
-		}
-	  }
-	  button.button-top {
-		position: relative;
-		z-index: 300;
-		background-color: $dropdown-background-color;
-		font: 16px/1.4 "Roboto", sans-serif;
-
-		.caret-down {
-		  display: block;
-		  position: absolute;
-		  font-size: 1.3em;
-		  color: $inactive-color;
-		  right: 0;
-		  top: 0;
-		  bottom: 0;
-		  line-height: $dropdown-element-height;
-		  transition: all $transition-duration;
-		}
-
-		&.active {
-		  color: $primary-color;
-		  border-color: $primary-color;
-		  background-color: $dropdown-background-color;
-
-		  .caret-down {
-			transform: rotate(180deg);
-		  }
-		}
-
-		&.active, &:hover {
-		  background-color: $dropdown-background-color-active;
-		  .caret-down {
-			color: $primary-color;
-		  }
-		}
-	  }
-
-	  ul {
-		display: block;
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		list-style: none;
-		li {
-		  position: absolute;
-		  width: 100%;
-		  transition: top $transition-duration ease-out;
-
-		  button {
-			&:active {
-			  color: $accent-color;
-			  transition: all 0s;
-			}
-		  }
-
-		  &.active {
-			button {
-			  color: $accent-color;
-			}
-		  }
-		  &.closed {
-			button:hover {
-			  cursor: default;
-			  background-color: $dropdown-background-color;
-			}
-		  }
-		}
-	  }
-	}
-  }
-
 }

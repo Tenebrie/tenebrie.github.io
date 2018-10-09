@@ -1,21 +1,16 @@
 <template>
-	<div>
-		<input :id='id' v-model='checked' type='checkbox' />
-		<label :for='id'>
-			<span></span>&nbsp
-		</label>
-	</div>
+	<checkbox :isChecked='checked'>&nbsp;</checkbox>
 </template>
 
 <script>
+	import checkbox from 'Component/checkbox.vue';
+
 	export default {
-		props: ['item', 'isSelected'],
+		props: ['isSelected'],
+		components: {
+			checkbox,
+		},
 		computed: {
-			id: {
-				get() {
-					return this.item.id;
-				}
-			},
 			checked: {
 				get() {
 					return this.isSelected;

@@ -2,6 +2,7 @@
   "dependencies": {
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
+    "css-loader": "^1.0.0",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
     "vue": "^2.5.17",

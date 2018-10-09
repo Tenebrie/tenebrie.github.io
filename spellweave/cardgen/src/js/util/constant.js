@@ -17,3 +17,13 @@ const Type = {
 	PATH: 'path',
 	RELEASE: 'release',
 };
+
+const Element = {
+	GENERIC: 'generic',
+	DAMAGE: 'damage',
+	HEALING: 'healing',
+	ALTERATION: 'alteration',
+	SUMMONING: 'summoning',
+	CONTROL: 'control',
+	SACRIFICE: 'sacrifice',
+};

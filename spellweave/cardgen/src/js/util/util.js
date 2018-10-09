@@ -47,3 +47,19 @@ function uuidv4() {
 		return v.toString(16);
 	});
 }
+
+function toCamelCase(str) {
+	if (str === undefined || str === null) {
+		return '';
+	}
+	return str.replace(/[A-Z]/g, ' $&').replace(/^./, str.toUpperCase());
+}
+
+function capitalize(str) {
+	return str.substring(0, 1).toUpperCase() + str.substring(1);
+}
+
+function stripMarkup(text) {
+	const htmlTagPattern = /<[^>]+>/g;
+	return text.replace(htmlTagPattern, '');
+}

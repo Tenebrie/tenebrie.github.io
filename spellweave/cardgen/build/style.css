@@ -1,84 +1,3 @@
-#main-container input[type=checkbox] {
-  height: 0;
-  width: 0;
-}
-#main-container input[type=checkbox] + label {
-  position: relative;
-  display: flex;
-  margin: 0.2em 0.2em;
-  align-items: center;
-  color: #9E9E9E;
-  user-select: none;
-  transition: color 350ms cubic-bezier(0.4, 0, 0.23, 1);
-}
-#main-container input[type=checkbox] + label > span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 1em;
-  width: 1em;
-  height: 1em;
-  background: transparent;
-  border: 2px solid #9E9E9E;
-  border-radius: 2px;
-  cursor: pointer;
-  transition: all 250ms cubic-bezier(0.4, 0, 0.23, 1);
-}
-#main-container input[type=checkbox] + label:hover, #main-container input[type=checkbox]:focus + label {
-  color: #FFF;
-}
-#main-container input[type=checkbox] + label:hover > span, #main-container input[type=checkbox]:focus + label > span {
-  background: rgba(255, 255, 255, 0.1);
-}
-#main-container input[type=checkbox]:checked + label {
-  color: #FFAAFF;
-}
-#main-container input[type=checkbox]:checked + label > span {
-  border: 0.5em solid #FFAAFF;
-  animation: shrink-bounce 200ms cubic-bezier(0.4, 0, 0.23, 1);
-}
-#main-container input[type=checkbox]:checked + label > span:before {
-  content: "";
-  position: absolute;
-  top: 9px;
-  left: 3px;
-  border-right: 3px solid transparent;
-  border-bottom: 3px solid transparent;
-  transform: rotate(45deg);
-  transform-origin: 0% 100%;
-  animation: checkbox-check 125ms 250ms cubic-bezier(0.4, 0, 0.23, 1) forwards;
-}
-@keyframes shrink-bounce {
-  0% {
-    transform: scale(1);
-  }
-  33% {
-    transform: scale(0.85);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes checkbox-check {
-  0% {
-    width: 0;
-    height: 0;
-    border-color: #212121;
-    transform: translate3d(0, 0, 0) rotate(45deg);
-  }
-  33% {
-    width: 0.2em;
-    height: 0;
-    transform: translate3d(0, 0, 0) rotate(45deg);
-  }
-  100% {
-    width: 0.2em;
-    height: 0.5em;
-    border-color: #212121;
-    transform: translate3d(0, -0.5em, 0) rotate(45deg);
-  }
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -138,7 +57,7 @@ body {
   width: 100%;
   margin: 0 auto;
   font-family: "K2D", sans-serif;
-  background-color: #00000050;
+  background-color: rgba(0, 0, 0, 0.31);
 }
 #main-container .toolbar .tabs-container a {
   color: #9E9E9E;
@@ -200,39 +119,8 @@ body {
   display: flex;
   flex-direction: column;
 }
-#main-container .text-input {
-  margin: 10px;
-}
-#main-container .text-input label {
-  font: 16px/1.4 "Roboto", sans-serif;
-  letter-spacing: 0.5px;
-  margin-left: 3px;
-}
-#main-container .text-input input[type=text], #main-container .text-input textarea {
-  font: 16px/1.4 "Roboto", sans-serif;
-  letter-spacing: 0.5px;
-  padding: 10px;
-  margin-top: 5px;
-  resize: none;
-  display: block;
-  color: #FFF;
-  border: 1px solid #9E9E9E;
-  border-radius: 3px;
-  outline: none;
-  transition: all 0.3s;
-  background-color: #FFFFFF11;
-}
-#main-container .text-input input[type=text]:focus, #main-container .text-input textarea:focus {
-  border-color: #FFF;
-  background-color: transparent;
-}
-#main-container .text-input .card-title {
-  width: 100%;
-}
-#main-container .text-input .card-description {
-  width: 100%;
-}
-#main-container button {
+
+button {
   display: inline-block;
   padding: 0.35em 1.2em;
   border: 1px solid #9E9E9E;
@@ -249,174 +137,35 @@ body {
   cursor: pointer;
   outline: none;
 }
-#main-container button:focus, #main-container button:hover {
+button:focus, button:hover {
   color: #FFF;
   border: 1px solid #FFF;
-  background-color: #00000022;
+  background-color: rgba(0, 0, 0, 0.33);
 }
-#main-container button:active {
+button:active {
   color: #FFAAFF;
   border: 1px solid #FFAAFF;
-  background-color: #00000022;
+  background-color: rgba(0, 0, 0, 0.33);
   transition: all 0s;
 }
-#main-container button.btn-red {
+button.btn-red {
   color: #ff4d4d;
   border-color: #ff4d4d;
 }
-#main-container button.btn-red:focus, #main-container button.btn-red:hover {
+button.btn-red:focus, button.btn-red:hover {
   color: red;
   border-color: red;
 }
-#main-container button.btn-red:active {
+button.btn-red:active {
   color: #990000;
   border-color: #990000;
 }
+
 @media all and (max-width: 30em) {
-  #main-container button {
+  button {
     display: block;
     margin: 0.4em auto;
   }
-}
-#main-container .table-card-library {
-  display: flex;
-  flex-direction: column;
-}
-#main-container .table-card-library .library-items-container-wrapper {
-  overflow-y: auto;
-  padding-right: 10px;
-}
-#main-container .table-card-library .library-items-container-wrapper::-webkit-scrollbar {
-  width: 5px;
-}
-#main-container .table-card-library .library-items-container-wrapper::-webkit-scrollbar-track {
-  background-color: #00000022;
-}
-#main-container .table-card-library .library-items-container-wrapper::-webkit-scrollbar-thumb {
-  background-color: #9E9E9E;
-}
-#main-container .table-card-library .library-items-container-wrapper::-webkit-scrollbar-thumb:hover {
-  background-color: #FFF;
-}
-#main-container .table-card-library .library-items-container {
-  overflow-y: auto;
-}
-#main-container .table-card-library .library-items-container .library-item {
-  width: 100%;
-  color: #9E9E9E;
-  border-bottom: 1px solid #9E9E9E;
-  height: 40px;
-  transition: all 0.3s;
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  vertical-align: middle;
-  padding-left: 20px;
-}
-#main-container .table-card-library .library-items-container .library-item .library-item-checkbox {
-  flex-basis: 30px;
-  padding-top: 7px;
-}
-#main-container .table-card-library .library-items-container .library-item .library-item-value {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  flex-basis: 30%;
-  margin-right: 20px;
-  line-height: 40px;
-}
-#main-container .table-card-library .library-items-container .library-item div {
-  display: inline-block;
-}
-#main-container .table-card-library .library-items-container .library-item:hover {
-  color: #FFF;
-  border-bottom-color: #FFF;
-}
-#main-container .table-card-library .library-items-container .library-item:active {
-  color: #FFAAFF;
-  border-bottom-color: #FFAAFF;
-  transition: all 0s;
-}
-#main-container .dropdown-wrapper {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-#main-container .dropdown-wrapper .card-drop {
-  max-width: 200px;
-  position: relative;
-}
-#main-container .dropdown-wrapper .card-drop button {
-  display: block;
-  width: 100%;
-  height: 34px;
-  margin: 0;
-  padding: 6px 0 6px 0;
-  text-decoration: none;
-  color: #9E9E9E;
-  background-color: #1b1b1b;
-}
-#main-container .dropdown-wrapper .card-drop button i {
-  display: inline-block;
-  width: 20px;
-}
-#main-container .dropdown-wrapper .card-drop button:hover {
-  color: #FFF;
-  background-color: #333;
-}
-#main-container .dropdown-wrapper .card-drop button.button-top {
-  position: relative;
-  z-index: 300;
-  background-color: #1b1b1b;
-  font: 16px/1.4 "Roboto", sans-serif;
-}
-#main-container .dropdown-wrapper .card-drop button.button-top .caret-down {
-  display: block;
-  position: absolute;
-  font-size: 1.3em;
-  color: #9E9E9E;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  line-height: 34px;
-  transition: all 0.3s;
-}
-#main-container .dropdown-wrapper .card-drop button.button-top.active {
-  color: #FFF;
-  border-color: #FFF;
-  background-color: #1b1b1b;
-}
-#main-container .dropdown-wrapper .card-drop button.button-top.active .caret-down {
-  transform: rotate(180deg);
-}
-#main-container .dropdown-wrapper .card-drop button.button-top.active, #main-container .dropdown-wrapper .card-drop button.button-top:hover {
-  background-color: #333;
-}
-#main-container .dropdown-wrapper .card-drop button.button-top.active .caret-down, #main-container .dropdown-wrapper .card-drop button.button-top:hover .caret-down {
-  color: #FFF;
-}
-#main-container .dropdown-wrapper .card-drop ul {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  list-style: none;
-}
-#main-container .dropdown-wrapper .card-drop ul li {
-  position: absolute;
-  width: 100%;
-  transition: top 0.3s ease-out;
-}
-#main-container .dropdown-wrapper .card-drop ul li button:active {
-  color: #FFAAFF;
-  transition: all 0s;
-}
-#main-container .dropdown-wrapper .card-drop ul li.active button {
-  color: #FFAAFF;
-}
-#main-container .dropdown-wrapper .card-drop ul li.closed button:hover {
-  cursor: default;
-  background-color: #1b1b1b;
 }
 
 /*# sourceMappingURL=style.css.map */

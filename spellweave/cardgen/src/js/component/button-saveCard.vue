@@ -9,16 +9,26 @@
 				let item = JSON.parse(JSON.stringify(this.$store.state.cardState));
 				item.timestamp = formatDateTime(new Date());
 
+				item.displayName = stripMarkup(item.cardName);
+				if (item.cardName === '') {
+					item.displayName = stripMarkup(item.cardDescription);
+				}
+				let prefix = capitalize(item.cardType);
+				if (item.cardElement !== Element.GENERIC) {
+					prefix = capitalize(item.cardElement) + ' ' + prefix;
+				}
+				if (item.cardManaCost > 0) {
+					prefix = item.cardManaCost + ' Mana ' + prefix;
+				}
+				prefix = '[' + prefix + ']';
+				item.displayName = prefix + ' ' + item.displayName;
+
 				item.version = 0;
 				let library = this.$store.state.cardLibrary.data;
 				for (let i = 0; i < library.length; i++) {
-					if (library[i].cardName === item.cardName) {
+					if (library[i].displayName === item.displayName) {
 						item.version += 1;
 					}
-				}
-				item.displayName = item.cardName;
-				if (item.cardName === '') {
-					item.displayName = 'Unnamed';
 				}
 				if (item.version > 0) {
 					item.displayName += ' (' + item.version + ')';

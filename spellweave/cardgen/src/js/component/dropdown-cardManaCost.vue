@@ -25,6 +25,11 @@
 			},
 			items() {
 				let data = [];
+				data.push({
+					title: '- No Mana -',
+					icon: 'fa-dot-circle',
+					value: 0,
+				});
 				for (let i = 1; i <= 12; i++) {
 					data.push({
 						title: i + ' Mana',

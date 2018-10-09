@@ -9,14 +9,9 @@
 			cardName: '',
 			cardDescription: '',
 			cardType: Type.PATH,
+			cardElement: Element.GENERIC,
 			cardManaCost: 1,
 		},
-		getters: {
-			// isFreeBuild: () => state => {
-			// 	return state.isFreeBuild;
-			// },
-		},
-
 		mutations: {
 			load(state, value) {
 				state.cardName = value.cardName;
@@ -24,6 +19,7 @@
 				state.isFreeBuild = value.isFreeBuild;
 				state.isFreeDraw = value.isFreeDraw;
 				state.cardType = value.cardType;
+				state.cardElement = value.cardElement;
 				state.cardManaCost = value.cardManaCost;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
@@ -33,6 +29,7 @@
 				state.isFreeBuild = false;
 				state.isFreeDraw = false;
 				state.cardType = Type.PATH;
+				state.cardElement = Element.DAMAGE;
 				state.cardManaCost = 1;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
@@ -54,6 +51,10 @@
 			},
 			setCardType(state, value) {
 				state.cardType = value;
+				app.$emit(Event.CARD_STATE_UPDATED);
+			},
+			setCardElement(state, value) {
+				state.cardElement = value;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 			setCardManaCost(state, value) {

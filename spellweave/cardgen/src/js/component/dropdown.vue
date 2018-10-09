@@ -112,3 +112,104 @@
 		},
 	}
 </script>
+
+<style lang='scss' scoped>
+	@import "Style/variables.scss";
+
+	.dropdown-wrapper {
+		margin-top: 10px;
+		margin-bottom: 10px;
+
+		.card-drop {
+			max-width: 200px;
+			position: relative;
+
+			button {
+				display: block;
+				width: 100%;
+				height: $dropdown-element-height;
+				margin: 0;
+				padding: 6px 0 6px 0;
+				text-decoration: none;
+				color: $inactive-color;
+				background-color: $dropdown-background-color;
+				i {
+					display: inline-block;
+					width: 20px;
+				}
+				&:hover {
+					color: $primary-color;
+					background-color: $dropdown-background-color-active;
+				}
+			}
+			button.button-top {
+				position: relative;
+				z-index: 300;
+				background-color: $dropdown-background-color;
+				font: 16px/1.4 "Roboto", sans-serif;
+
+				.caret-down {
+					display: block;
+					position: absolute;
+					font-size: 1.3em;
+					color: $inactive-color;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					line-height: $dropdown-element-height;
+					transition: all $transition-duration;
+				}
+
+				&.active {
+					color: $primary-color;
+					border-color: $primary-color;
+					background-color: $dropdown-background-color;
+
+					.caret-down {
+						transform: rotate(180deg);
+					}
+				}
+
+				&.active, &:hover {
+					background-color: $dropdown-background-color-active;
+					.caret-down {
+						color: $primary-color;
+					}
+				}
+			}
+
+			ul {
+				display: block;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				list-style: none;
+				li {
+					position: absolute;
+					width: 100%;
+					transition: top $transition-duration ease-out;
+
+					button {
+						&:active {
+							color: $accent-color;
+							transition: all 0s;
+						}
+					}
+
+					&.active {
+						button {
+							color: $accent-color;
+						}
+					}
+					&.closed {
+						button:hover {
+							cursor: default;
+							background-color: $dropdown-background-color;
+						}
+					}
+				}
+			}
+		}
+	}
+</style>

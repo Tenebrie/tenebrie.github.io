@@ -1,9 +1,9 @@
 <template>
 	<div class='library-item' @click='onClick(item.id)' v-longpress='onLongpress'>
 		<div v-if='$parent.isInSelectState' class='library-item-checkbox'>
-			<is-selected :item='item' :isSelected='isSelected'></is-selected>
+			<is-selected :isSelected='isSelected'></is-selected>
 		</div>
-		<div class='library-item-value'>
+		<div class='library-item-value library-item-name'>
 			{{ item.displayName }}
 		</div>
 		<div class='library-item-value'>
@@ -55,3 +55,53 @@
 		},
 	}
 </script>
+
+<style lang='scss' scoped>
+	@import 'Style/variables.scss';
+
+	.library-item {
+		width: 100%;
+		color: $inactive-color;
+		border-bottom: 1px solid $inactive-color;
+		height: 40px;
+		transition: all $transition-duration;
+		cursor: pointer;
+		user-select: none;
+		display: flex;
+		vertical-align: middle;
+		padding-left: 20px;
+
+		.library-item-checkbox {
+			flex-basis: 30px;
+			padding-top: 7px;
+		}
+
+		.library-item-value {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			flex-basis: 50%;
+			margin-right: 20px;
+			line-height: 40px;
+
+		}
+		.library-item-name {
+			flex-basis: 70%;
+		}
+
+		div {
+			display: inline-block;
+		}
+
+		&:hover {
+			color: $primary-color;
+			border-bottom-color: $primary-color;
+		}
+
+		&:active {
+			color: $accent-color;
+			border-bottom-color: $accent-color;
+			transition: all .0s;
+		}
+	}
+</style>

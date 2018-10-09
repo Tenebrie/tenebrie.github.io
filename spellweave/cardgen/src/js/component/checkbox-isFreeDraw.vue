@@ -1,16 +1,19 @@
 <template>
-	<div>
-		<input :id='id' v-model='checked' type='checkbox' />
-		<label :for='id'>
-			<span></span>
-			<slot></slot>
-		</label>
-	</div>
+	<checkbox :isChecked='checked' :onChecked='onChecked'>Free Draw</checkbox>
 </template>
 
 <script>
+	import checkbox from 'Component/checkbox.vue';
+
 	export default {
-		props: ['id'],
+		components: {
+			checkbox,
+		},
+		methods: {
+			onChecked: function(value) {
+				this.checked = value;
+			},
+		},
 		computed: {
 			checked: {
 				get() {

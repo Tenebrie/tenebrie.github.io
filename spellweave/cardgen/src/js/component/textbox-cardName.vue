@@ -1,12 +1,19 @@
 <template>
-	<div class='text-input'>
-		<label>Card title</label>
-		<input class='card-title' type='text' placeholder="Title" v-model='text'/>
-	</div>
+	<textbox :defaultValue='text' :onInput='onInput' placeholder='Title'>Card title</textbox>
 </template>
 
 <script>
+	import textbox from 'Component/textbox.vue'
+
 	export default {
+		components: {
+			textbox,
+		},
+		methods: {
+			onInput: function(value) {
+				this.text = value;
+			},
+		},
 		computed: {
 			text: {
 				get() {

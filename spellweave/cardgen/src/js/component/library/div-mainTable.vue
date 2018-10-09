@@ -61,3 +61,36 @@
 		},
 	}
 </script>
+
+<style lang='scss' scoped>
+	@import "Style/variables.scss";
+
+	.table-card-library {
+		display: flex;
+		flex-direction: column;
+
+		.library-items-container-wrapper {
+			overflow-y: auto;
+			padding-right: 10px;
+
+			&::-webkit-scrollbar {
+				width: 5px;
+			}
+
+			&::-webkit-scrollbar-track {
+				background-color: #00000022;
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background-color: $inactive-color;
+				&:hover {
+					background-color: $primary-color;
+				}
+			}
+
+		}
+		.library-items-container {
+			overflow-y: auto;
+		}
+	}
+</style>
