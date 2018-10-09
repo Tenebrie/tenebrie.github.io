@@ -115,7 +115,7 @@
 					});
 
 				}.bind(this);
-				backgroundImg.src = 'res/bg_path.png';
+				backgroundImg.src = 'res/bg_textured.png';
 				this.clearCanvasRenderThrottleTimer();
 			},
 
