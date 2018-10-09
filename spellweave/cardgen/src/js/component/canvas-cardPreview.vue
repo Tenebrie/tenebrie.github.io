@@ -48,6 +48,7 @@
 				let backgroundImg = new Image();
 				let ctx = this.previewContext;
 				backgroundImg.onload = function() {
+					// On background rendered
 					ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 					let sourceWidth = backgroundImg.width;
 					let sourceHeight = backgroundImg.height;
@@ -61,25 +62,57 @@
 					$(this.$el).parent().css('min-width', sourceWidth);
 					this.drawImage(ctx, backgroundImg);
 
-					if (this.$store.state.cardState.isFreeBuild || this.$store.state.cardState.isFreeDraw) {
-						this.drawImageFromFile(ctx, 'res/bg_attribute.png');
-					}
+					let state = this.$store.state.cardState;
 
-					let cardManaCost = this.$store.state.cardState.cardManaCost;
-					if (cardManaCost >= 1 && cardManaCost <= 12) {
-						let manaCostFileName = 'manacost_' + cardManaCost + '.png';
-						this.drawImageFromFile(ctx, 'res/' + manaCostFileName);
-					}
-
-					let cardName = this.$store.state.cardState.cardName;
-					let cardDescription = this.$store.state.cardState.cardDescription;
-
-					this.drawImageFromFile(ctx, 'res/bg_name.png', () => {
-						if (cardName !== '') {
-							this.renderText(ctx, '24px K2D', 'black', cardName, realWidth / 2, 140, 24, 270);
+					let elementFileName = 'bg_element_' + state.cardElement + '.png';
+					this.drawImageFromFile(ctx, 'res/' + elementFileName, () => {
+						// On element background rendered
+						let pathFileName;
+						if (state.cardType === Type.PREPARATION) {
+							pathFileName = 'empty.png';
+						} else if (state.cardType === Type.ACTION) {
+							pathFileName = 'bg_path_begin.png';
+						} else if (state.cardType === Type.PATH && state.cardPathType === PathType.NORMAL) {
+							pathFileName = 'bg_path_normal.png';
+						} else if (state.cardType === Type.PATH && state.cardPathType === PathType.FORK) {
+							pathFileName = 'bg_path_fork.png';
+						} else if (state.cardType === Type.STATE) {
+							pathFileName = 'bg_path_stop.png';
+						} else if (state.cardType === Type.RELEASE) {
+							pathFileName = 'bg_path_end.png';
 						}
+
+						this.drawImageFromFile(ctx, 'res/' + pathFileName, () => {
+							// On path rendered
+							if (state.isFreeBuild || state.isFreeDraw) {
+								this.drawImageFromFile(ctx, 'res/bg_attribute.png', () => {
+									if (state.isFreeBuild && state.isFreeDraw) {
+										this.drawImageFromFile(ctx, 'res/attr_freeBuildAndDraw.png');
+									} else if (state.isFreeBuild) {
+										this.drawImageFromFile(ctx, 'res/attr_freeBuild.png');
+									} else if (state.isFreeDraw) {
+										this.drawImageFromFile(ctx, 'res/attr_freeDraw.png');
+									}
+								});
+							}
+
+							if (state.cardManaCost >= 1 && state.cardManaCost <= 12) {
+								let manaCostFileName = 'manacost_' + state.cardManaCost + '.png';
+								this.drawImageFromFile(ctx, 'res/' + manaCostFileName);
+							}
+
+							let cardName = this.$store.state.cardState.cardName;
+							let cardDescription = this.$store.state.cardState.cardDescription;
+
+							if (cardName !== '') {
+								this.drawImageFromFile(ctx, 'res/bg_name.png', () => {
+									// On name slot rendered
+									this.renderText(ctx, '24px K2D', 'black', cardName, realWidth / 2, 140, 24, 270);
+								});
+							}
+							this.renderText(ctx, '18px K2D', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 365, 20, realWidth - 50, 200);
+						});
 					});
-					this.renderText(ctx, '18px K2D', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 350, 20, realWidth - 50, 200);
 
 				}.bind(this);
 				backgroundImg.src = 'res/bg_path.png';
@@ -135,7 +168,6 @@
 					paragraphs.splice(0, 1);
 					this.renderTextLine(ctx, color, currentLineText, targetX, currentLineY);
 					currentLineY += lineHeight * 1.2;
-					console.log(currentLineY);
 				}
 			},
 
@@ -260,6 +292,9 @@
 						callback();
 					}
 				}.bind(this);
+				image.onerror = function() {
+					callback();
+				};
 				image.src = filePath;
 			},
 

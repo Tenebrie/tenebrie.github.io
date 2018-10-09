@@ -1,5 +1,6 @@
 <template>
 	<div class="dropdown-wrapper">
+		<label><slot></slot></label>
 		<div class="card-drop">
 			<button @click='onTopClick' class='button-top'>
 				<i :class="'fas ' + activeItem.icon"></i>
@@ -117,12 +118,18 @@
 	@import "Style/variables.scss";
 
 	.dropdown-wrapper {
-		margin-top: 10px;
-		margin-bottom: 10px;
+		margin: 10px;
+
+		label {
+			font: 16px/1.4 "Roboto", sans-serif;
+			letter-spacing: 0.5px;
+			margin-left: 3px;
+		}
 
 		.card-drop {
 			max-width: 200px;
 			position: relative;
+			margin-top: 5px;
 
 			button {
 				display: block;

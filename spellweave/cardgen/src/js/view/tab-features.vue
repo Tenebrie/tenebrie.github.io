@@ -4,6 +4,7 @@
 			<is-free-build id='cb-isFreeBuild'>Free Build</is-free-build>
 			<is-free-draw id='cb-isFreeDraw'>Free Draw</is-free-draw>
 			<card-type></card-type>
+			<card-path-type v-if='isPathTypeVisible'></card-path-type>
 			<card-element></card-element>
 			<card-mana-cost></card-mana-cost>
 		</div>
@@ -14,6 +15,7 @@
 	import isFreeBuild from 'Component/checkbox-isFreeBuild.vue';
 	import isFreeDraw from 'Component/checkbox-isFreeDraw.vue';
 	import cardType from 'Component/dropdown-cardType.vue';
+	import cardPathType from 'Component/dropdown-cardPathType.vue';
 	import cardElement from 'Component/dropdown-cardElement.vue';
 	import cardManaCost from 'Component/dropdown-cardManaCost.vue';
 
@@ -22,8 +24,14 @@
 			isFreeBuild,
 			isFreeDraw,
 			cardType,
+			cardPathType,
 			cardElement,
 			cardManaCost,
+		},
+		computed: {
+			isPathTypeVisible() {
+				return this.$store.state.cardState.cardType === Type.PATH;
+			}
 		}
 	}
 </script>

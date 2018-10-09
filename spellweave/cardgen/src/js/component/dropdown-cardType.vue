@@ -1,5 +1,5 @@
 <template>
-	<dropdown :id="id" :items="items" zIndex="40" :selectedValue="selectedType" :onSelect="onSelect"></dropdown>
+	<dropdown :id="id" :items="items" zIndex="80" :selectedValue="selectedType" :onSelect="onSelect">Type</dropdown>
 </template>
 
 <script>
@@ -27,6 +27,11 @@
 			items() {
 				return [
 					{
+						title: 'Preparation',
+						icon: 'fa-signature',
+						value: Type.PREPARATION,
+					},
+					{
 						title: 'Action',
 						icon: 'fa-hand-spock',
 						value: Type.ACTION,
@@ -35,6 +40,11 @@
 						title: 'Path',
 						icon: 'fa-arrow-right',
 						value: Type.PATH,
+					},
+					{
+						title: 'State',
+						icon: 'fa-pause-circle',
+						value: Type.STATE,
 					},
 					{
 						title: 'Release',

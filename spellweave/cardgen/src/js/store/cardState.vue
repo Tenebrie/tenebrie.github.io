@@ -9,6 +9,7 @@
 			cardName: '',
 			cardDescription: '',
 			cardType: Type.PATH,
+			cardPathType: PathType.NORMAL,
 			cardElement: Element.GENERIC,
 			cardManaCost: 1,
 		},
@@ -19,6 +20,7 @@
 				state.isFreeBuild = value.isFreeBuild;
 				state.isFreeDraw = value.isFreeDraw;
 				state.cardType = value.cardType;
+				state.cardPathType = value.cardPathType;
 				state.cardElement = value.cardElement;
 				state.cardManaCost = value.cardManaCost;
 				app.$emit(Event.CARD_STATE_UPDATED);
@@ -29,6 +31,7 @@
 				state.isFreeBuild = false;
 				state.isFreeDraw = false;
 				state.cardType = Type.PATH;
+				state.cardPathType = PathType.NORMAL;
 				state.cardElement = Element.DAMAGE;
 				state.cardManaCost = 1;
 				app.$emit(Event.CARD_STATE_UPDATED);
@@ -51,6 +54,10 @@
 			},
 			setCardType(state, value) {
 				state.cardType = value;
+				app.$emit(Event.CARD_STATE_UPDATED);
+			},
+			setCardPathType(state, value) {
+				state.cardPathType = value;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 			setCardElement(state, value) {

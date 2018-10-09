@@ -19,6 +19,17 @@ module.exports = {
 					'css-loader',
 					'sass-loader'
 				],
+			},
+			{
+				test: /\.(png|jpg|gif)$/i,
+				use: [
+					{
+						loader: 'url-loader',
+						options: {
+							limit: 8192
+						}
+					}
+				]
 			}
 		]
 	},
@@ -31,6 +42,8 @@ module.exports = {
 			Component: path.resolve(__dirname, 'src/js/component/'),
 			Store: path.resolve(__dirname, 'src/js/store/'),
 			View: path.resolve(__dirname, 'src/js/view/'),
+
+			Res: path.resolve(__dirname, 'res/'),
 
 			Style: path.resolve(__dirname, 'src/css/'),
 		}

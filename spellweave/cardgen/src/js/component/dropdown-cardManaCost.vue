@@ -1,5 +1,5 @@
 <template>
-	<dropdown :items="items" zIndex="10" :selectedValue="selectedManaCost" :onSelect="onSelect"></dropdown>
+	<dropdown :items="items" zIndex="20" :selectedValue="selectedManaCost" :onSelect="onSelect">Cost</dropdown>
 </template>
 
 <script>

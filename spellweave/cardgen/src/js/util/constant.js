@@ -13,9 +13,16 @@ const Color = {
 };
 
 const Type = {
+	PREPARATION: 'preparation',
 	ACTION: 'action',
 	PATH: 'path',
+	STATE: 'state',
 	RELEASE: 'release',
+};
+
+const PathType = {
+	NORMAL: 'normal',
+	FORK: 'fork',
 };
 
 const Element = {

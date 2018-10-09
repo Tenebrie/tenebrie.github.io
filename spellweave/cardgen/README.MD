@@ -2,9 +2,7 @@ Spellweave Card Generator
 =========================
 
 ## Prerequisites ##
-`npm install vue`
-`npm install webpack webpack-cli vue-loader`
-`npm install sass-loader node-sass`
+`npm install vue webpack webpack-cli vue-loader url-loader sass-loader node-sass`
 
 ## Development ##
 #### If using WebStorm ####
