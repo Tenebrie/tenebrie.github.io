@@ -134,10 +134,9 @@
 
 				let imageCache = this.imageCache;
 
-				let backgroundImg = imageCache['bg-textured'];
-
-				let sourceWidth = backgroundImg.width;
-				let sourceHeight = backgroundImg.height;
+				let backgroundImg = 'bg-textured';
+				let sourceWidth = imageCache[backgroundImg].width;
+				let sourceHeight = imageCache[backgroundImg].height;
 				let realWidth = this.$el.offsetWidth;
 				let targetHeight = sourceWidth / (sourceWidth / sourceHeight);
 				let parent = $(this.$el).parent();
@@ -146,46 +145,47 @@
 				$(this.$el).css('max-width', sourceWidth);
 				$(this.$el).css('margin-top', parent.height() / 2 - targetHeight / 2);
 				$(this.$el).parent().css('min-width', sourceWidth);
-				this.drawImage(ctx, backgroundImg);
+
+				this.renderImage(ctx, backgroundImg);
 
 				let state = this.$store.state.cardState;
 
 				let elementFileName = 'bg-element-' + state.cardElement;
-				this.drawImage(ctx, imageCache[elementFileName]);
+				this.renderImage(ctx, elementFileName);
 
 				if (state.cardType === Type.ACTION) {
-					this.drawImage(ctx, this.imageCache['bg-path-begin']);
+					this.renderImage(ctx, 'bg-path-begin');
 				} else if (state.cardType === Type.PATH && state.cardPathType === PathType.NORMAL) {
-					this.drawImage(ctx, this.imageCache['bg-path-normal']);
+					this.renderImage(ctx, 'bg-path-normal');
 				} else if (state.cardType === Type.PATH && state.cardPathType === PathType.FORK) {
-					this.drawImage(ctx, this.imageCache['bg-path-fork']);
+					this.renderImage(ctx, 'bg-path-fork');
 				} else if (state.cardType === Type.STATE) {
-					this.drawImage(ctx, this.imageCache['bg-path-stop']);
+					this.renderImage(ctx, 'bg-path-stop');
 				} else if (state.cardType === Type.RELEASE) {
-					this.drawImage(ctx, this.imageCache['bg-path-end']);
+					this.renderImage(ctx, 'bg-path-end');
 				}
 
 				if (state.isFreeBuild || state.isFreeDraw) {
-					this.drawImage(ctx, imageCache['bg-attribute']);
+					this.renderImage(ctx, 'bg-attribute');
 					if (state.isFreeBuild && state.isFreeDraw) {
-						this.drawImage(ctx, imageCache['attr_freeBuildAndDraw.png']);
+						this.renderImage(ctx, 'attr-freeBuildAndDraw.png');
 					} else if (state.isFreeBuild) {
-						this.drawImage(ctx, imageCache['attr_freeBuild.png']);
+						this.renderImage(ctx, 'attr-freeBuild.png');
 					} else if (state.isFreeDraw) {
-						this.drawImage(ctx, imageCache['attr_freeDraw']);
+						this.renderImage(ctx, 'attr-freeDraw');
 					}
 				}
 
 				if (state.cardManaCost >= 1 && state.cardManaCost <= 12) {
 					let manaCostFileName = 'manacost-' + state.cardManaCost;
-					this.drawImage(ctx, imageCache[manaCostFileName]);
+					this.renderImage(ctx, manaCostFileName);
 				}
 
 				let cardName = this.$store.state.cardState.cardName;
 				let cardDescription = this.$store.state.cardState.cardDescription;
 
 				if (cardName !== '') {
-					this.drawImage(ctx, imageCache['bg-name']);
+					this.renderImage(ctx, 'bg-name');
 					this.renderText(ctx, '24px K2D', 'black', cardName, realWidth / 2, 140, 24, 270);
 				}
 				this.renderText(ctx, '18px "K2D"', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 365, 20, realWidth - 50, 200);
@@ -355,8 +355,10 @@
 				}
 			},
 
-			drawImage: function(ctx, image) {
-				if (typeof image === 'undefined') {
+			renderImage: function(ctx, imageId) {
+				let image = this.imageCache[imageId];
+				if (image === undefined) {
+					console.error('Unable to load image: ' + imageId + '.png');
 					return;
 				}
 
