@@ -23,6 +23,7 @@
 		data: function() {
 			return {
 				isSelected: false,
+				clickFadeOutTimer: null,
 			}
 		},
 		mounted: function() {
@@ -45,13 +46,24 @@
 				} else {
 					this.isSelected = !this.isSelected;
 				}
+				this.transitionAfterClick();
 			},
 
 			onLongpress: function() {
 				if (!this.$parent.isInSelectState) {
 					this.$parent.isInSelectState = true;
 				}
-			}
+			},
+
+			transitionAfterClick: function() {
+				this.$el.style.transition = 'all 0.3s';
+				if (this.clickFadeOutTimer !== null) {
+					clearTimeout(this.clickFadeOutTimer);
+				}
+				this.clickFadeOutTimer = setTimeout(() => {
+					this.$el.style.transition = '';
+				}, 300);
+			},
 		},
 	}
 </script>
@@ -96,12 +108,12 @@
 		&:hover {
 			color: $primary-color;
 			border-bottom-color: $primary-color;
+			transition: all .0s;
 		}
 
 		&:active {
 			color: $accent-color;
 			border-bottom-color: $accent-color;
-			transition: all .0s;
 		}
 	}
 </style>

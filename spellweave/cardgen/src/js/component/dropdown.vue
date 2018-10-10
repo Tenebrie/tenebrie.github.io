@@ -117,6 +117,13 @@
 <style lang='scss' scoped>
 	@import "Style/variables.scss";
 
+	.element-damage { color: $element-damage-color; }
+	.element-healing { color: $element-healing-color; }
+	.element-alteration { color: $element-alteration-color; }
+	.element-summoning { color: $element-summoning-color; }
+	.element-control { color: $element-control-color; }
+	.element-sacrifice { color: $element-sacrifice-color; }
+
 	.dropdown-wrapper {
 		margin: 10px;
 
@@ -147,6 +154,7 @@
 				&:hover {
 					color: $primary-color;
 					background-color: $dropdown-background-color-active;
+					transition: all 0s;
 				}
 			}
 			button.button-top {

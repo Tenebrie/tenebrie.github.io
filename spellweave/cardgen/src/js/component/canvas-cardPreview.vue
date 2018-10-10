@@ -1,31 +1,99 @@
 <template>
-	<canvas></canvas>
+	<div class="canvas-container">
+		<canvas class='primary'></canvas>
+		<canvas class='secondary'></canvas>
+	</div>
 </template>
 
 <script>
 	export default {
 		data: function() {
 			return {
-				previewContext: null,
+				imageCache: {},
+				imagesCached: 0,
+				previewContexts: [],
+				activePreviewContext: 0,
+				cacheWaitingTimer: null,
 				canvasRenderDebounceTimer: null,
 			}
 		},
+		computed: {
+			previewContext() {
+				return this.previewContexts[this.activePreviewContext];
+			},
+			contextCount() {
+				return 2;
+			},
+			image(name) {
+
+			},
+			imageUrls() {
+				let urls = [
+					'empty',
+					'bg-textured',
+					'bg-attribute',
+					'bg-name',
+					'bg-path-begin',
+					'bg-path-normal',
+					'bg-path-fork',
+					'bg-path-stop',
+					'bg-path-end',
+					'bg-element-generic',
+					'bg-element-damage',
+					'bg-element-healing',
+					'bg-element-alteration',
+					'bg-element-summoning',
+					'bg-element-control',
+					'bg-element-sacrifice',
+					'attr-freeBuildAndDraw',
+					'attr-freeBuild',
+					'attr-freeDraw',
+				];
+
+				for (let i = 1; i <= 12; i++) {
+					urls.push('manacost-' + i);
+				}
+
+				return urls;
+			},
+		},
+		created: function() {
+			for (let i = 0; i < this.imageUrls.length; i++) {
+				let url = this.imageUrls[i];
+				let image = new Image();
+				image.onload = () => {
+					this.imagesCached += 1;
+					this.imageCache[url] = image;
+				};
+				image.src = 'res/' + url + '.png';
+			}
+		},
 		mounted: function() {
-			let canvas = this.$el;
+			let canvas = $(this.$el).find('canvas.primary')[0];
+			let backCanvas = $(this.$el).find('canvas.secondary')[0];
+
 			let dpr = window.devicePixelRatio || 1;
-			let rect = canvas.getBoundingClientRect();
+			let rect = this.$el.getBoundingClientRect();
 			canvas.width = rect.width * dpr;
-			canvas.height = rect.height * dpr;
+			canvas.height = rect.height * dpr / this.contextCount;
+			backCanvas.width = rect.width * dpr;
+			backCanvas.height = rect.height * dpr / this.contextCount;
 			let ctx = canvas.getContext('2d');
+			let backCtx = backCanvas.getContext('2d');
 			ctx.scale(dpr, dpr);
-			this.previewContext = ctx;
+			backCtx.scale(dpr, dpr);
+			this.previewContexts.push(ctx);
+			this.previewContexts.push(backCtx);
+
+			canvas.style.display = 'none';
+			backCanvas.style.display = 'none';
 
 			this.$root.$on(Event.SAVE_CARD_AS_IMAGE, () => {
 				this.saveCanvasToFile();
 			});
 
 			this.$root.$on(Event.CARD_STATE_UPDATED, () => {
-				this.renderCanvas();
+				this.renderCanvasAfterDelay();
 			});
 
 			this.renderCanvasAfterDelay();
@@ -34,9 +102,19 @@
 			});
 		},
 		methods: {
+			swapContext: function() {
+				this.previewContexts[this.activePreviewContext].canvas.style.display = 'block';
+				if (this.activePreviewContext === 0) {
+					this.activePreviewContext = 1;
+				} else {
+					this.activePreviewContext = 0;
+				}
+				this.previewContexts[this.activePreviewContext].canvas.style.display = 'none';
+			},
+
 			renderCanvasAfterDelay: function() {
 				if (this.canvasRenderDebounceTimer === null) {
-					this.canvasRenderDebounceTimer = setTimeout(this.renderCanvas, 20);
+					this.canvasRenderDebounceTimer = setTimeout(this.renderCanvas, 0);
 				}
 			},
 
@@ -45,78 +123,75 @@
 			},
 
 			renderCanvas: function() {
-				let backgroundImg = new Image();
+				if (this.imagesCached < this.imageUrls.length) {
+					this.cacheWaitingTimer = setTimeout(this.renderCanvas, 10);
+					console.log('[Card render] Waiting for image cache: ' + this.imagesCached + '/' + this.imageUrls.length);
+					return;
+				}
+
 				let ctx = this.previewContext;
-				backgroundImg.onload = function() {
-					// On background rendered
-					ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-					let sourceWidth = backgroundImg.width;
-					let sourceHeight = backgroundImg.height;
-					let realWidth = ctx.canvas.offsetWidth;
-					let targetHeight = sourceWidth / (sourceWidth / sourceHeight);
-					let parent = $(this.$el).parent();
-					$(this.$el).attr("width", sourceWidth).attr("height", targetHeight);
-					$(this.$el).css('height', targetHeight);
-					$(this.$el).css('max-width', sourceWidth);
-					$(this.$el).css('margin-top', parent.height() / 2 - targetHeight / 2);
-					$(this.$el).parent().css('min-width', sourceWidth);
-					this.drawImage(ctx, backgroundImg);
+				ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-					let state = this.$store.state.cardState;
+				let imageCache = this.imageCache;
 
-					let elementFileName = 'bg_element_' + state.cardElement + '.png';
-					this.drawImageFromFile(ctx, 'res/' + elementFileName, () => {
-						// On element background rendered
-						let pathFileName;
-						if (state.cardType === Type.PREPARATION) {
-							pathFileName = 'empty.png';
-						} else if (state.cardType === Type.ACTION) {
-							pathFileName = 'bg_path_begin.png';
-						} else if (state.cardType === Type.PATH && state.cardPathType === PathType.NORMAL) {
-							pathFileName = 'bg_path_normal.png';
-						} else if (state.cardType === Type.PATH && state.cardPathType === PathType.FORK) {
-							pathFileName = 'bg_path_fork.png';
-						} else if (state.cardType === Type.STATE) {
-							pathFileName = 'bg_path_stop.png';
-						} else if (state.cardType === Type.RELEASE) {
-							pathFileName = 'bg_path_end.png';
-						}
+				let backgroundImg = imageCache['bg-textured'];
 
-						this.drawImageFromFile(ctx, 'res/' + pathFileName, () => {
-							// On path rendered
-							if (state.isFreeBuild || state.isFreeDraw) {
-								this.drawImageFromFile(ctx, 'res/bg_attribute.png', () => {
-									if (state.isFreeBuild && state.isFreeDraw) {
-										this.drawImageFromFile(ctx, 'res/attr_freeBuildAndDraw.png');
-									} else if (state.isFreeBuild) {
-										this.drawImageFromFile(ctx, 'res/attr_freeBuild.png');
-									} else if (state.isFreeDraw) {
-										this.drawImageFromFile(ctx, 'res/attr_freeDraw.png');
-									}
-								});
-							}
+				let sourceWidth = backgroundImg.width;
+				let sourceHeight = backgroundImg.height;
+				let realWidth = this.$el.offsetWidth;
+				let targetHeight = sourceWidth / (sourceWidth / sourceHeight);
+				let parent = $(this.$el).parent();
+				$(this.$el).attr("width", sourceWidth).attr("height", targetHeight);
+				$(this.$el).css('height', targetHeight);
+				$(this.$el).css('max-width', sourceWidth);
+				$(this.$el).css('margin-top', parent.height() / 2 - targetHeight / 2);
+				$(this.$el).parent().css('min-width', sourceWidth);
+				this.drawImage(ctx, backgroundImg);
 
-							if (state.cardManaCost >= 1 && state.cardManaCost <= 12) {
-								let manaCostFileName = 'manacost_' + state.cardManaCost + '.png';
-								this.drawImageFromFile(ctx, 'res/' + manaCostFileName);
-							}
+				let state = this.$store.state.cardState;
 
-							let cardName = this.$store.state.cardState.cardName;
-							let cardDescription = this.$store.state.cardState.cardDescription;
+				let elementFileName = 'bg-element-' + state.cardElement;
+				this.drawImage(ctx, imageCache[elementFileName]);
 
-							if (cardName !== '') {
-								this.drawImageFromFile(ctx, 'res/bg_name.png', () => {
-									// On name slot rendered
-									this.renderText(ctx, '24px K2D', 'black', cardName, realWidth / 2, 140, 24, 270);
-								});
-							}
-							this.renderText(ctx, '18px K2D', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 365, 20, realWidth - 50, 200);
-						});
-					});
+				if (state.cardType === Type.ACTION) {
+					this.drawImage(ctx, this.imageCache['bg-path-begin']);
+				} else if (state.cardType === Type.PATH && state.cardPathType === PathType.NORMAL) {
+					this.drawImage(ctx, this.imageCache['bg-path-normal']);
+				} else if (state.cardType === Type.PATH && state.cardPathType === PathType.FORK) {
+					this.drawImage(ctx, this.imageCache['bg-path-fork']);
+				} else if (state.cardType === Type.STATE) {
+					this.drawImage(ctx, this.imageCache['bg-path-stop']);
+				} else if (state.cardType === Type.RELEASE) {
+					this.drawImage(ctx, this.imageCache['bg-path-end']);
+				}
 
-				}.bind(this);
-				backgroundImg.src = 'res/bg_textured.png';
+				if (state.isFreeBuild || state.isFreeDraw) {
+					this.drawImage(ctx, imageCache['bg-attribute']);
+					if (state.isFreeBuild && state.isFreeDraw) {
+						this.drawImage(ctx, imageCache['attr_freeBuildAndDraw.png']);
+					} else if (state.isFreeBuild) {
+						this.drawImage(ctx, imageCache['attr_freeBuild.png']);
+					} else if (state.isFreeDraw) {
+						this.drawImage(ctx, imageCache['attr_freeDraw']);
+					}
+				}
+
+				if (state.cardManaCost >= 1 && state.cardManaCost <= 12) {
+					let manaCostFileName = 'manacost-' + state.cardManaCost;
+					this.drawImage(ctx, imageCache[manaCostFileName]);
+				}
+
+				let cardName = this.$store.state.cardState.cardName;
+				let cardDescription = this.$store.state.cardState.cardDescription;
+
+				if (cardName !== '') {
+					this.drawImage(ctx, imageCache['bg-name']);
+					this.renderText(ctx, '24px K2D', 'black', cardName, realWidth / 2, 140, 24, 270);
+				}
+				this.renderText(ctx, '18px "K2D"', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 365, 20, realWidth - 50, 200);
+
 				this.clearCanvasRenderThrottleTimer();
+				this.swapContext();
 			},
 
 			renderText: function(ctx, font, color, text, targetX, targetY, lineHeight, maxWidth, maxHeight) {
@@ -281,21 +356,11 @@
 			},
 
 			drawImage: function(ctx, image) {
-				ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height);
-			},
+				if (typeof image === 'undefined') {
+					return;
+				}
 
-			drawImageFromFile: function(ctx, filePath, callback) {
-				let image = new Image();
-				image.onload = function() {
-					this.drawImage(ctx, image);
-					if (typeof callback !== 'undefined') {
-						callback();
-					}
-				}.bind(this);
-				image.onerror = function() {
-					callback();
-				};
-				image.src = filePath;
+				ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height);
 			},
 
 			getCardFileName: function() {
@@ -325,3 +390,20 @@
 		},
 	}
 </script>
+
+<style lang='scss' scoped>
+	@import 'Style/variables.scss';
+
+	.canvas-container {
+		height: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		canvas {
+			display: block;
+			width: 408px;
+			height: 584px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+</style>

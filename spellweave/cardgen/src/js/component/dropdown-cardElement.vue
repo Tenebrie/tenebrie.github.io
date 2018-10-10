@@ -33,32 +33,32 @@
 					},
 					{
 						title: 'Damage',
-						icon: 'fa-fire color-damage',
+						icon: 'fa-fire element-damage',
 						value: Element.DAMAGE,
 					},
 					{
 						title: 'Healing',
-						icon: 'fa-ankh color-healing',
+						icon: 'fa-ankh element-healing',
 						value: Element.HEALING,
 					},
 					{
 						title: 'Alteration',
-						icon: 'fa-seedling color-alteration',
+						icon: 'fa-seedling element-alteration',
 						value: Element.ALTERATION,
 					},
 					{
 						title: 'Summoning',
-						icon: 'fa-paw color-summoning',
+						icon: 'fa-paw element-summoning',
 						value: Element.SUMMONING,
 					},
 					{
 						title: 'Control',
-						icon: 'fa-chess-knight color-control',
+						icon: 'fa-chess-knight element-control',
 						value: Element.CONTROL,
 					},
 					{
 						title: 'Sacrifice',
-						icon: 'fa-skull color-sacrifice',
+						icon: 'fa-skull element-sacrifice',
 						value: Element.SACRIFICE,
 					},
 				]

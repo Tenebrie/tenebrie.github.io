@@ -26,8 +26,8 @@
 				item.version = 0;
 				let library = this.$store.state.cardLibrary.data;
 				for (let i = 0; i < library.length; i++) {
-					if (library[i].displayName === item.displayName) {
-						item.version += 1;
+					if (library[i].cardName === item.cardName && library[i].version >= item.version) {
+						item.version = library[i].version + 1;
 					}
 				}
 				if (item.version > 0) {

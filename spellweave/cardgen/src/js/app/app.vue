@@ -1,9 +1,7 @@
 <template>
 	<div id="main-container">
 		<div class="card-container">
-			<div class="canvas-container">
-				<preview-canvas></preview-canvas>
-			</div>
+			<preview-canvas></preview-canvas>
 		</div>
 
 		<div class="toolbar">
@@ -70,18 +68,8 @@
 			position: relative;
 			flex-grow: 1;
 			flex-basis: 30%;
-			background: white url("~Res/bg_alpha.png") repeat fixed center;
+			background: white url("~Res/bg-alpha.png") repeat fixed center;
 
-			.canvas-container {
-				height: 100%;
-				canvas {
-					display: block;
-					width: 100%;
-					height: 100%;
-					margin-left: auto;
-					margin-right: auto;
-				}
-			}
 		}
 
 		//======================================================================

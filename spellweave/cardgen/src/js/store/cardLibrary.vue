@@ -19,7 +19,10 @@
 				state.data.push(value);
 			},
 			delete(state, value) {
-				state.data.splice(state.data.indexOf(value), 1);
+				let index = state.data.indexOf(value);
+				if (index !== -1) {
+					state.data.splice(state.data.indexOf(value), 1);
+				}
 			},
 			load(state, value) {
 				for (let i = 0; i < value.length; i++) {
