@@ -92,13 +92,13 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			overflow: hidden;
-			flex-basis: 50%;
+			flex-basis: 20%;
 			margin-right: 20px;
 			line-height: 40px;
 
 		}
 		.library-item-name {
-			flex-basis: 70%;
+			flex-basis: 80%;
 		}
 
 		div {

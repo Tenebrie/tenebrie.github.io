@@ -22,7 +22,7 @@
 		transition: all $transition-duration ease;
 
 		button {
-			font-size: 24px;
+			font-size: 20px;
 			margin: 0;
 			border: none;
 			padding: 10px 0;

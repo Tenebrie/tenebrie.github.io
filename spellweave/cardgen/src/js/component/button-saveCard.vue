@@ -9,10 +9,12 @@
 				let item = JSON.parse(JSON.stringify(this.$store.state.cardState));
 				item.timestamp = formatDateTime(new Date());
 
-				item.displayName = stripMarkup(item.cardName);
-				if (item.cardName === '') {
-					item.displayName = stripMarkup(item.cardDescription);
+				item.displayName = '';
+				if (item.cardName !== '') {
+					item.displayName = stripMarkup(item.cardName) + ': ';
 				}
+				item.displayName += stripMarkup(item.cardDescription);
+
 				let prefix = capitalize(item.cardType);
 				if (item.cardElement !== Element.GENERIC) {
 					prefix = capitalize(item.cardElement) + ' ' + prefix;

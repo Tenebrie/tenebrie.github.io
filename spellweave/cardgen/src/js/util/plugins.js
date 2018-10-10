@@ -1,12 +1,15 @@
 let storageKey = 'cardLibrary';
+let backupKey = 'cardLibraryBackup';
 let api = {
 	load: function () {
 		let json = window.localStorage.getItem(storageKey) || JSON.stringify('');
 		return JSON.parse(json)
 	},
-	save: function(content, callback) {
+	save: function(content) {
 		window.localStorage.setItem(storageKey, JSON.stringify(content));
-		callback();
+	},
+	saveBackup: function(content) {
+		window.localStorage.setItem(backupKey, JSON.stringify(content));
 	},
 };
 
@@ -15,9 +18,10 @@ let autosaverPlugin = function (store) {
 
 	store.subscribe(function (mutation, state) {
 		if (mutation.type === 'cardLibrary/push' || mutation.type === 'cardLibrary/delete') {
-			api.save(store.state.cardLibrary.data, function () {
-				// This callback doesn't need to do anything yet
-			});
+			api.save(store.state.cardLibrary.data);
+		}
+		if (mutation.type === 'cardLibrary/push') {
+			api.saveBackup(store.state.cardLibrary.data);
 		}
 	})
 };

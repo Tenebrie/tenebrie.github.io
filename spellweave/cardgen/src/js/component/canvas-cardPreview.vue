@@ -134,7 +134,7 @@
 
 				let imageCache = this.imageCache;
 
-				let backgroundImg = 'bg-textured';
+				let backgroundImg = 'bg-clean';
 				let sourceWidth = imageCache[backgroundImg].width;
 				let sourceHeight = imageCache[backgroundImg].height;
 				let realWidth = this.$el.offsetWidth;
@@ -186,9 +186,9 @@
 
 				if (cardName !== '') {
 					this.renderImage(ctx, 'bg-name');
-					this.renderText(ctx, '24px K2D', 'black', cardName, realWidth / 2, 140, 24, 270);
+					this.renderText(ctx, '24px K2D', 'black', cardName, realWidth / 2, 158, 24, 270);
 				}
-				this.renderText(ctx, '18px "K2D"', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 365, 20, realWidth - 50, 200);
+				this.renderText(ctx, '18px "K2D"', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 400, 20, realWidth - 50, 200);
 
 				this.clearCanvasRenderThrottleTimer();
 				this.swapContext();

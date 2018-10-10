@@ -32,7 +32,7 @@
 				state.isFreeDraw = false;
 				state.cardType = Type.PATH;
 				state.cardPathType = PathType.NORMAL;
-				state.cardElement = Element.DAMAGE;
+				state.cardElement = Element.GENERIC;
 				state.cardManaCost = 1;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
