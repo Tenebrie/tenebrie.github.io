@@ -6,6 +6,7 @@ const Event = {
 	UNSELECT_ALL_LIBRARY: 'unselectAllLibrary',
 	ENABLE_LIBRARY_SELECTION: 'enableLibrarySelection',
 	CANCEL_LIBRARY_SELECTION: 'cancelLibrarySelection',
+	TOGGLE_SIDEBAR: 'toggleSidebar',
 };
 
 const Color = {

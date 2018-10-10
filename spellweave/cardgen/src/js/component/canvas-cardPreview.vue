@@ -21,15 +21,13 @@
 			previewContext() {
 				return this.previewContexts[this.activePreviewContext];
 			},
-			contextCount() {
-				return 2;
-			},
-			image(name) {
-
+			canvasSize() {
+				return '408x584';
 			},
 			imageUrls() {
 				let urls = [
 					'empty',
+					'bg-clean',
 					'bg-textured',
 					'bg-attribute',
 					'bg-name',
@@ -72,12 +70,14 @@
 			let canvas = $(this.$el).find('canvas.primary')[0];
 			let backCanvas = $(this.$el).find('canvas.secondary')[0];
 
+			let width = this.canvasSize.split('x')[0];
+			let height = this.canvasSize.split('x')[1];
+
 			let dpr = window.devicePixelRatio || 1;
-			let rect = this.$el.getBoundingClientRect();
-			canvas.width = rect.width * dpr;
-			canvas.height = rect.height * dpr / this.contextCount;
-			backCanvas.width = rect.width * dpr;
-			backCanvas.height = rect.height * dpr / this.contextCount;
+			canvas.width = width * dpr;
+			canvas.height = height * dpr;
+			backCanvas.width = width * dpr;
+			backCanvas.height = height * dpr;
 			let ctx = canvas.getContext('2d');
 			let backCtx = backCanvas.getContext('2d');
 			ctx.scale(dpr, dpr);
@@ -168,9 +168,9 @@
 				if (state.isFreeBuild || state.isFreeDraw) {
 					this.renderImage(ctx, 'bg-attribute');
 					if (state.isFreeBuild && state.isFreeDraw) {
-						this.renderImage(ctx, 'attr-freeBuildAndDraw.png');
+						this.renderImage(ctx, 'attr-freeBuildAndDraw');
 					} else if (state.isFreeBuild) {
-						this.renderImage(ctx, 'attr-freeBuild.png');
+						this.renderImage(ctx, 'attr-freeBuild');
 					} else if (state.isFreeDraw) {
 						this.renderImage(ctx, 'attr-freeDraw');
 					}
@@ -402,8 +402,6 @@
 		margin-right: auto;
 		canvas {
 			display: block;
-			width: 408px;
-			height: 584px;
 			margin-left: auto;
 			margin-right: auto;
 		}

@@ -1,5 +1,13 @@
 <template>
 	<div id="main-container">
+		<div :class="'sidebar-container' + ' ' + (isSidebarOpen ? 'open' : '') ">
+			<sidebar :isOpen="isSidebarOpen"></sidebar>
+		</div>
+		<div :class="'minibar-container' + ' ' + (isMinibarOpen ? 'open' : '') ">
+			<minibar :isOpen="isMinibarOpen"></minibar>
+		</div>
+		<sidebar-toggle :onClick='onSidebarToggle' :isOpen='isSidebarOpen'></sidebar-toggle>
+
 		<div class="card-container">
 			<preview-canvas></preview-canvas>
 		</div>
@@ -9,7 +17,7 @@
 				<router-link class="tab one" to='/features'>Features</router-link><!--
 			 --><router-link class="tab two" to='/texts'>Texts</router-link><!--
 			 --><router-link class="tab three" to='/junk'>Junk</router-link><!--
-			 --><router-link class="tab four" to='/output'>Output</router-link>
+			 --><router-link class="tab four" to='/library'>Library</router-link>
 				<hr />
 			</div>
 
@@ -21,12 +29,33 @@
 </template>
 
 <script>
+	import minibar from 'Component/sidebar/div-minibar.vue';
+	import sidebar from 'Component/sidebar/div-sidebar.vue';
+	import sidebarToggle from 'Component/sidebar/button-sidebarToggle.vue'
 	import previewCanvas from 'Component/canvas-cardPreview.vue';
 
 	export default {
 		components: {
+			minibar,
+			sidebar,
+			sidebarToggle,
 			previewCanvas,
-		}
+		},
+		data() {
+			return {
+				isSidebarOpen: false,
+			}
+		},
+		computed: {
+			isMinibarOpen() {
+				return !this.isSidebarOpen;
+			}
+		},
+		methods: {
+			onSidebarToggle: function() {
+				this.isSidebarOpen = !this.isSidebarOpen;
+			}
+		},
 	}
 </script>
 
@@ -63,16 +92,33 @@
 		display: flex;
 		flex-direction: row;
 
-		//======================================================================
+		.sidebar-container {
+			width: $sidebar-width;
+			min-width: $sidebar-width;
+			margin-left: -$sidebar-width;
+			transition: all $transition-duration ease;
+			&.open {
+				margin-left: 0;
+			}
+		}
+
+		.minibar-container {
+			width: $minibar-width;
+			min-width: $minibar-width;
+			margin-left: -$minibar-width;
+			transition: all $transition-duration ease;
+			&.open {
+				margin-left: 0;
+			}
+		}
+
 		.card-container {
 			position: relative;
 			flex-grow: 1;
-			flex-basis: 30%;
 			background: white url("~Res/bg-alpha.png") repeat fixed center;
 
 		}
 
-		//======================================================================
 		.toolbar {
 			overflow: hidden;
 			position: relative;
@@ -169,17 +215,6 @@
 				}
 			}
 		}
-
-		//======================================================================
-
-
-		//======================================================================
-
-		//======================================================================
-
-		//===============================================
-
-
 	}
 
 	button {
@@ -203,6 +238,7 @@
 			color: $primary-color;
 			border: 1px solid $primary-color;
 			background-color: $button-background-color;
+			transition: all 0s;
 		}
 
 		&:active {

@@ -2,14 +2,14 @@
 import tabFeatures from 'View/tab-features.vue';
 import tabTexts from 'View/tab-texts.vue';
 import tabJunk from 'View/tab-junk.vue';
-import tabOutput from 'View/tab-output.vue';
+import tabLibrary from 'View/tab-library.vue';
 
 const vueRouter = new VueRouter({
 	routes: [
 		{ path: '/features', component: tabFeatures },
 		{ path: '/texts', component: tabTexts },
 		{ path: '/junk', component: tabJunk },
-		{ path: '/output', component: tabOutput },
+		{ path: '/library', component: tabLibrary },
 	]
 });
 

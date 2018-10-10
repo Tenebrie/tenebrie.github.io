@@ -2,11 +2,6 @@
 	<transition name="slide">
 		<div class="toolbar-tab tab-output">
 			<div class='toolbar-tab-content'>
-				<div class='file-buttons'>
-					<new-card></new-card>
-					<render-card></render-card>
-					<save-card></save-card>
-				</div>
 				<main-table></main-table>
 			</div>
 		</div>
