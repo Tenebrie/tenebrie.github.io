@@ -115,7 +115,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/c
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"\\n.canvas-container[data-v-635618b2] {\\n  height: 100%;\\n  margin-left: auto;\\n  margin-right: auto;\\n}\\n.canvas-container canvas[data-v-635618b2] {\\n    display: block;\\n    margin-left: auto;\\n    margin-right: auto;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./src/js/component/canvas-cardPreview.vue?./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib??vue-loader-options");
+eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ \"./node_modules/css-loader/lib/css-base.js\")(false);\n// imports\n\n\n// module\nexports.push([module.i, \"\\n.canvas-container[data-v-635618b2] {\\n  height: 100%;\\n  margin-left: auto;\\n  margin-right: auto;\\n  width: 408px;\\n}\\n.canvas-container canvas[data-v-635618b2] {\\n    display: block;\\n    margin-left: auto;\\n    margin-right: auto;\\n}\\n\", \"\"]);\n\n// exports\n\n\n//# sourceURL=webpack:///./src/js/component/canvas-cardPreview.vue?./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 

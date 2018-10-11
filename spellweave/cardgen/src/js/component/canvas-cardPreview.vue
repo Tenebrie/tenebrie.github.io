@@ -405,6 +405,7 @@
 		height: 100%;
 		margin-left: auto;
 		margin-right: auto;
+		width: 408px;
 		canvas {
 			display: block;
 			margin-left: auto;
