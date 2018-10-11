@@ -31,8 +31,6 @@
 	@import "Style/variables.scss";
 
 	.checkbox-wrapper {
-		margin: 10px;
-
 		input[type='checkbox'] {
 			height: 0;
 			width: 0;

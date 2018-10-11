@@ -3,9 +3,9 @@
 		<div class='file-buttons'>
 			<new-card></new-card>
 			<divider></divider>
-			<render-card></render-card>
-			<divider></divider>
 			<save-card></save-card>
+			<divider></divider>
+			<render-card></render-card>
 		</div>
 	</div>
 </template>
@@ -35,6 +35,8 @@
 			min-width: 100%;
 			margin: 0;
 			padding: 10px 0;
+			min-height: 36px;
+			background: transparent;
 		}
 	}
 </style>

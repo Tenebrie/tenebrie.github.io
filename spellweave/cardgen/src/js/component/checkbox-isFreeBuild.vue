@@ -1,5 +1,7 @@
 <template>
-	<checkbox :isChecked='checked' :onChecked='onChecked'>Free Build</checkbox>
+	<div class='checkbox-wrapper'>
+		<checkbox :isChecked='checked' :onChecked='onChecked'>Free Build</checkbox>
+	</div>
 </template>
 
 <script>
@@ -26,3 +28,9 @@
 		},
 	}
 </script>
+
+<style lang='scss' scoped>
+	.checkbox-wrapper {
+		margin: 5px;
+	}
+</style>

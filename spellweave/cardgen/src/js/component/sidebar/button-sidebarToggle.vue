@@ -19,14 +19,14 @@
 		left: 0;
 		z-index: 1;
 		background-color: $smoke-screen-color;
-		transition: all $transition-duration ease;
+		transition: all $long-transition-duration ease;
 
 		button {
-			font-size: 20px;
+			font-size: 16px;
 			margin: 0;
 			border: none;
 			padding: 10px 0;
-			transition: all $transition-duration ease;
+			transition: all $long-transition-duration ease;
 			min-width: $minibar-width;
 			&.expanded {
 				min-width: $sidebar-width;

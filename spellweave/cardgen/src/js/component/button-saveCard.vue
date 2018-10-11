@@ -1,9 +1,15 @@
 <template>
-	<button v-on:click='onClick'>Save to Library</button>
+	<custom-button text='Save to Library' icon='fa-save' :onClick='onClick' :isIconOnly='isIconOnly' ></custom-button>
 </template>
 
 <script>
+	import customButton from 'Component/button.vue';
+
 	export default {
+		props: ['isIconOnly'],
+		components: {
+			customButton,
+		},
 		methods: {
 			onClick: function () {
 				let item = JSON.parse(JSON.stringify(this.$store.state.cardState));

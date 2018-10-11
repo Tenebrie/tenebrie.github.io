@@ -51,6 +51,9 @@
 				for (let i = 1; i <= 12; i++) {
 					urls.push('manacost-' + i);
 				}
+				for (let i = 5; i <= 50; i += 5) {
+					urls.push('goldcost-' + i);
+				}
 
 				return urls;
 			},
@@ -177,8 +180,10 @@
 				}
 
 				if (state.cardManaCost >= 1 && state.cardManaCost <= 12) {
-					let manaCostFileName = 'manacost-' + state.cardManaCost;
-					this.renderImage(ctx, manaCostFileName);
+					this.renderImage(ctx, 'manacost-' + state.cardManaCost);
+				}
+				if (state.cardGoldCost > 0) {
+					this.renderImage(ctx, 'goldcost-' + state.cardGoldCost);
 				}
 
 				let cardName = this.$store.state.cardState.cardName;

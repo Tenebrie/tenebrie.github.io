@@ -103,10 +103,12 @@
 		flex-direction: row;
 
 		.sidebar-container {
+			z-index: 1;
 			width: $sidebar-width;
 			min-width: $sidebar-width;
 			margin-left: -$sidebar-width;
-			transition: all $transition-duration ease;
+			transition: all $long-transition-duration ease;
+			background: linear-gradient(to bottom, #1b1b1e, #333);
 			&.open {
 				margin-left: 0;
 			}
@@ -116,7 +118,8 @@
 			width: $minibar-width;
 			min-width: $minibar-width;
 			margin-left: -$minibar-width;
-			transition: all $transition-duration ease;
+			transition: all $long-transition-duration ease;
+			background: linear-gradient(to bottom, #1b1b1e, #333);
 			&.open {
 				margin-left: 0;
 			}

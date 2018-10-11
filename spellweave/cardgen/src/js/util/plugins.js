@@ -6,7 +6,6 @@ let localStorage = {
 		return JSON.parse(json)
 	},
 	save: function(content) {
-		console.log('save!');
 		window.localStorage.setItem(storageKey, JSON.stringify(content));
 	},
 	saveBackup: function(content) {
