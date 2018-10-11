@@ -11,6 +11,7 @@
 			cardType: Type.PATH,
 			cardPathType: PathType.NORMAL,
 			cardElement: Element.GENERIC,
+			cardGoldCost: 0,
 			cardManaCost: 1,
 		},
 		mutations: {
@@ -22,6 +23,7 @@
 				state.cardType = value.cardType;
 				state.cardPathType = value.cardPathType;
 				state.cardElement = value.cardElement;
+				state.cardGoldCost = value.cardGoldCost;
 				state.cardManaCost = value.cardManaCost;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
@@ -33,6 +35,7 @@
 				state.cardType = Type.PATH;
 				state.cardPathType = PathType.NORMAL;
 				state.cardElement = Element.GENERIC;
+				state.cardGoldCost = 0;
 				state.cardManaCost = 1;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
@@ -62,6 +65,10 @@
 			},
 			setCardElement(state, value) {
 				state.cardElement = value;
+				app.$emit(Event.CARD_STATE_UPDATED);
+			},
+			setCardGoldCost(state, value) {
+				state.cardGoldCost = value;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 			setCardManaCost(state, value) {

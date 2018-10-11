@@ -3,13 +3,13 @@
 		<label><slot></slot></label>
 		<div class="card-drop">
 			<button @click='onTopClick' class='button-top'>
-				<i :class="'fas ' + activeItem.icon"></i>
+				<i :class='getIconClass(activeItem)'></i>
 				<span class='label-active'>{{ activeItem.title }} </span>
 				<span class='caret-down'>&nbsp;<i class="fas fa-caret-down"></i>&nbsp;</span>
 			</button>
 			<ul>
 				<li v-for='item in items' :class="item === activeItem ? 'active' : '' ">
-					<button @click='onItemClick(item)'><i :class="'fas ' + item.icon"></i> {{ item.title }}</button>
+					<button @click='onItemClick(item)'><i :class='getIconClass(item)'></i> {{ item.title }}</button>
 				</li>
 			</ul>
 		</div>
@@ -81,9 +81,15 @@
 						this.activeItem = item;
 					}
 				}
-
 				this.close();
-			}
+			},
+			getIconClass(item) {
+				if (item.icon !== undefined) {
+					return 'fas ' + item.icon;
+				} else {
+					return 'no-icon';
+				}
+			},
 		},
 		mounted: function() {
 			this.cards = $(this.$el).find(".card-drop");
@@ -118,6 +124,8 @@
 
 	.dropdown-wrapper {
 		margin: 10px;
+		min-width: 150px;
+		flex-grow: 1;
 
 		label {
 			font: 16px/1.4 "Roboto", sans-serif;
@@ -126,7 +134,6 @@
 		}
 
 		.card-drop {
-			max-width: 200px;
 			position: relative;
 			margin-top: 5px;
 
@@ -142,6 +149,9 @@
 				i {
 					display: inline-block;
 					width: 20px;
+					&.no-icon {
+						width: 0px;
+					}
 				}
 				&:hover {
 					color: $primary-color;

@@ -1,5 +1,5 @@
 <template>
-	<dropdown :items="items" zIndex="20" :selectedValue="selectedManaCost" :onSelect="onSelect">Cost</dropdown>
+	<dropdown :items="items" zIndex="20" :selectedValue="selectedManaCost" :onSelect="onSelect">Traverse cost</dropdown>
 </template>
 
 <script>
@@ -27,7 +27,6 @@
 				let data = [];
 				data.push({
 					title: '- No Mana -',
-					icon: 'fa-dot-circle',
 					value: 0,
 				});
 				for (let i = 1; i <= 12; i++) {
