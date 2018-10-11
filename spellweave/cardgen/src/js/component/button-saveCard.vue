@@ -10,10 +10,15 @@
 				item.timestamp = formatDateTime(new Date());
 
 				item.displayName = '';
-				if (item.cardName !== '') {
-					item.displayName = stripMarkup(item.cardName) + ': ';
+				if (item.cardName === '') {
+					item.displayName = 'Unnamed';
+				} else {
+					item.displayName = stripMarkup(item.cardName);
 				}
-				item.displayName += stripMarkup(item.cardDescription);
+
+				if (item.cardDescription !== '') {
+					item.displayName += ': ' + stripMarkup(item.cardDescription);
+				}
 
 				let prefix = capitalize(item.cardType);
 				if (item.cardElement !== Element.GENERIC) {

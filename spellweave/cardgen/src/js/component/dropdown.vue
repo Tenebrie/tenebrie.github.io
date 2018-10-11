@@ -27,34 +27,26 @@
 				links: null,
 				li: null,
 				elementCount: 0,
-				activeItemData: this.defaultItem,
 			}
 		},
 		computed: {
 			zIndexInt() {
 				return parseInt(this.zIndex);
 			},
-			defaultItem() {
-				let items = this.items;
-				for (let i = 0; i < items.length; i++) {
-					if (items[i].value === this.selectedValue) {
-						return items[i];
-					}
-				}
-				return {};
-			},
 			activeItem: {
 				get() {
-					if (this.activeItemData === undefined) {
-						this.activeItemData = this.defaultItem;
+					let items = this.items;
+					for (let i = 0; i < items.length; i++) {
+						if (items[i].value === this.selectedValue) {
+							return items[i];
+						}
 					}
-					return this.activeItemData;
+					return {};
 				},
 				set(value) {
 					if (this.onSelect !== undefined) {
 						this.onSelect(value.value);
 					}
-					this.activeItemData = value;
 				}
 			},
 		},

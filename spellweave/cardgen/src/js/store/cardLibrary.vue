@@ -15,6 +15,14 @@
 			},
 		},
 		mutations: {
+			load(state, value) {
+				for (let i = 0; i < value.length; i++) {
+					state.data.push(value[i]);
+				}
+			},
+			clear(state) {
+				state.data.splice(0, state.data.length);
+			},
 			push(state, value) {
 				state.data.push(value);
 			},
@@ -22,11 +30,6 @@
 				let index = state.data.indexOf(value);
 				if (index !== -1) {
 					state.data.splice(state.data.indexOf(value), 1);
-				}
-			},
-			load(state, value) {
-				for (let i = 0; i < value.length; i++) {
-					state.data.push(value[i]);
 				}
 			},
 		},

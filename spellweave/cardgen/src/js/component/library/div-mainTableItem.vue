@@ -1,7 +1,7 @@
 <template>
 	<div class='library-item' @click='onClick(item.id)' v-longpress='onLongpress'>
 		<div v-if='$parent.isInSelectState' class='library-item-checkbox'>
-			<is-selected :isSelected='isSelected'></is-selected>
+			<selection-checkbox :isSelected='isSelected'></selection-checkbox>
 		</div>
 		<div class='library-item-value library-item-name'>
 			{{ item.displayName }}
@@ -13,12 +13,12 @@
 </template>
 
 <script>
-	import isSelected from 'Component/library/checkbox-isSelected.vue';
+	import selectionCheckbox from 'Component/library/checkbox-isSelected.vue';
 
 	export default {
 		props: ['item'],
 		components: {
-			isSelected,
+			selectionCheckbox,
 		},
 		data: function() {
 			return {
@@ -35,6 +35,7 @@
 			});
 			this.$root.$on(Event.DELETE_FROM_LIBRARY, () => {
 				if (this.isSelected) {
+					this.isSelected = false;
 					this.$store.commit('cardLibrary/delete', this.$store.getters['cardLibrary/getCardById'](this.item.id));
 				}
 			});

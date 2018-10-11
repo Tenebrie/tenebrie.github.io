@@ -42,6 +42,7 @@ module.exports = {
 			Component: path.resolve(__dirname, 'src/js/component/'),
 			Store: path.resolve(__dirname, 'src/js/store/'),
 			View: path.resolve(__dirname, 'src/js/view/'),
+			Plugin: path.resolve(__dirname, 'src/js/util/plugin'),
 
 			Res: path.resolve(__dirname, 'res/'),
 

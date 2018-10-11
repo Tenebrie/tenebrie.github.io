@@ -13,6 +13,9 @@ const vueRouter = new VueRouter({
 	]
 });
 
+
+
+
 import storeCardState from 'Store/cardState.vue';
 import storeCardLibrary from 'Store/cardLibrary.vue';
 
@@ -21,16 +24,21 @@ export const vueStore = new Vuex.Store({
 		cardState: storeCardState,
 		cardLibrary: storeCardLibrary,
 	},
-	plugins: [ autosaverPlugin ],
+	plugins: [ autosaverPlugin, undoRedoPlugin ],
 });
 
+
+
+
 import application from './app.vue';
+
 export const app = new Vue({
 	el: '#app',
 	render: function(createElement) {
 		return createElement(application);
 	},
 	mounted: function() {
+
 	},
 	store: vueStore,
 	router: vueRouter,

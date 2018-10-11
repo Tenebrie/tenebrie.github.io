@@ -33,6 +33,7 @@
 	import sidebar from 'Component/sidebar/div-sidebar.vue';
 	import sidebarToggle from 'Component/sidebar/button-sidebarToggle.vue'
 	import previewCanvas from 'Component/canvas-cardPreview.vue';
+	import { app } from 'Application';
 
 	export default {
 		components: {
@@ -54,7 +55,16 @@
 		methods: {
 			onSidebarToggle: function() {
 				this.isSidebarOpen = !this.isSidebarOpen;
-			}
+			},
+		},
+		mounted() {
+			window.addEventListener("keydown", (event) => {
+				if (event.code === 'KeyZ' && event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+					undoRedoHistory.undo(app);
+				} else if (event.code === 'KeyY' && event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+					undoRedoHistory.redo(app);
+				}
+			});
 		},
 	}
 </script>
