@@ -21,6 +21,13 @@
 			previewContext() {
 				return this.previewContexts[this.activePreviewContext];
 			},
+			displayedContext() {
+				let context = 0;
+				if (this.activePreviewContext === 0) {
+					context = 1;
+				}
+				return this.previewContexts[context];
+			},
 			canvasSize() {
 				return '408x584';
 			},
@@ -383,7 +390,7 @@
 			},
 
 			saveCanvasToFile: function() {
-				let image = this.previewContext.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+				let image = this.displayedContext.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
 
 				let anchorTag = document.createElement("a");
 				document.body.appendChild(anchorTag);
