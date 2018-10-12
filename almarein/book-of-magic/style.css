@@ -69,3 +69,15 @@ p {
 .editor-label {
   font-size: 20px;
 }
+
+/* Editor specific */
+button {
+  padding: 5px;
+  margin: 10px;
+}
+span.editor-label {
+  margin: 10px;
+}
+textarea {
+  margin-top: 10px;
+}
