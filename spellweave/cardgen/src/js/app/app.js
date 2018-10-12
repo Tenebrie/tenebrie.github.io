@@ -20,6 +20,7 @@ import storeCardState from 'Store/cardState.vue';
 import storeCardLibrary from 'Store/cardLibrary.vue';
 
 export const vueStore = new Vuex.Store({
+	strict: true,
 	modules: {
 		cardState: storeCardState,
 		cardLibrary: storeCardLibrary,
