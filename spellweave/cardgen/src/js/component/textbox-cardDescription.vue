@@ -1,5 +1,5 @@
 <template>
-	<textbox :defaultValue='text' rows='3' :onInput='onInput' placeholder="A description of the card's effect">Card description</textbox>
+	<textbox :value='text' rows='3' :onInput='onInput' placeholder="A description of the card's effect">Card description</textbox>
 </template>
 
 <script>

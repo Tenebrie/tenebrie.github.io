@@ -1,18 +1,18 @@
 <template>
 	<div class='text-input'>
 		<label><slot></slot></label>
-		<input v-if='!multiline' class='card-title' type='text' v-model='text' :placeholder='placeholder'/>
-		<textarea v-if='multiline' class='card-title' type='text' :rows='rows' v-model='text' :placeholder='placeholder'/>
+		<input v-if='!multiline' class='card-title' type='text' v-model='text' :placeholder='placeholder' />
+		<textarea v-if='multiline' class='card-title' type='text' :rows='rows' v-model='text' :placeholder='placeholder'></textarea>
 	</div>
 </template>
 
 <script>
 	export default {
-		props: ['defaultValue', 'rows', 'onInput', 'placeholder'],
+		props: ['value', 'rows', 'onInput', 'placeholder'],
 		computed: {
 			text: {
 				get() {
-					return this.defaultValue;
+					return this.value;
 				},
 				set(value) {
 					this.onInput(value);

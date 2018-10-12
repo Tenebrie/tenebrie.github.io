@@ -1,12 +1,11 @@
 <template>
-	<dropdown :id="id" :items="items" zIndex="80" :selectedValue="selectedType" :onSelect="onSelect">Type</dropdown>
+	<dropdown :items="items" zIndex="80" :selectedValue="selectedType" :onSelect="onSelect">Type</dropdown>
 </template>
 
 <script>
 	import dropdown from 'Component/dropdown.vue';
 
 	export default {
-		props: ['id'],
 		components: {
 			dropdown,
 		},

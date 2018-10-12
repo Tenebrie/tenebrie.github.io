@@ -35,3 +35,9 @@ const Element = {
 	CONTROL: 'control',
 	SACRIFICE: 'sacrifice',
 };
+
+const ImportMethod = {
+	SAVE: 'save',
+	DOWNLOAD: 'download',
+	SAVE_AND_DOWNLOAD: 'save-and-download',
+};

@@ -33,6 +33,10 @@ const undoRedoPlugin = (store) => {
 	undoRedoHistory.addState('', firstState);
 
 	store.subscribe((mutation, state) => {
+		if (undoRedoHistory.manualMode) {
+			return;
+		}
+
 		undoRedoHistory.addState(mutation.type, JSON.parse(JSON.stringify(state)));
 	});
 };
@@ -41,6 +45,7 @@ const undoRedoHistory = {
 	store: {},
 	history: [],
 	currentIndex: -1,
+	manualMode: false,
 
 	init(store) {
 		this.store = store;

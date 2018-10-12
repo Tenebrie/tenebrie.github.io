@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	import importFromList from 'Component/library/textbox-importFromList.vue';
+	import importFromList from 'Component/importer/textbox-importFromList.vue';
 
 	export default {
 		components: {

@@ -412,7 +412,7 @@
 			},
 		},
 	}
-</script> 
+</script>
 
 <style lang='scss' scoped>
 	@import 'Style/variables.scss';

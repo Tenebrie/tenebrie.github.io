@@ -24,6 +24,43 @@
 				state.data.splice(0, state.data.length);
 			},
 			push(state, value) {
+				let item = value;
+				item.timestamp = formatDateTime(new Date());
+
+				item.displayName = '';
+				if (item.cardName === '') {
+					item.displayName = 'Unnamed';
+				} else {
+					item.displayName = stripMarkup(item.cardName);
+				}
+
+				if (item.cardDescription !== '') {
+					item.displayName += ': ' + stripMarkup(item.cardDescription);
+				}
+
+				let prefix = capitalize(item.cardType);
+				if (item.cardElement !== Element.GENERIC) {
+					prefix = capitalize(item.cardElement) + ' ' + prefix;
+				}
+				if (item.cardManaCost > 0) {
+					prefix = item.cardManaCost + ' Mana ' + prefix;
+				}
+				prefix = '[' + prefix + ']';
+				item.displayName = prefix + ' ' + item.displayName;
+
+				item.version = 0;
+				let library = state.data;
+				for (let i = 0; i < library.length; i++) {
+					if (library[i].cardName === item.cardName && library[i].version >= item.version) {
+						item.version = library[i].version + 1;
+					}
+				}
+				if (item.version > 0) {
+					item.displayName += ' (' + item.version + ')';
+				}
+
+				item.id = uuidv4();
+
 				state.data.push(value);
 			},
 			delete(state, value) {

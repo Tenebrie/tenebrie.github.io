@@ -18,12 +18,14 @@ const vueRouter = new VueRouter({
 
 import storeCardState from 'Store/cardState.vue';
 import storeCardLibrary from 'Store/cardLibrary.vue';
+import storeCardImporter from 'Store/cardImporter.vue';
 
 export const vueStore = new Vuex.Store({
 	strict: true,
 	modules: {
 		cardState: storeCardState,
 		cardLibrary: storeCardLibrary,
+		cardImporter: storeCardImporter,
 	},
 	plugins: [ autosaverPlugin, undoRedoPlugin ],
 });
