@@ -84,10 +84,17 @@
 			let height = this.canvasSize.split('x')[1];
 
 			let dpr = window.devicePixelRatio || 1;
+			// let dpr = 1;
+			//console.log(dpr);
 			canvas.width = width * dpr;
 			canvas.height = height * dpr;
 			backCanvas.width = width * dpr;
 			backCanvas.height = height * dpr;
+			canvas.style.width = width;
+			canvas.style.height = height;
+			backCanvas.style.width = width;
+			backCanvas.style.height = height;
+
 			let ctx = canvas.getContext('2d');
 			let backCtx = backCanvas.getContext('2d');
 			ctx.scale(dpr, dpr);
@@ -374,7 +381,9 @@
 					return;
 				}
 
-				ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height);
+				let width = this.canvasSize.split('x')[0];
+				let height = this.canvasSize.split('x')[1];
+				ctx.drawImage(image, 0, 0, width, height);
 			},
 
 			getCardFileName: function() {
