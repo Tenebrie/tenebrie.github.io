@@ -38,6 +38,7 @@
 					'bg-textured',
 					'bg-attribute',
 					'bg-name',
+					'bg-tribe',
 					'bg-path-begin',
 					'bg-path-normal',
 					'bg-path-fork',
@@ -50,9 +51,14 @@
 					'bg-element-summoning',
 					'bg-element-control',
 					'bg-element-sacrifice',
-					'attr-freeBuildAndDraw',
 					'attr-freeBuild',
 					'attr-freeDraw',
+					'attr-freeMove',
+					'attr-freeBuildAndDraw',
+					'attr-freeDrawAndMove',
+					'attr-freeBuildAndMove',
+					'attr-freeBuildDrawAndMove',
+					'attr-permanent',
 				];
 
 				for (let i = 1; i <= 12; i++) {
@@ -68,12 +74,17 @@
 		created: function() {
 			for (let i = 0; i < this.imageUrls.length; i++) {
 				let url = this.imageUrls[i];
+				let finalUrl = 'res/' + url + '.png';
 				let image = new Image();
 				image.onload = () => {
 					this.imagesCached += 1;
 					this.imageCache[url] = image;
 				};
-				image.src = 'res/' + url + '.png';
+				image.onerror = () => {
+					this.imagesCached += 1;
+					console.error('Unable to load image: ' + url + '.png');
+				};
+				image.src = finalUrl;
 			}
 		},
 		mounted: function() {
@@ -84,8 +95,6 @@
 			let height = this.canvasSize.split('x')[1];
 
 			let dpr = window.devicePixelRatio || 1;
-			// let dpr = 1;
-			//console.log(dpr);
 			canvas.width = width * dpr;
 			canvas.height = height * dpr;
 			backCanvas.width = width * dpr;
@@ -106,6 +115,7 @@
 			backCanvas.style.display = 'none';
 
 			this.$root.$on(Event.SAVE_CARD_AS_IMAGE, () => {
+				this.renderCanvas();
 				this.saveCanvasToFile();
 			});
 
@@ -141,7 +151,7 @@
 
 			renderCanvas: function() {
 				if (this.imagesCached < this.imageUrls.length) {
-					this.cacheWaitingTimer = setTimeout(this.renderCanvas, 10);
+					this.cacheWaitingTimer = setTimeout(this.renderCanvas, 50);
 					console.log('[Card render] Waiting for image cache: ' + this.imagesCached + '/' + this.imageUrls.length);
 					return;
 				}
@@ -182,15 +192,27 @@
 					this.renderImage(ctx, 'bg-path-end');
 				}
 
-				if (state.isFreeBuild || state.isFreeDraw) {
+				if (state.isFreeBuild || state.isFreeDraw || state.isFreeMove) {
 					this.renderImage(ctx, 'bg-attribute');
-					if (state.isFreeBuild && state.isFreeDraw) {
+					if (state.isFreeBuild && state.isFreeDraw && state.isFreeMove) {
+						this.renderImage(ctx, 'attr-freeBuildDrawAndMove');
+					} else if (state.isFreeBuild && state.isFreeDraw) {
 						this.renderImage(ctx, 'attr-freeBuildAndDraw');
+					} else if (state.isFreeBuild && state.isFreeMove) {
+						this.renderImage(ctx, 'attr-freeBuildAndMove');
+					} else if (state.isFreeDraw && state.isFreeMove) {
+						this.renderImage(ctx, 'attr-freeDrawAndMove');
 					} else if (state.isFreeBuild) {
 						this.renderImage(ctx, 'attr-freeBuild');
 					} else if (state.isFreeDraw) {
 						this.renderImage(ctx, 'attr-freeDraw');
+					} else if (state.isFreeMove) {
+						this.renderImage(ctx, 'attr-freeMove');
 					}
+				}
+
+				if (state.isPermanent) {
+					this.renderImage(ctx, 'attr-permanent');
 				}
 
 				if (state.cardManaCost >= 1 && state.cardManaCost <= 12) {
@@ -200,17 +222,27 @@
 					this.renderImage(ctx, 'goldcost-' + state.cardGoldCost);
 				}
 
-				let cardName = this.$store.state.cardState.cardName;
-				let cardDescription = this.$store.state.cardState.cardDescription;
-
-				if (cardName !== '') {
+				if (state.cardName !== '') {
 					this.renderImage(ctx, 'bg-name');
-					this.renderText(ctx, '24px K2D', 'black', cardName, realWidth / 2, 158, 24, 270);
+					this.renderText(ctx, this.getFont('24px', state.cardName), 'black', state.cardName, realWidth / 2, 158, 24, 270);
 				}
-				this.renderText(ctx, '18px "K2D"', Color.DEFAULT_CARD_TEXT, cardDescription, realWidth / 2, 400, 20, realWidth - 50, 200);
+				this.renderText(ctx, this.getFont('18px', state.cardDescription), Color.DEFAULT_CARD_TEXT, state.cardDescription, realWidth / 2, 400, 20, realWidth - 50, 200);
+				if (state.cardTribe !== '') {
+					this.renderImage(ctx, 'bg-tribe');
+					this.renderText(ctx, this.getFont('18px', state.cardTribe), 'black', state.cardTribe, realWidth / 2, 570, 20, realWidth - 50);
+				}
 
 				this.clearCanvasRenderThrottleTimer();
 				this.swapContext();
+			},
+
+			getFont: function(size, text) {
+				let font = 'K2D';
+				let cyrillic = (/[а-яА-Я]/g).exec(text);
+				if (cyrillic) {
+					font = 'Roboto';
+				}
+				return size + ' ' + font;
 			},
 
 			renderText: function(ctx, font, color, text, targetX, targetY, lineHeight, maxWidth, maxHeight) {
@@ -389,11 +421,12 @@
 			getCardFileName: function() {
 				let enteredName = this.$store.state.cardState.cardName;
 				if (enteredName.length === 0) {
-					return 'sw-unnamedCard.png';
+					return 'sw-unnamed.png';
 				} else {
-					let formattedName = enteredName.trim();
+					let illegalNameCharacters = /[….,<>:"/\\|?*\x00-\x31\s]/g;
+					let formattedName = enteredName.replace(illegalNameCharacters, '');
+					formattedName = formattedName.trim();
 					formattedName = formattedName.substring(0, 1).toLowerCase() + formattedName.substring(1);
-					formattedName = formattedName.replace(/\s/g, '');
 					return 'sw-' + formattedName + '.png';
 				}
 			},

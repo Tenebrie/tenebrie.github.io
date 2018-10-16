@@ -4,10 +4,13 @@
 	export default {
 		namespaced: true,
 		state: {
-			isFreeBuild: false,
 			isFreeDraw: false,
+			isFreeBuild: false,
+			isFreeMove: false,
+			isPermanent: false,
 			cardName: '',
 			cardDescription: '',
+			cardTribe: '',
 			cardType: Type.PATH,
 			cardPathType: PathType.NORMAL,
 			cardElement: Element.GENERIC,
@@ -18,8 +21,11 @@
 			load(state, value) {
 				state.cardName = value.cardName;
 				state.cardDescription = value.cardDescription;
-				state.isFreeBuild = value.isFreeBuild;
+				state.cardTribe = value.cardTribe;
 				state.isFreeDraw = value.isFreeDraw;
+				state.isFreeBuild = value.isFreeBuild;
+				state.isFreeMove = value.isFreeMove;
+				state.isPermanent = value.isPermanent;
 				state.cardType = value.cardType;
 				state.cardPathType = value.cardPathType;
 				state.cardElement = value.cardElement;
@@ -30,8 +36,11 @@
 			clear(state) {
 				state.cardName = '';
 				state.cardDescription = '';
-				state.isFreeBuild = false;
+				state.cardTribe = '';
 				state.isFreeDraw = false;
+				state.isFreeBuild = false;
+				state.isFreeMove = false;
+				state.isPermanent = false;
 				state.cardType = Type.PATH;
 				state.cardPathType = PathType.NORMAL;
 				state.cardElement = Element.GENERIC;
@@ -47,12 +56,24 @@
 				state.isFreeDraw = value;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
+			setFreeMove(state, value) {
+				state.isFreeMove = value;
+				app.$emit(Event.CARD_STATE_UPDATED);
+			},
+			setPermanent(state, value) {
+				state.isPermanent = value;
+				app.$emit(Event.CARD_STATE_UPDATED);
+			},
 			setCardName(state, value) {
 				state.cardName = value;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 			setCardDescription(state, value) {
 				state.cardDescription = value;
+				app.$emit(Event.CARD_STATE_UPDATED);
+			},
+			setCardTribe(state, value) {
+				state.cardTribe = value;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 			setCardType(state, value) {

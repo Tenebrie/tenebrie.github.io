@@ -3,8 +3,11 @@
 		<div class="toolbar-tab tab-features">
 			<card-name></card-name>
 			<card-description></card-description>
-			<is-free-build id='cb-isFreeBuild'>Free Build</is-free-build>
-			<is-free-draw id='cb-isFreeDraw'>Free Draw</is-free-draw>
+			<card-tribe></card-tribe>
+			<is-free-build></is-free-build>
+			<is-free-draw></is-free-draw>
+			<is-free-move></is-free-move>
+			<is-permanent></is-permanent>
 			<div style='display: flex; flex-direction: row; flex-wrap: wrap'>
 				<card-type></card-type>
 				<card-path-type v-if='isPathTypeVisible'></card-path-type>
@@ -19,8 +22,11 @@
 <script>
 	import cardName from 'Component/textbox-cardName.vue';
 	import cardDescription from 'Component/textbox-cardDescription.vue';
+	import cardTribe from 'Component/textbox-cardTribe.vue';
 	import isFreeBuild from 'Component/checkbox-isFreeBuild.vue';
 	import isFreeDraw from 'Component/checkbox-isFreeDraw.vue';
+	import isFreeMove from 'Component/checkbox-isFreeMove.vue';
+	import isPermanent from 'Component/checkbox-isPermanent.vue';
 	import cardType from 'Component/dropdown-cardType.vue';
 	import cardPathType from 'Component/dropdown-cardPathType.vue';
 	import cardElement from 'Component/dropdown-cardElement.vue';
@@ -31,8 +37,11 @@
 		components: {
 			cardName,
 			cardDescription,
+			cardTribe,
 			isFreeBuild,
 			isFreeDraw,
+			isFreeMove,
+			isPermanent,
 			cardType,
 			cardPathType,
 			cardElement,

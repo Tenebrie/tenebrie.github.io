@@ -31,6 +31,6 @@
 
 <style lang='scss' scoped>
 	.checkbox-wrapper {
-		margin: 5px;
+		margin: 10px;
 	}
 </style>

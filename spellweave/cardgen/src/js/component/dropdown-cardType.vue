@@ -26,9 +26,9 @@
 			items() {
 				return [
 					{
-						title: 'Preparation',
+						title: 'Prime',
 						icon: 'fa-signature',
-						value: Type.PREPARATION,
+						value: Type.Prime,
 					},
 					{
 						title: 'Action',

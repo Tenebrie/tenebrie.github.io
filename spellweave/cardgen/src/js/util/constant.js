@@ -14,7 +14,7 @@ const Color = {
 };
 
 const Type = {
-	PREPARATION: 'preparation',
+	Prime: 'prime',
 	ACTION: 'action',
 	PATH: 'path',
 	STATE: 'state',
@@ -34,6 +34,12 @@ const Element = {
 	SUMMONING: 'summoning',
 	CONTROL: 'control',
 	SACRIFICE: 'sacrifice',
+};
+
+const Tribe = {
+	NONE: 'none',
+	BESTIAL: 'bestial',
+	DRACONIC: 'draconic',
 };
 
 const ImportMethod = {

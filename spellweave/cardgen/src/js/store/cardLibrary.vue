@@ -24,7 +24,7 @@
 				state.data.splice(0, state.data.length);
 			},
 			push(state, value) {
-				let item = value;
+				let item = JSON.parse(JSON.stringify(value));
 				item.timestamp = formatDateTime(new Date());
 
 				item.displayName = '';
@@ -56,12 +56,12 @@
 					}
 				}
 				if (item.version > 0) {
-					item.displayName += ' (' + item.version + ')';
+					item.displayName += ' (v.' + (item.version + 1) + ')';
 				}
 
 				item.id = uuidv4();
 
-				state.data.push(value);
+				state.data.push(item);
 			},
 			delete(state, value) {
 				let index = state.data.indexOf(value);
