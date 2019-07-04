@@ -84,7 +84,7 @@
 
 	.slide-leave-active,
 	.slide-enter-active {
-		transition: 1s ease;
+		transition: 0.5s ease;
 	}
 	.slide-enter {
 		transform: translate(100%, 0);
@@ -282,6 +282,11 @@
 			display: block;
 			margin: 0.4em auto;
 		}
+	}
+
+	@font-face {
+		font-family: "BrushScript";
+		src: url("~Res/font/brush-script-mt.woff") format('woff');
 	}
 
 </style>

@@ -7,7 +7,11 @@
 
 <script>
 	const CanvasConstants = {
-		DESCRIPTION_FIELD_HEIGHT: 140,
+		NAME_FIELD_TOP: 385,
+		TRIBE_FIELD_TOP: 422,
+		DESCRIPTION_FIELD_TOP: 450,
+		DESCRIPTION_FIELD_MARGIN: 50,
+		DESCRIPTION_FIELD_HEIGHT: 110,
 	};
 
 	export default {
@@ -70,8 +74,10 @@
 					'bg-textured',
 					'bg-attribute',
 					'bg-name',
+					'bg-name-low',
 					'bg-description',
 					'bg-tribe',
+					'bg-tribe-inverted',
 					'bg-path-begin',
 					'bg-path-normal',
 					'bg-path-fork',
@@ -185,7 +191,7 @@
 			renderCanvas: function() {
 				if (this.imagesCached < this.imageUrls.length) {
 					this.cacheWaitingTimer = setTimeout(this.renderCanvas, 50);
-					console.log('[Card render] Waiting for image cache: ' + this.imagesCached + '/' + this.imageUrls.length);
+					console.info('[Card render] Waiting for image cache: ' + this.imagesCached + '/' + this.imageUrls.length);
 					return;
 				}
 				let ctx = this.previewContext;
@@ -258,17 +264,25 @@
 					this.renderImage(ctx, 'goldcost-' + state.cardGoldCost);
 				}
 
-				if (state.cardName !== '') {
-					this.renderImage(ctx, 'bg-name');
-					this.renderText(ctx, this.getFont('24px', state.cardName), 'black', state.cardName, realWidth / 2, 158, 24, 270);
-				}
 				if (state.cardDescription !== '') {
 					this.renderImage(ctx, 'bg-description');
-					this.renderText(ctx, this.getFont('18px', state.cardDescription), Color.DEFAULT_CARD_TEXT, state.cardDescription, realWidth / 2, 400, 20, realWidth - 50, CanvasConstants.DESCRIPTION_FIELD_HEIGHT);
+					this.renderText(ctx, this.getFont('18px', state.cardDescription), Color.DEFAULT_CARD_TEXT, state.cardDescription,
+							realWidth / 2,
+							CanvasConstants.DESCRIPTION_FIELD_TOP,
+							20,
+							realWidth - CanvasConstants.DESCRIPTION_FIELD_MARGIN * 2,
+							CanvasConstants.DESCRIPTION_FIELD_HEIGHT
+					);
 				}
+
 				if (state.cardTribe !== '') {
-					this.renderImage(ctx, 'bg-tribe');
-					this.renderText(ctx, this.getFont('18px', state.cardTribe), 'black', state.cardTribe, realWidth / 2, 570, 20, realWidth - 50);
+					this.renderImage(ctx, 'bg-tribe-inverted');
+					this.renderText(ctx, this.getFont('16px', state.cardTribe), 'black', state.cardTribe, realWidth / 2, CanvasConstants.TRIBE_FIELD_TOP, 20, realWidth - 50);
+				}
+
+				if (state.cardName !== '') {
+					this.renderImage(ctx, 'bg-name-low');
+					this.renderText(ctx, '24px BrushScript', 'black', state.cardName, realWidth / 2, CanvasConstants.NAME_FIELD_TOP, 24, 270);
 				}
 
 				this.clearCanvasRenderThrottleTimer();
@@ -347,7 +361,6 @@
 				}
 
 				let offset = (maximumLineY - currentLineY) / 2;
-				console.log(offset);
 				for (let lineIndex in textLines) {
 					let line = textLines[lineIndex];
 					this.renderTextLine(ctx, color, line.text, line.targetX, line.targetY + offset);
@@ -462,15 +475,6 @@
 					nakedClosingColorTagPattern.lastIndex = 0;
 				}
 			},
-
-			/*resizeImage: function(image) {
-				let canvas = document.createElement('canvas');
-				canvas.width = this.canvasWidth;
-				canvas.height = this.canvasHeight;
-				let ctx = canvas.getContext('2d');
-				ctx.drawImage(image, 0, 0, this.canvasWidth, this.canvasHeight);
-				return canvas.toDataURL('image/png');
-			},*/
 
 			applyCardMask: function(image, callback) {
 				let canvas = document.createElement('canvas');
