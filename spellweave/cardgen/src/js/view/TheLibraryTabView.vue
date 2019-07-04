@@ -12,7 +12,7 @@
 	import newCard from 'Component/SidebarNewCardButton.vue';
 	import renderCard from 'Component/SidebarRenderCardButton.vue';
 	import saveCard from 'Component/SidebarSaveCardButton.vue';
-	import mainTable from 'Component/TheSidebar.vue';
+	import mainTable from 'Component/TheLibraryContentList.vue';
 
 	export default {
 		components: {
