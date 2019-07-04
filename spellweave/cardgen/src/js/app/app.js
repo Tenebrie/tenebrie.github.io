@@ -1,24 +1,44 @@
 
-import tabFeatures from 'View/tab-features.vue';
-import tabTexts from 'View/tab-texts.vue';
-import tabJunk from 'View/tab-junk.vue';
-import tabLibrary from 'View/tab-library.vue';
+import TheFeaturesTabView from 'View/TheFeaturesTabView.vue';
+import TheTextsTabView from 'View/TheTextsTabView.vue';
+import TheImportTabView from 'View/TheImportTabView.vue';
+import TheLibraryTabView from 'View/TheLibraryTabView.vue';
 
 const vueRouter = new VueRouter({
 	routes: [
-		{ path: '/features', component: tabFeatures },
-		{ path: '/texts', component: tabTexts },
-		{ path: '/junk', component: tabJunk },
-		{ path: '/library', component: tabLibrary },
+		{
+			path: '/',
+			redirect: { name: 'FeaturesTab' },
+		},
+		{
+			name: 'FeaturesTab',
+			path: '/features',
+			component: TheFeaturesTabView,
+		},
+		{
+			name: 'TextsTab',
+			path: '/texts',
+			component: TheTextsTabView
+		},
+		{
+			name: 'ImportTab',
+			path: '/import',
+			component: TheImportTabView
+		},
+		{
+			name: 'LibraryTab',
+			path: '/library',
+			component: TheLibraryTabView
+		},
 	]
 });
 
 
 
 
-import storeCardState from 'Store/cardState.vue';
-import storeCardLibrary from 'Store/cardLibrary.vue';
-import storeCardImporter from 'Store/cardImporter.vue';
+import storeCardState from 'Store/CardStateModule.vue';
+import storeCardLibrary from 'Store/CardLibraryModule.vue';
+import storeCardImporter from 'Store/CardImporterModule.vue';
 
 export const vueStore = new Vuex.Store({
 	strict: true,
@@ -39,9 +59,6 @@ export const app = new Vue({
 	el: '#app',
 	render: function(createElement) {
 		return createElement(application);
-	},
-	mounted: function() {
-
 	},
 	store: vueStore,
 	router: vueRouter,

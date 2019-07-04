@@ -14,10 +14,10 @@
 
 		<div class="toolbar">
 			<div class="tabs-container">
-				<router-link class="tab one" to='/features'>Features</router-link><!--
-			 --><router-link class="tab two" to='/texts'>Texts</router-link><!--
-			 --><router-link class="tab three" to='/junk'>Junk</router-link><!--
-			 --><router-link class="tab four" to='/library'>Library</router-link>
+				<router-link class="tab one" :to="{ name: 'FeaturesTab' }">Features</router-link><!--
+			 --><router-link class="tab two" :to="{ name: 'TextsTab' }">Texts</router-link><!--
+			 --><router-link class="tab three" :to="{ name: 'ImportTab' }">Import</router-link><!--
+			 --><router-link class="tab four" :to="{ name: 'LibraryTab' }">Library</router-link>
 				<hr />
 			</div>
 
@@ -29,10 +29,10 @@
 </template>
 
 <script>
-	import minibar from 'Component/sidebar/div-minibar.vue';
-	import sidebar from 'Component/sidebar/div-sidebar.vue';
-	import sidebarToggle from 'Component/sidebar/button-sidebarToggle.vue'
-	import previewCanvas from 'Component/canvas-cardPreview.vue';
+	import minibar from 'Component/TheMinibar.vue';
+	import sidebar from 'Component/TheSidebar.vue';
+	import sidebarToggle from 'Component/SidebarToggleButton.vue'
+	import previewCanvas from 'Component/TheCardPreviewCanvas.vue';
 	import { app } from 'Application';
 
 	export default {
