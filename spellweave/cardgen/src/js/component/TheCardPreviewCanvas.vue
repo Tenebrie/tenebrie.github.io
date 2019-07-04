@@ -11,11 +11,26 @@
 			return {
 				imageCache: {},
 				imagesCached: 0,
+				customArtwork: null,
 				previewContexts: [],
 				activePreviewContext: 0,
 				cacheWaitingTimer: null,
 				canvasRenderDebounceTimer: null,
 			}
+		},
+		watch: {
+			customArtworkBase64: function(newValue) {
+				if (!newValue) {
+					this.customArtwork = null;
+					return;
+				}
+
+				let image = new Image();
+				image.onload = () => {
+					this.customArtwork = this.applyCardMask(image);
+				};
+				image.src = newValue;
+			},
 		},
 		computed: {
 			previewContext() {
@@ -28,8 +43,17 @@
 				}
 				return this.previewContexts[context];
 			},
+			customArtworkBase64() {
+				return this.$store.state.cardState.customImageData;
+			},
 			canvasSize() {
 				return '408x584';
+			},
+			canvasWidth() {
+				return this.canvasSize.split('x')[0];
+			},
+			canvasHeight() {
+				return this.canvasSize.split('x')[1];
 			},
 			imageUrls() {
 				let urls = [
@@ -173,9 +197,13 @@
 				$(this.$el).css('margin-top', parent.height() / 2 - targetHeight / 2);
 				$(this.$el).parent().css('min-width', sourceWidth);
 
-				this.renderImage(ctx, backgroundImg);
-
 				let state = this.$store.state.cardState;
+
+				if (state.customImageData === '') {
+					this.renderImage(ctx, backgroundImg);
+				} else {
+					this.renderRawImage(ctx, this.customArtwork);
+				}
 
 				let elementFileName = 'bg-element-' + state.cardElement;
 				this.renderImage(ctx, elementFileName);
@@ -406,6 +434,27 @@
 				}
 			},
 
+			/*resizeImage: function(image) {
+				let canvas = document.createElement('canvas');
+				canvas.width = this.canvasWidth;
+				canvas.height = this.canvasHeight;
+				let ctx = canvas.getContext('2d');
+				ctx.drawImage(image, 0, 0, this.canvasWidth, this.canvasHeight);
+				return canvas.toDataURL('image/png');
+			},*/
+
+			applyCardMask: function(image) {
+				let canvas = document.createElement('canvas');
+				canvas.width = this.canvasWidth;
+				canvas.height = this.canvasHeight;
+				let ctx = canvas.getContext('2d');
+				ctx.drawImage(this.imageCache['bg-clean'], 0, 0, this.canvasWidth, this.canvasHeight);
+				ctx.globalCompositeOperation = 'source-atop';
+				ctx.drawImage(image, 0, 0, this.canvasWidth, this.canvasHeight);
+
+				return canvas.toDataURL('image/png');
+			},
+
 			renderImage: function(ctx, imageId) {
 				let image = this.imageCache[imageId];
 				if (image === undefined) {
@@ -413,6 +462,10 @@
 					return;
 				}
 
+				this.renderRawImage(ctx, image);
+			},
+
+			renderRawImage: function(ctx, image) {
 				let width = this.canvasSize.split('x')[0];
 				let height = this.canvasSize.split('x')[1];
 				ctx.drawImage(image, 0, 0, width, height);

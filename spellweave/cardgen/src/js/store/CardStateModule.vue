@@ -16,6 +16,7 @@
 			cardElement: Element.GENERIC,
 			cardGoldCost: 0,
 			cardManaCost: 1,
+            customImageData: '',
 		},
 		mutations: {
 			load(state, value) {
@@ -31,6 +32,7 @@
 				state.cardElement = value.cardElement;
 				state.cardGoldCost = value.cardGoldCost;
 				state.cardManaCost = value.cardManaCost;
+				state.customImageData = value.customImageData;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 			clear(state) {
@@ -46,6 +48,7 @@
 				state.cardElement = Element.GENERIC;
 				state.cardGoldCost = 0;
 				state.cardManaCost = 1;
+				state.customImageData = '';
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
 			setFreeBuild(state, value) {
@@ -96,6 +99,10 @@
 				state.cardManaCost = value;
 				app.$emit(Event.CARD_STATE_UPDATED);
 			},
+            setCustomImageData(state, value) {
+			    state.customImageData = value;
+                app.$emit(Event.CARD_STATE_UPDATED);
+            },
 		},
 	};
 </script>
