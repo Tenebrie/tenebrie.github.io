@@ -6,6 +6,10 @@
 </template>
 
 <script>
+	const CanvasConstants = {
+		DESCRIPTION_FIELD_HEIGHT: 140,
+	};
+
 	export default {
 		data: function() {
 			return {
@@ -27,10 +31,14 @@
 
 				let image = new Image();
 				image.onload = () => {
-					this.customArtwork = this.applyCardMask(image);
+					this.applyCardMask(image, (croppedImage) => this.customArtwork = croppedImage);
 				};
 				image.src = newValue;
 			},
+
+			customArtwork: function() {
+				this.renderCanvasAfterDelay();
+			}
 		},
 		computed: {
 			previewContext() {
@@ -62,6 +70,7 @@
 					'bg-textured',
 					'bg-attribute',
 					'bg-name',
+					'bg-description',
 					'bg-tribe',
 					'bg-path-begin',
 					'bg-path-normal',
@@ -115,8 +124,8 @@
 			let canvas = $(this.$el).find('canvas.primary')[0];
 			let backCanvas = $(this.$el).find('canvas.secondary')[0];
 
-			let width = this.canvasSize.split('x')[0];
-			let height = this.canvasSize.split('x')[1];
+			let width = this.canvasWidth;
+			let height = this.canvasHeight;
 
 			let dpr = window.devicePixelRatio || 1;
 			canvas.width = width * dpr;
@@ -179,7 +188,6 @@
 					console.log('[Card render] Waiting for image cache: ' + this.imagesCached + '/' + this.imageUrls.length);
 					return;
 				}
-
 				let ctx = this.previewContext;
 				ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
@@ -197,13 +205,13 @@
 				$(this.$el).css('margin-top', parent.height() / 2 - targetHeight / 2);
 				$(this.$el).parent().css('min-width', sourceWidth);
 
-				let state = this.$store.state.cardState;
-
-				if (state.customImageData === '') {
+				if (!this.customArtwork) {
 					this.renderImage(ctx, backgroundImg);
 				} else {
 					this.renderRawImage(ctx, this.customArtwork);
 				}
+
+				let state = this.$store.state.cardState;
 
 				let elementFileName = 'bg-element-' + state.cardElement;
 				this.renderImage(ctx, elementFileName);
@@ -254,7 +262,10 @@
 					this.renderImage(ctx, 'bg-name');
 					this.renderText(ctx, this.getFont('24px', state.cardName), 'black', state.cardName, realWidth / 2, 158, 24, 270);
 				}
-				this.renderText(ctx, this.getFont('18px', state.cardDescription), Color.DEFAULT_CARD_TEXT, state.cardDescription, realWidth / 2, 400, 20, realWidth - 50, 200);
+				if (state.cardDescription !== '') {
+					this.renderImage(ctx, 'bg-description');
+					this.renderText(ctx, this.getFont('18px', state.cardDescription), Color.DEFAULT_CARD_TEXT, state.cardDescription, realWidth / 2, 400, 20, realWidth - 50, CanvasConstants.DESCRIPTION_FIELD_HEIGHT);
+				}
 				if (state.cardTribe !== '') {
 					this.renderImage(ctx, 'bg-tribe');
 					this.renderText(ctx, this.getFont('18px', state.cardTribe), 'black', state.cardTribe, realWidth / 2, 570, 20, realWidth - 50);
@@ -291,6 +302,7 @@
 
 				let paragraphs = text.split('\n');
 				let currentLineY = targetY;
+				let textLines = [];
 
 				while (paragraphs.length > 0) {
 					let words = paragraphs[0].split(' ');
@@ -306,11 +318,15 @@
 							currentLineText = currentTextCandidate;
 							words.splice(0, 1);
 						} else if (currentLineText != null) {
-							if (currentLineY + lineHeight > maximumLineY) {
+							if (currentLineY + lineHeight >= maximumLineY) {
 								currentLineText += '...';
 								break;
 							}
-							this.renderTextLine(ctx, color, currentLineText, targetX, currentLineY);
+							textLines.push({
+								text: currentLineText,
+								targetX: targetX,
+								targetY: currentLineY,
+							});
 							currentLineY += lineHeight;
 							currentLineText = null;
 						} else {
@@ -320,8 +336,21 @@
 					}
 
 					paragraphs.splice(0, 1);
-					this.renderTextLine(ctx, color, currentLineText, targetX, currentLineY);
-					currentLineY += lineHeight * 1.2;
+					textLines.push({
+						text: currentLineText,
+						targetX: targetX,
+						targetY: currentLineY,
+					});
+					if (paragraphs.length > 0) {
+						currentLineY += lineHeight * 1.2;
+					}
+				}
+
+				let offset = (maximumLineY - currentLineY) / 2;
+				console.log(offset);
+				for (let lineIndex in textLines) {
+					let line = textLines[lineIndex];
+					this.renderTextLine(ctx, color, line.text, line.targetX, line.targetY + offset);
 				}
 			},
 
@@ -443,7 +472,7 @@
 				return canvas.toDataURL('image/png');
 			},*/
 
-			applyCardMask: function(image) {
+			applyCardMask: function(image, callback) {
 				let canvas = document.createElement('canvas');
 				canvas.width = this.canvasWidth;
 				canvas.height = this.canvasHeight;
@@ -452,7 +481,11 @@
 				ctx.globalCompositeOperation = 'source-atop';
 				ctx.drawImage(image, 0, 0, this.canvasWidth, this.canvasHeight);
 
-				return canvas.toDataURL('image/png');
+				let updatedImage = new Image();
+				updatedImage.onload = () => {
+					callback(updatedImage);
+				};
+				updatedImage.src = canvas.toDataURL('image/png');
 			},
 
 			renderImage: function(ctx, imageId) {
