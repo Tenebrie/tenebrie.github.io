@@ -1,23 +1,39 @@
-Spellweave Card Generator
-=========================
+# cursedgame
 
-## Prerequisites ##
-`npm install vue webpack webpack-cli vue-loader url-loader sass-loader node-sass`
+## Project setup
+```
+npm install
+```
 
-## Development ##
-#### If using WebStorm ####
-- Create SCSS File Watcher: `Preferences -> Tools -> File Watchers`
-  - File type: `SCSS Style Sheet`
-  - Program: `npx`
-  - Arguments: `webpack`
-  - Working directory: `$ProjectFileDir$/spellweave/cardgen`
-  
-- Create Vue File Watcher: `Preferences -> Tools -> File Watchers`
-  - File type: `Vue.js template`
-  - Program: `npx`
-  - Arguments: `webpack`
-  - Working directory: `$ProjectFileDir$/spellweave/cardgen`
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-#### Just run once ####
-- Compile JavaScript: `npx webpack`
-- Open `index.html`
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Run your end-to-end tests
+```
+npm run test:e2e
+```
+
+### Run your unit tests
+```
+npm run test:unit
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
