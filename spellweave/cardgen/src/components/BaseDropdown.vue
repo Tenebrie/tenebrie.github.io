@@ -43,10 +43,11 @@
 					}
 					return {};
 				},
-				set(value) {
+				set(item) {
 					if (this.onSelect !== undefined) {
-						this.onSelect(value.value);
+						this.onSelect(item.value);
 					}
+					this.$emit('select', item.value);
 				}
 			},
 		},
@@ -84,7 +85,9 @@
 				this.close();
 			},
 			getIconClass(item) {
-				if (item.icon !== undefined) {
+				if (item.icon !== undefined && item.icon.includes(' ')) {
+					return item.icon;
+				} else if (item.icon !== undefined) {
 					return 'fas ' + item.icon;
 				} else {
 					return 'no-icon';

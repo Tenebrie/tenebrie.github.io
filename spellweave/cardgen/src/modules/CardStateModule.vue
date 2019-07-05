@@ -11,12 +11,18 @@
 			cardName: '',
 			cardDescription: '',
 			cardTribe: '',
-			cardType: Type.PATH,
+			cardType: Type.PRIME,
 			cardPathType: PathType.NORMAL,
 			cardElement: Element.GENERIC,
 			cardGoldCost: 0,
-			cardManaCost: 1,
-            customImageData: '',
+			cardManaCost: 0,
+
+			attack: -1,
+			health: -1,
+			initiative: 50,
+			customImageData: '',
+			customImageOffsetX: 0,
+			customImageOffsetY: 0,
 		},
 		mutations: {
 			load(state, value) {
@@ -32,7 +38,13 @@
 				state.cardElement = value.cardElement;
 				state.cardGoldCost = value.cardGoldCost;
 				state.cardManaCost = value.cardManaCost;
+
+				state.attack = value.attack;
+				state.health = value.health;
+				state.initiative = value.initiative;
 				state.customImageData = value.customImageData;
+				state.customImageOffsetX = value.customImageOffsetX;
+				state.customImageOffsetY = value.customImageOffsetY;
 			},
 			clear(state) {
 				state.cardName = '';
@@ -42,12 +54,18 @@
 				state.isFreeBuild = false;
 				state.isFreeMove = false;
 				state.isPermanent = false;
-				state.cardType = Type.PATH;
+				state.cardType = Type.PRIME;
 				state.cardPathType = PathType.NORMAL;
 				state.cardElement = Element.GENERIC;
 				state.cardGoldCost = 0;
-				state.cardManaCost = 1;
+				state.cardManaCost = 0;
+
+				state.attack = -1;
+				state.health = -1;
+				state.initiative = 50;
 				state.customImageData = '';
+				state.customImageOffsetX = 0;
+				state.customImageOffsetY = 0;
 			},
 			setFreeBuild(state, value) {
 				state.isFreeBuild = value;
@@ -85,9 +103,25 @@
 			setCardManaCost(state, value) {
 				state.cardManaCost = value;
 			},
-            setCustomImageData(state, value) {
-			    state.customImageData = value;
-            },
+
+			setAttack(state, value) {
+				state.attack = value;
+			},
+			setHealth(state, value) {
+				state.health = value;
+			},
+			setInitiative(state, value) {
+				state.initiative = value;
+			},
+			setCustomImageData(state, value) {
+				state.customImageData = value;
+			},
+			setCustomImageOffsetX(state, value) {
+				state.customImageOffsetX = value;
+			},
+			setCustomImageOffsetY(state, value) {
+				state.customImageOffsetY = value;
+			},
 		},
 	};
 </script>

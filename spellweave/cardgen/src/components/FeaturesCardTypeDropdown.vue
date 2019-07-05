@@ -29,7 +29,7 @@
 					{
 						title: 'Prime',
 						icon: 'fa-signature',
-						value: Type.Prime,
+						value: Type.PRIME,
 					},
 					{
 						title: 'Action',

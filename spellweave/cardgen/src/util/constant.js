@@ -14,7 +14,7 @@ export const Color = {
 };
 
 export const Type = {
-	Prime: 'prime',
+	PRIME: 'prime',
 	ACTION: 'action',
 	PATH: 'path',
 	STATE: 'state',

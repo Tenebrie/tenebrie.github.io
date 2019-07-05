@@ -15,7 +15,10 @@
 					return this.value;
 				},
 				set(value) {
-					this.onInput(value);
+					if (this.onInput) {
+						this.onInput(value);
+					}
+					this.$emit('input', value);
 				}
 			},
 			multiline() {

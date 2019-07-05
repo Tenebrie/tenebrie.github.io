@@ -1,7 +1,6 @@
 import {Event} from './constant'
 
 let storageKey = 'cardLibrary';
-let backupKey = 'cardLibrary_backup';
 let localStorage = {
 	load: function () {
 		let json = window.localStorage.getItem(storageKey) || JSON.stringify('');
@@ -10,9 +9,6 @@ let localStorage = {
 	save: function(content) {
 		window.localStorage.setItem(storageKey, JSON.stringify(content));
 	},
-	saveBackup: function(content) {
-		window.localStorage.setItem(backupKey, JSON.stringify(content));
-	},
 };
 
 export const autosaverPlugin = function (store) {
@@ -20,10 +16,12 @@ export const autosaverPlugin = function (store) {
 
 	store.subscribe(function (mutation, state) {
 		if (mutation.type === 'cardLibrary/push' || mutation.type === 'cardLibrary/delete') {
-			localStorage.save(state.cardLibrary.data);
-		}
-		if (mutation.type === 'cardLibrary/push') {
-			localStorage.saveBackup(state.cardLibrary.data);
+			let dataCopy = JSON.parse(JSON.stringify(state.cardLibrary.data));
+			for (let cardIndex in dataCopy) {
+				let card = dataCopy[cardIndex];
+				card.customImageData = '';
+			}
+			localStorage.save(dataCopy);
 		}
 	})
 };

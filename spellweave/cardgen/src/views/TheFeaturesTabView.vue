@@ -8,34 +8,40 @@
 			<is-free-draw></is-free-draw>
 			<is-free-move></is-free-move>
 			<is-permanent></is-permanent>
-			<div style='display: flex; flex-direction: row; flex-wrap: wrap'>
+			<div class="dropdowns">
 				<card-type></card-type>
-				<card-path-type v-if='isPathTypeVisible'></card-path-type>
 				<card-element></card-element>
-				<card-gold-cost></card-gold-cost>
-				<card-mana-cost></card-mana-cost>
+				<card-attack-dropdown />
+				<card-health-dropdown />
+				<card-initiative-textbox />
 			</div>
 		</div>
 	</transition>
 </template>
 
 <script>
+	import {Type} from "../util/constant";
 	import cardName from '../components/FeaturesCardNameTextbox.vue';
-	import cardDescription from '../components/FeaturesCardDescriptionTextbox.vue';
+	import cardType from '../components/FeaturesCardTypeDropdown.vue';
 	import cardTribe from '../components/FeaturesCardTribeTextbox.vue';
-	import isFreeBuild from '../components/FeaturesIsFreeBuildCheckbox.vue';
 	import isFreeDraw from '../components/FeaturesIsFreeDrawCheckbox.vue';
 	import isFreeMove from '../components/FeaturesIsFreeMoveCheckbox.vue';
+	import isFreeBuild from '../components/FeaturesIsFreeBuildCheckbox.vue';
 	import isPermanent from '../components/FeaturesIsPermanentCheckbox.vue';
-	import cardType from '../components/FeaturesCardTypeDropdown.vue';
-	import cardPathType from '../components/FeaturesCardPathTypeDropdown.vue';
 	import cardElement from '../components/FeaturesCardElementDropdown.vue';
+	import cardPathType from '../components/FeaturesCardPathTypeDropdown.vue';
 	import cardGoldCost from '../components/FeaturesCardGoldCostDropdown.vue';
 	import cardManaCost from '../components/FeaturesCardManaCostDropdown.vue';
-	import {Type} from "../util/constant";
+	import cardDescription from '../components/FeaturesCardDescriptionTextbox.vue';
+	import CardAttackDropdown from "../components/CardAttackDropdown";
+	import CardHealthDropdown from "../components/CardHealthDropdown";
+	import CardInitiativeTextbox from "../components/CardInitiativeTextbox";
 
 	export default {
 		components: {
+			CardInitiativeTextbox,
+			CardAttackDropdown,
+			CardHealthDropdown,
 			cardName,
 			cardDescription,
 			cardTribe,
@@ -56,3 +62,13 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	.tab-features {
+		.dropdowns {
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+		}
+	}
+</style>

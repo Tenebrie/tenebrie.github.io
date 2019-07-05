@@ -6,16 +6,9 @@
 </template>
 
 <script>
-	import {Event, Color, PathType, Type} from "../util/constant";
-	import {stripMarkup} from "../util/util";
-
-	const CanvasConstants = {
-		NAME_FIELD_TOP: 385,
-		TRIBE_FIELD_TOP: 422,
-		DESCRIPTION_FIELD_TOP: 450,
-		DESCRIPTION_FIELD_MARGIN: 50,
-		DESCRIPTION_FIELD_HEIGHT: 110,
-	};
+	import { mapState } from 'vuex';
+	import { stripMarkup } from "../util/util";
+	import { Event, Color, PathType, Type } from "../util/constant";
 
 	export default {
 		data: function() {
@@ -27,8 +20,27 @@
 				activePreviewContext: 0,
 				cacheWaitingTimer: null,
 				canvasRenderDebounceTimer: null,
+
+				unsubscribeFromCardStore: () => {},
 			}
 		},
+
+		watch: {
+			imagesCached: function(newValue) {
+				if (newValue === this.imageUrls.length && this.customArtworkBase64 && !this.customArtwork) {
+					this.preloadCustomArtwork();
+				}
+			},
+
+			customArtworkBase64: function() { this.preloadCustomArtwork() },
+			customArtOffsetX: function() { this.preloadCustomArtwork() },
+			customArtOffsetY: function() { this.preloadCustomArtwork() },
+
+			customArtwork: function() {
+				this.renderCanvasAfterDelay();
+			},
+		},
+
 		created: function() {
 			for (let i = 0; i < this.imageUrls.length; i++) {
 				let url = this.imageUrls[i];
@@ -45,6 +57,7 @@
 				image.src = finalUrl;
 			}
 		},
+
 		mounted: function() {
 			let canvas = this.$refs.primaryCanvas;
 			let backCanvas = this.$refs.secondaryCanvas;
@@ -77,7 +90,7 @@
 				this.saveCanvasToFile();
 			});
 
-			this.$store.subscribe((mutation, state) => {
+			this.unsubscribeFromCardStore = this.$store.subscribe((mutation, state) => {
 				if (mutation.type.startsWith('cardState')) {
 					this.renderCanvasAfterDelay();
 				}
@@ -92,25 +105,19 @@
 				this.renderCanvasAfterDelay();
 			});
 		},
-		watch: {
-			customArtworkBase64: function(newValue) {
-				if (!newValue) {
-					this.customArtwork = null;
-					return;
-				}
 
-				let image = new Image();
-				image.onload = () => {
-					this.applyCardMask(image, (croppedImage) => this.customArtwork = croppedImage);
-				};
-				image.src = newValue;
-			},
-
-			customArtwork: function() {
-				this.renderCanvasAfterDelay();
-			},
+		beforeDestroy: function() {
+			this.unsubscribeFromCardStore();
+			this.$root.$off(Event.SAVE_CARD_AS_IMAGE);
+			this.$root.$off(Event.CARD_STATE_UPDATED);
 		},
+
 		computed: {
+			...mapState({
+				customArtOffsetX: state => state.cardState.customImageOffsetX,
+				customArtOffsetY: state => state.cardState.customImageOffsetY,
+			}),
+
 			previewContext() {
 				return this.previewContexts[this.activePreviewContext];
 			},
@@ -141,6 +148,9 @@
 					'bg-attribute',
 					'bg-name',
 					'bg-name-low',
+					'bg-name-modern',
+					'bg-initiative',
+					'bg-stats',
 					'bg-description',
 					'bg-tribe',
 					'bg-tribe-inverted',
@@ -164,6 +174,8 @@
 					'attr-freeBuildAndMove',
 					'attr-freeBuildDrawAndMove',
 					'attr-permanent',
+					'stat-attack-claw',
+					'stat-defense-shield',
 				];
 
 				for (let i = 1; i <= 12; i++) {
@@ -220,10 +232,10 @@
 				$(this.$el).css('margin-top', parent.height() / 2 - targetHeight / 2);
 				$(this.$el).parent().css('min-width', sourceWidth);
 
-				if (!this.customArtwork) {
-					this.renderImage(ctx, backgroundImg);
+				if (this.customArtwork) {
+					this.renderCustomArtwork(ctx);
 				} else {
-					this.renderRawImage(ctx, this.customArtwork);
+					this.renderImage(ctx, backgroundImg);
 				}
 
 				let state = this.$store.state.cardState;
@@ -275,23 +287,116 @@
 
 				if (state.cardDescription !== '') {
 					this.renderImage(ctx, 'bg-description');
-					this.renderText(ctx, this.getFont('18px', state.cardDescription), Color.DEFAULT_CARD_TEXT, state.cardDescription,
-							realWidth / 2,
-							CanvasConstants.DESCRIPTION_FIELD_TOP,
-							20,
-							realWidth - CanvasConstants.DESCRIPTION_FIELD_MARGIN * 2,
-							CanvasConstants.DESCRIPTION_FIELD_HEIGHT
-					);
-				}
-
-				if (state.cardTribe !== '') {
-					this.renderImage(ctx, 'bg-tribe-inverted');
-					this.renderText(ctx, this.getFont('16px', state.cardTribe), 'black', state.cardTribe, realWidth / 2, CanvasConstants.TRIBE_FIELD_TOP, 20, realWidth - 50);
+					this.renderCardText(ctx, {
+						text: state.cardDescription,
+						font: this.getFont('18px', state.cardDescription),
+						color: Color.DEFAULT_CARD_TEXT,
+						targetX: realWidth / 2,
+						targetY: 420,
+						lineHeight: 20,
+						maxWidth: realWidth - 50,
+						maxHeight: 110,
+					});
 				}
 
 				if (state.cardName !== '') {
-					this.renderImage(ctx, 'bg-name-low');
-					this.renderText(ctx, '24px BrushScript', 'black', state.cardName, realWidth / 2, CanvasConstants.NAME_FIELD_TOP, 24, 270);
+					this.renderImage(ctx, 'bg-name-modern');
+					if (state.cardTribe === '') {
+						this.renderCardText(ctx, {
+							text: state.cardName,
+							font: this.getFont('22px', state.cardName),
+							color: 'black',
+							targetX: 390,
+							targetY: 52,
+							lineHeight: 28,
+							maxWidth: 220,
+							maxHeight: 48,
+							verticalAlign: 'center',
+							horizontalAlign: 'right',
+						});
+					} else {
+						this.renderCardText(ctx, {
+							text: state.cardName,
+							font: this.getFont('22px', state.cardName),
+							color: 'black',
+							targetX: 390,
+							targetY: 64,
+							lineHeight: 24,
+							horizontalAlign: 'right',
+						});
+					}
+				}
+
+				if (state.cardTribe !== '') {
+					this.renderCardText(ctx, {
+						text: state.cardTribe,
+						font: this.getFont('16px', state.cardTribe),
+						color: 'black',
+						targetX: 390,
+						targetY: 88,
+						lineHeight: 24,
+						horizontalAlign: 'right',
+					});
+				}
+
+				if (state.attack >= 0 || state.health >= 0) {
+					this.renderImage(ctx, 'bg-stats');
+				}
+
+				if (state.attack >= 0) {
+					this.renderImage(ctx, 'stat-attack-claw');
+					if (state.attack < 10) {
+						this.renderCardText(ctx, {
+							text: state.attack.toString(),
+							font: '46px BrushScript',
+							color: 'black',
+							targetX: 298,
+							targetY: 568,
+							lineHeight: 24,
+						});
+					} else {
+						this.renderCardText(ctx, {
+							text: state.attack.toString(),
+							font: '42px BrushScript',
+							color: 'black',
+							targetX: 300,
+							targetY: 568,
+							lineHeight: 24,
+						});
+					}
+				}
+				if (state.health >= 0) {
+					this.renderImage(ctx, 'stat-defense-shield');
+					if (state.health < 10) {
+						this.renderCardText(ctx, {
+							text: state.health.toString(),
+							font: '46px BrushScript',
+							color: 'black',
+							targetX: 380,
+							targetY: 568,
+							lineHeight: 24,
+						});
+					} else {
+						this.renderCardText(ctx, {
+							text: state.health.toString(),
+							font: '42px BrushScript',
+							color: 'black',
+							targetX: 382,
+							targetY: 568,
+							lineHeight: 24,
+						});
+					}
+				}
+				if (state.initiative >= 1) {
+					this.renderImage(ctx, 'bg-initiative');
+					this.renderCardText(ctx, {
+						text: state.initiative.toString(),
+						font: '70px BrushScript',
+						color: 'black',
+						targetX: 58,
+						targetY: 65,
+						lineHeight: 24,
+					});
 				}
 
 				this.clearCanvasRenderThrottleTimer();
@@ -317,6 +422,33 @@
 				if (maxHeight === undefined) {
 					maxHeight = 0;
 				}
+
+				this.renderCardText(ctx, {
+					text: text,
+					font: font,
+					color: color,
+					targetX: targetX,
+					targetY: targetY,
+					lineHeight: lineHeight,
+					maxWidth: maxWidth,
+					maxHeight: maxHeight,
+					horizontalAlign: 'center',
+				});
+			},
+
+			renderCardText: function(ctx, options) {
+				let text = options.text;
+				if (!text || text.length === 0) { return }
+
+				let targetX = options.targetX;
+				let targetY = options.targetY;
+				let font = options.font || this.getFont('16px', text);
+				let color = options.color || 'black';
+				let lineHeight = options.lineHeight || 16;
+				let maxWidth = options.maxWidth || targetX * 2;
+				let maxHeight = options.maxHeight || 0;
+				let horizontalAlign = options.horizontalAlign || 'center';
+				let verticalAlign = options.verticalAlign || 'center';
 
 				ctx.font = font;
 				ctx.fillStyle = color;
@@ -369,21 +501,38 @@
 					}
 				}
 
-				let offset = (maximumLineY - currentLineY) / 2;
+				let offset = 0;
+				if (verticalAlign === 'center') {
+					offset = (maximumLineY - currentLineY) / 2
+				} else if (verticalAlign === 'bottom') {
+					offset = -currentLineY;
+				}
+
 				for (let lineIndex in textLines) {
 					let line = textLines[lineIndex];
-					this.renderTextLine(ctx, color, line.text, line.targetX, line.targetY + offset);
+					this.renderCardTextLine(ctx, {
+						text: line.text,
+						defaultColor: color,
+						targetX: line.targetX,
+						targetY: line.targetY + offset,
+						align: horizontalAlign,
+					});
 				}
 			},
 
-			renderTextLine: function(ctx, defaultColor, text, targetX, targetY) {
+			renderCardTextLine: function(ctx, { text, defaultColor, targetX, targetY, align }) {
 				if (text === null) {
 					throw 'Unable to render null text';
 				}
 
 				let cleanText = stripMarkup(text);
 				let width = ctx.measureText(cleanText).width;
-				let renderTargetX = targetX - width / 2;
+				let renderTargetX = targetX;
+				if (align === 'center') {
+					renderTargetX = targetX - width / 2;
+				} else if (align === 'right') {
+					renderTargetX = targetX - width;
+				}
 
 				const colorTagPairPattern = /<color=['"]?([a-zA-Z0-9#]+)['"]?>.+<\/color>$/g;
 				const openingColorTagPattern = /<color=['"]?([a-zA-Z0-9#]+)['"]?>.+$/g;
@@ -485,6 +634,19 @@
 				}
 			},
 
+			preloadCustomArtwork: function() {
+				if (!this.customArtworkBase64) {
+					this.customArtwork = null;
+					return;
+				}
+
+				let image = new Image();
+				image.onload = () => {
+					this.applyCardMask(image, (croppedImage) => this.customArtwork = croppedImage);
+				};
+				image.src = this.customArtworkBase64;
+			},
+
 			applyCardMask: function(image, callback) {
 				let canvas = document.createElement('canvas');
 				canvas.width = this.canvasWidth;
@@ -492,7 +654,23 @@
 				let ctx = canvas.getContext('2d');
 				ctx.drawImage(this.imageCache['bg-clean'], 0, 0, this.canvasWidth, this.canvasHeight);
 				ctx.globalCompositeOperation = 'source-atop';
-				ctx.drawImage(image, 0, 0, this.canvasWidth, this.canvasHeight);
+
+				let desiredAspectRatio = this.canvasWidth / this.canvasHeight;
+				let croppedImageWidth = this.canvasWidth;
+				let croppedImageHeight = image.height * (this.canvasWidth / image.width); //image.width / desiredAspectRatio;
+				let verticalOffset = (croppedImageHeight - this.canvasHeight) / 2;
+				let horizontalOffset = 0;
+				if (image.width > image.height * desiredAspectRatio) {
+					croppedImageWidth = image.width * (this.canvasHeight / image.height);
+					croppedImageHeight = this.canvasHeight;
+					horizontalOffset = (croppedImageWidth - this.canvasWidth) / 2;
+					verticalOffset = 0;
+				}
+
+				horizontalOffset += this.customArtOffsetX;
+				verticalOffset += this.customArtOffsetY;
+
+				ctx.drawImage(image, -horizontalOffset, -verticalOffset, croppedImageWidth, croppedImageHeight);
 
 				let updatedImage = new Image();
 				updatedImage.onload = () => {
@@ -508,13 +686,11 @@
 					return;
 				}
 
-				this.renderRawImage(ctx, image);
+				ctx.drawImage(image, 0, 0, this.canvasWidth, this.canvasHeight);
 			},
 
-			renderRawImage: function(ctx, image) {
-				let width = this.canvasSize.split('x')[0];
-				let height = this.canvasSize.split('x')[1];
-				ctx.drawImage(image, 0, 0, width, height);
+			renderCustomArtwork: function(ctx) {
+				ctx.drawImage(this.customArtwork, 0, 0, this.canvasWidth, this.canvasHeight);
 			},
 
 			getCardFileName: function() {

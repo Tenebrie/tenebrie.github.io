@@ -13,5 +13,7 @@
 </script>
 
 <style lang='scss' scoped>
-
+	.base-file-selector {
+		margin: 10px;
+	}
 </style>
