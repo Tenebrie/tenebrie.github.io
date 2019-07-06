@@ -1,5 +1,5 @@
 <template>
-	<textbox :value='text' :onInput='onInput' placeholder='Title'>Card title</textbox>
+	<textbox :value='text' :onInput='onInput' placeholder='Name'>Card name</textbox>
 </template>
 
 <script>

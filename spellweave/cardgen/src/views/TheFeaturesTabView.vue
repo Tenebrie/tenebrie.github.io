@@ -2,18 +2,15 @@
 	<transition name="slide">
 		<div class="toolbar-tab tab-features">
 			<card-name></card-name>
+			<features-card-title-textbox />
 			<card-description></card-description>
 			<card-tribe></card-tribe>
-			<is-free-build></is-free-build>
-			<is-free-draw></is-free-draw>
-			<is-free-move></is-free-move>
-			<is-permanent></is-permanent>
 			<div class="dropdowns">
-				<card-type></card-type>
 				<card-element></card-element>
 				<card-attack-dropdown />
 				<card-health-dropdown />
 				<card-initiative-textbox />
+				<card-attack-type-dropdown />
 			</div>
 		</div>
 	</transition>
@@ -36,9 +33,13 @@
 	import CardAttackDropdown from "../components/CardAttackDropdown";
 	import CardHealthDropdown from "../components/CardHealthDropdown";
 	import CardInitiativeTextbox from "../components/CardInitiativeTextbox";
+	import FeaturesCardTitleTextbox from "../components/FeaturesCardTitleTextbox";
+	import CardAttackTypeDropdown from "../components/CardAttackTypeDropdown";
 
 	export default {
 		components: {
+			CardAttackTypeDropdown,
+			FeaturesCardTitleTextbox,
 			CardInitiativeTextbox,
 			CardAttackDropdown,
 			CardHealthDropdown,

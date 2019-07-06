@@ -1,5 +1,5 @@
 <template>
-	<button v-on:click='onClick'><i :class='iconClass'></i>   {{ buttonText }}</button>
+	<button v-on:click='onClickInternal'><i :class='iconClass'></i>   {{ buttonText }}</button>
 </template>
 
 <script>
@@ -18,7 +18,15 @@
 				}
 				return 'hidden';
 			}
-		}
+		},
+		methods: {
+			onClickInternal: function(args) {
+				if (this.onClick) {
+					this.onClick(args);
+				}
+				this.$emit('click', args);
+			},
+		},
 	}
 </script>
 

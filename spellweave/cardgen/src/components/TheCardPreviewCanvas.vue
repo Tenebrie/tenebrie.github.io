@@ -8,7 +8,7 @@
 <script>
 	import { mapState } from 'vuex';
 	import { stripMarkup } from "../util/util";
-	import { Event, Color, PathType, Type } from "../util/constant";
+	import {Event, Color, PathType, Type, AttackType} from "../util/constant";
 
 	export default {
 		data: function() {
@@ -104,6 +104,10 @@
 			window.addEventListener('resize', () => {
 				this.renderCanvasAfterDelay();
 			});
+
+			document.fonts.addEventListener('loadingdone', () => {
+				this.renderCanvasAfterDelay();
+			});
 		},
 
 		beforeDestroy: function() {
@@ -154,6 +158,7 @@
 					'bg-description',
 					'bg-tribe',
 					'bg-tribe-inverted',
+					'bg-tribe-modern',
 					'bg-path-begin',
 					'bg-path-normal',
 					'bg-path-fork',
@@ -175,6 +180,7 @@
 					'attr-freeBuildDrawAndMove',
 					'attr-permanent',
 					'stat-attack-claw',
+					'stat-attack-heal',
 					'stat-defense-shield',
 				];
 
@@ -301,14 +307,14 @@
 
 				if (state.cardName !== '') {
 					this.renderImage(ctx, 'bg-name-modern');
-					if (state.cardTribe === '') {
+					if (state.cardTitle === '') {
 						this.renderCardText(ctx, {
 							text: state.cardName,
 							font: this.getFont('22px', state.cardName),
 							color: 'black',
 							targetX: 390,
 							targetY: 52,
-							lineHeight: 28,
+							lineHeight: 24,
 							maxWidth: 220,
 							maxHeight: 48,
 							verticalAlign: 'center',
@@ -327,13 +333,26 @@
 					}
 				}
 
-				if (state.cardTribe !== '') {
+				if (state.cardTitle !== '') {
 					this.renderCardText(ctx, {
-						text: state.cardTribe,
-						font: this.getFont('16px', state.cardTribe),
+						text: state.cardTitle,
+						font: this.getFont('16px', state.cardTitle),
 						color: 'black',
 						targetX: 390,
 						targetY: 88,
+						lineHeight: 24,
+						horizontalAlign: 'right',
+					});
+				}
+
+				if (state.cardTribe !== '') {
+					this.renderImage(ctx, 'bg-tribe-modern');
+					this.renderCardText(ctx, {
+						text: state.cardTribe,
+						font: this.getFont('18px', state.cardTribe),
+						color: 'black',
+						targetX: 390,
+						targetY: 129,
 						lineHeight: 24,
 						horizontalAlign: 'right',
 					});
@@ -344,7 +363,12 @@
 				}
 
 				if (state.attack >= 0) {
-					this.renderImage(ctx, 'stat-attack-claw');
+					if (state.attackType === AttackType.NORMAL) {
+						this.renderImage(ctx, 'stat-attack-claw');
+					} else if (state.attackType === AttackType.HEALING) {
+						this.renderImage(ctx, 'stat-attack-heal');
+					}
+
 					if (state.attack < 10) {
 						this.renderCardText(ctx, {
 							text: state.attack.toString(),

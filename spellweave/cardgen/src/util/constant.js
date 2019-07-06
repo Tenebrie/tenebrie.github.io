@@ -47,3 +47,8 @@ export const ImportMethod = {
 	DOWNLOAD: 'download',
 	SAVE_AND_DOWNLOAD: 'save-and-download',
 };
+
+export const AttackType = {
+	NORMAL: 'normal',
+	HEALING: 'healing',
+};

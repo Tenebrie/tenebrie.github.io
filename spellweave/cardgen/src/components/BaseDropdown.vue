@@ -85,7 +85,7 @@
 				this.close();
 			},
 			getIconClass(item) {
-				if (item.icon !== undefined && item.icon.includes(' ')) {
+				if (item.icon !== undefined && item.icon.includes('fab')) {
 					return item.icon;
 				} else if (item.icon !== undefined) {
 					return 'fas ' + item.icon;

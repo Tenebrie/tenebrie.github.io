@@ -1,5 +1,5 @@
 <script>
-	import { Element, PathType, Type } from "../util/constant";
+	import {AttackType, Element, PathType, Type} from "../util/constant";
 
 	export default {
 		namespaced: true,
@@ -9,6 +9,7 @@
 			isFreeMove: false,
 			isPermanent: false,
 			cardName: '',
+			cardTitle: '',
 			cardDescription: '',
 			cardTribe: '',
 			cardType: Type.PRIME,
@@ -20,6 +21,7 @@
 			attack: -1,
 			health: -1,
 			initiative: 50,
+			attackType: AttackType.NORMAL,
 			customImageData: '',
 			customImageOffsetX: 0,
 			customImageOffsetY: 0,
@@ -27,6 +29,7 @@
 		mutations: {
 			load(state, value) {
 				state.cardName = value.cardName;
+				state.cardTitle = value.cardTitle;
 				state.cardDescription = value.cardDescription;
 				state.cardTribe = value.cardTribe;
 				state.isFreeDraw = value.isFreeDraw;
@@ -42,12 +45,14 @@
 				state.attack = value.attack;
 				state.health = value.health;
 				state.initiative = value.initiative;
+				state.attackType = value.attackType;
 				state.customImageData = value.customImageData;
 				state.customImageOffsetX = value.customImageOffsetX;
 				state.customImageOffsetY = value.customImageOffsetY;
 			},
 			clear(state) {
 				state.cardName = '';
+				state.cardTitle = '';
 				state.cardDescription = '';
 				state.cardTribe = '';
 				state.isFreeDraw = false;
@@ -63,6 +68,7 @@
 				state.attack = -1;
 				state.health = -1;
 				state.initiative = 50;
+				state.attackType = AttackType.NORMAL;
 				state.customImageData = '';
 				state.customImageOffsetX = 0;
 				state.customImageOffsetY = 0;
@@ -81,6 +87,9 @@
 			},
 			setCardName(state, value) {
 				state.cardName = value;
+			},
+			setCardTitle(state, value) {
+				state.cardTitle = value;
 			},
 			setCardDescription(state, value) {
 				state.cardDescription = value;
@@ -113,6 +122,9 @@
 			setInitiative(state, value) {
 				state.initiative = value;
 			},
+			setAttackType(state, value) {
+				state.attackType = value;
+			},
 			setCustomImageData(state, value) {
 				state.customImageData = value;
 			},
@@ -121,6 +133,11 @@
 			},
 			setCustomImageOffsetY(state, value) {
 				state.customImageOffsetY = value;
+			},
+			clearCustomImageData(state) {
+				state.customImageData = '';
+				state.customImageOffsetX = 0;
+				state.customImageOffsetY = 0;
 			},
 		},
 	};
