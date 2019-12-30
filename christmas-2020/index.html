@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="script/soundmanager2-nodebug-jsmin.js"></script>
+		<script type="text/javascript" src="script/fireworks.js"></script>
+		<script type="text/javascript" src="script/ending.js"></script>
+		<script type="text/javascript" src="script/core.js"></script>
+		<link rel="stylesheet" type="text/css" href="style/fireworks.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="style/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="style/style.css">
+	</head>
+	<body>
+		<div class="background-image">
+			<img src="images/module_01_bg.jpg" width="100%" height="100%"/>
+		</div>
+
+		<div id="fireworks-template">
+ 			<div id="fw" class="firework"></div>
+ 			<div id="fp" class="fireworkParticle"><img src="images/particles.gif" alt="" /></div>
+		</div>
+
+		<div id="fireContainer"></div>
+
+		<div id="module_01_controls">
+			<button id="btn_songPlay" class="btn btn-info"><span class="glyphicon glyphicon-play"></span></button>
+			<button id="btn_songPause" class="btn btn-info"><span class="glyphicon glyphicon-pause"></span></button>
+			<button id="btn_songStop" class="btn btn-info"><span class="glyphicon glyphicon-stop"></span></button>
+			<button id="btn_songReveal" class="btn btn-info" data-toggle="modal" data-target="#module_01_answer" ><span class="glyphicon glyphicon-ok-circle"></span></button>
+			<button id="btn_songHide" class="btn btn-info"><span class="glyphicon glyphicon-remove-circle"></span></button>
+		</div>
+		<div id="module_meta_controls">
+			<button id="btn_pageLeft" class="btn btn-info"><span class="glyphicon glyphicon-arrow-left"></span></button>
+			<button id="btn_pageRight" class="btn btn-info"><span class="glyphicon glyphicon-arrow-right"></span></button>
+		</div>
+
+		<div id="module_01" class="container-fluid">
+			<div id="column-container" class="col-md-9">
+				<table id="table_music_main" class="table">
+					<thead>
+						<tr><th id="table_music_answer" class="answerFont" colspan=10></th></tr>
+					</thead>
+					<tbody id="table_music">
+					</tbody>
+					<tfoot>
+
+					</tfoot>
+				</table>
+			</div>
+			<div class="col-md-3">
+				<table class="table">
+					<thead>	
+						<tr><th class="scoreLabelFont">Очки:</th><th></th><th></th></tr>
+					</thead>
+					<tbody id="table_score">
+						
+					</tbody>
+				</table>
+				<div class="library-status">
+					<div class="songs-count">
+						Песен сыграно: <span id="songs-played">0</span>/<span id="songs-total">0</span>
+					</div>
+					<div>Песен доступно: <span id="songs-reachable">0</span></div>
+					<div class="current-song">
+						Текущая песня: <span id="current-song-id">-</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+</html>
