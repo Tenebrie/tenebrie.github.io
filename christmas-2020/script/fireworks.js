@@ -587,7 +587,7 @@ soundManager.onready(function() {
         id: item,
         url: 'audio/' + sounds[item],
         autoLoad: true,
-        volume: 10
+        volume: 0
       });
     }
   }
