@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/raid-trainers/static/css/main.5b4b731e.chunk.css",
-    "main.js": "/raid-trainers/static/js/main.b34b35b2.chunk.js",
-    "main.js.map": "/raid-trainers/static/js/main.b34b35b2.chunk.js.map",
+    "main.css": "/raid-trainers/static/css/main.af85d355.chunk.css",
+    "main.js": "/raid-trainers/static/js/main.020809a1.chunk.js",
+    "main.js.map": "/raid-trainers/static/js/main.020809a1.chunk.js.map",
     "runtime-main.js": "/raid-trainers/static/js/runtime-main.f26b4f65.js",
     "runtime-main.js.map": "/raid-trainers/static/js/runtime-main.f26b4f65.js.map",
     "static/js/2.1f71e301.chunk.js": "/raid-trainers/static/js/2.1f71e301.chunk.js",
@@ -10,14 +10,14 @@
     "static/js/3.32e228a2.chunk.js": "/raid-trainers/static/js/3.32e228a2.chunk.js",
     "static/js/3.32e228a2.chunk.js.map": "/raid-trainers/static/js/3.32e228a2.chunk.js.map",
     "index.html": "/raid-trainers/index.html",
-    "static/css/main.5b4b731e.chunk.css.map": "/raid-trainers/static/css/main.5b4b731e.chunk.css.map",
+    "static/css/main.af85d355.chunk.css.map": "/raid-trainers/static/css/main.af85d355.chunk.css.map",
     "static/js/2.1f71e301.chunk.js.LICENSE.txt": "/raid-trainers/static/js/2.1f71e301.chunk.js.LICENSE.txt",
     "static/media/App.css": "/raid-trainers/static/media/boss-e9.7a213db3.png"
   },
   "entrypoints": [
     "static/js/runtime-main.f26b4f65.js",
     "static/js/2.1f71e301.chunk.js",
-    "static/css/main.5b4b731e.chunk.css",
-    "static/js/main.b34b35b2.chunk.js"
+    "static/css/main.af85d355.chunk.css",
+    "static/js/main.020809a1.chunk.js"
   ]
 }
